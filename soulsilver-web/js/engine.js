@@ -53,6 +53,60 @@ export function bindTouch() {
   });
 }
 
+// ---- DS chrome helpers: rounded panels, proportional font ----
+const DS_FONT = 'Verdana, Tahoma, "DejaVu Sans", sans-serif';
+function rr(g, x, y, w, h, r) {
+  r = Math.max(0, Math.min(r, w / 2, h / 2));
+  g.beginPath();
+  g.moveTo(x + r, y);
+  g.arcTo(x + w, y, x + w, y + h, r);
+  g.arcTo(x + w, y + h, x, y + h, r);
+  g.arcTo(x, y + h, x, y, r);
+  g.arcTo(x, y, x + w, y, r);
+  g.closePath();
+}
+function triR(g, x, y, s, color) {
+  g.fillStyle = color;
+  g.beginPath();
+  g.moveTo(x, y);
+  g.lineTo(x, y + s);
+  g.lineTo(x + s * 0.9, y + s / 2);
+  g.closePath();
+  g.fill();
+}
+function triD(g, cx, y, s, color) {
+  g.fillStyle = color;
+  g.beginPath();
+  g.moveTo(cx - s / 2, y);
+  g.lineTo(cx + s / 2, y);
+  g.lineTo(cx, y + s);
+  g.closePath();
+  g.fill();
+}
+function panelChrome(g, x, y, w, h) {
+  x = Math.round(x); y = Math.round(y); w = Math.round(w); h = Math.round(h);
+  g.save();
+  g.fillStyle = "rgba(0,0,0,0.35)";
+  rr(g, x + 1, y + 2, w, h, 5); g.fill();
+  g.fillStyle = "#fdfdf4";
+  rr(g, x, y, w, h, 5); g.fill();
+  g.lineWidth = 2; g.strokeStyle = "#ffffff";
+  rr(g, x + 1, y + 1, w - 2, h - 2, 4); g.stroke();
+  g.lineWidth = 1; g.strokeStyle = "#3c5a8a";
+  rr(g, x + 2.5, y + 2.5, w - 5, h - 5, 3); g.stroke();
+  g.strokeStyle = "#9fb4d8";
+  rr(g, x + 4, y + 4, w - 8, h - 8, 2); g.stroke();
+  g.restore();
+}
+function isDarkColor(c) {
+  const m = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(c || "");
+  if (!m) return true;
+  let h = m[1];
+  if (h.length === 3) h = h.split("").map((ch) => ch + ch).join("");
+  const r = parseInt(h.slice(0, 2), 16), gg = parseInt(h.slice(2, 4), 16), b = parseInt(h.slice(4, 6), 16);
+  return (0.299 * r + 0.587 * gg + 0.114 * b) < 128;
+}
+
 // ---- text box ----
 export class TextBox {
   constructor() { this.queue = []; this.chars = 0; this.open = false; this.onDone = null; }
@@ -77,15 +131,28 @@ export class TextBox {
   }
   draw(g) {
     if (!this.open) return;
-    g.fillStyle = "#f8f8f8"; g.fillRect(4, H - 56, W - 8, 52);
-    g.fillStyle = "#181820"; g.fillRect(6, H - 54, W - 12, 48);
-    g.fillStyle = "#f8f8f8"; g.font = "8px monospace"; g.textBaseline = "top";
-    const lines = this.shown.split("\n");
-    lines.slice(0, 4).forEach((ln, i) => g.fillText(ln, 10, H - 50 + i * 11));
-    if (this.done) {
-      const b = Math.floor(performance.now() / 300) % 2 === 0 ? "▼" : " ";
-      g.fillText(b, W - 16, H - 16);
+    const bx = 4, bw = W - 8, bh = 52, by = H - 56;
+    panelChrome(g, bx, by, bw, bh);
+    // tail notch on the top edge, right side (speaker tab)
+    const tx = bx + bw - 46;
+    g.save();
+    g.fillStyle = "#fdfdf4";
+    g.strokeStyle = "#3c5a8a"; g.lineWidth = 1;
+    g.beginPath();
+    g.moveTo(tx, by + 1); g.lineTo(tx + 6, by - 5); g.lineTo(tx + 12, by + 1);
+    g.closePath();
+    g.fill(); g.stroke();
+    g.restore();
+    // name-plate row: a "NAME: ..." prefix gets its own plate above the box
+    const m = this.shown.match(/^([A-Z][A-Z .'\-]{1,11}):(?:\s|\n)/);
+    if (m) {
+      const nw = m[1].length * 7 + 16;
+      panelChrome(g, bx + 6, by - 13, nw, 15);
+      text(g, m[1], bx + 14, by - 10, "#14305a", 8, true);
     }
+    const lines = this.shown.split("\n");
+    lines.slice(0, 4).forEach((ln, i) => text(g, ln, bx + 10, by + 8 + i * 11, "#182028"));
+    if (this.done && Math.floor(performance.now() / 400) % 2 === 0) triD(g, bx + bw - 14, by + bh - 12, 6, "#c02020");
   }
 }
 export const textbox = new TextBox();
@@ -116,13 +183,19 @@ export function fmtPages(s) {
 }
 
 export function drawPanel(g, x, y, w, h) {
-  g.fillStyle = "#f8f8f8"; g.fillRect(x, y, w, h);
-  g.fillStyle = "#181820"; g.fillRect(x + 2, y + 2, w - 4, h - 4);
+  panelChrome(g, x, y, w, h);
 }
 
-export function text(g, s, x, y, color = "#f8f8f8") {
-  g.fillStyle = color; g.font = "8px monospace"; g.textBaseline = "top";
+export function text(g, s, x, y, color = "#f8f8f8", size = 8, bold = false) {
+  x = Math.round(x); y = Math.round(y);
+  g.save();
+  g.font = `${bold ? "bold " : ""}${size}px ${DS_FONT}`;
+  g.textBaseline = "top"; g.textAlign = "left";
+  g.fillStyle = isDarkColor(color) ? "rgba(0,0,0,0.55)" : "rgba(255,255,255,0.7)";
+  g.fillText(s, x + 1, y + 1);
+  g.fillStyle = color;
   g.fillText(s, x, y);
+  g.restore();
 }
 
 // menu helper: items drawn in a panel, index state, returns chosen on A
@@ -136,11 +209,13 @@ export class Menu {
     return null;
   }
   draw(g) {
-    const h = this.items.length * 12 + 8;
+    const rh = 13, h = this.items.length * rh + 8;
     drawPanel(g, this.x, this.y, this.w, h);
     this.items.forEach((it, k) => {
-      text(g, (k === this.i ? "▶" : " ") + it, this.x + 8, this.y + 5 + k * 12,
-        k === this.i ? "#f8d838" : "#f8f8f8");
+      const iy = this.y + 5 + k * rh, sel = k === this.i;
+      if (sel) { g.fillStyle = "#dce8f8"; rr(g, this.x + 4, iy - 1, this.w - 8, rh, 3); g.fill(); }
+      if (sel) triR(g, this.x + 7, iy + 2, 8, "#2a4a8a");
+      text(g, it, this.x + 18, iy + 1, sel ? "#102848" : "#33405a", 8, sel);
     });
   }
 }

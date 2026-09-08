@@ -22,120 +22,185 @@ export function blit(ctx, art, dx, dy, flip = false) {
 }
 
 const HERO_DOWN = [
-  ".....HHHHHH.....",
-  "....HHHHHHHH....",
-  "....HSSSSSSH....",
-  "....HSESSHSH....",
-  "....HSSSSSSH....",
-  ".....SSSSSS.....",
-  "....RRRRRRRR....",
-  "...SRRRRRRRRS...",
-  "...SRRRRRRRRS...",
-  "....RRRRRRRR....",
-  "....NNNNNNNN....",
-  "....NNN..NNN....",
-  "....NNN..NNN....",
-  "....NNN..NNN....",
-  "...KKK....KKK...",
-  "...KKK....KKK...",
+  "....KKRRRRKK....",
+  "...KRRRRRRRRK...",
+  "...KRWRRRRWRK...",
+  "...KRRRRRRRRK...",
+  "..KKWWWWWWWWKK..",
+  "...KSSSSSSSSK...",
+  "...KSSKSSKSSK...",
+  "...KSSSSSSSSK...",
+  "....KSSSSSSK....",
+  "...KNNWNNWNNK...",
+  "..SKNNWNNWNNKS..",
+  "..SKNNWNNWNNKS..",
+  "..SKNNWNNWNNKS..",
+  "...KNNWNNWNNK...",
+  "...KMMKMMKMMK...",
+  "...KMMKMMKMMK...",
+  "...KMMK..KMMK...",
+  "...KMMK..KMMK...",
+  "...KKKK..KKKK...",
+  "...KWWK..KWWK...",
 ];
 const HERO_DOWN2 = [
-  ".....HHHHHH.....",
-  "....HHHHHHHH....",
-  "....HSSSSSSH....",
-  "....HSESSHSH....",
-  "....HSSSSSSH....",
-  ".....SSSSSS.....",
-  "....RRRRRRRR....",
-  "...SRRRRRRRRS...",
-  "...SRRRRRRRRS...",
-  "....RRRRRRRR....",
-  "....NNNNNNNN....",
-  ".....NNN.NN.....",
-  ".....NN...N.....",
-  ".....NN...N.....",
-  "...KK.....KKK...",
-  "...KK.....KKK...",
+  "....KKRRRRKK....",
+  "...KRRRRRRRRK...",
+  "...KRWRRRRWRK...",
+  "...KRRRRRRRRK...",
+  "..KKWWWWWWWWKK..",
+  "...KSSSSSSSSK...",
+  "...KSSKSSKSSK...",
+  "...KSSSSSSSSK...",
+  "....KSSSSSSK....",
+  "...KNNWNNWNNK...",
+  "..SKNNWNNWNNKS..",
+  "..SKNNWNNWNNKS..",
+  "..SKNNWNNWNNKS..",
+  "...KNNWNNWNNK...",
+  "...KMMKMMKMMK...",
+  "...KMMKMMKMMK...",
+  "....KMMMMMMK....",
+  "....KMMK.MMK....",
+  "...KKKK...KKK...",
+  "...KWWK...KWK...",
 ];
 const HERO_UP = [
-  ".....HHHHHH.....",
-  "....HHHHHHHH....",
-  "....HHHHHHHH....",
-  "....HHHHHHHH....",
-  "....HHHHHHHH....",
-  ".....SSSSSS.....",
-  "....RRRRRRRR....",
-  "...SRRRRRRRRS...",
-  "...SRRRRRRRRS...",
-  "....RRRRRRRR....",
-  "....NNNNNNNN....",
-  "....NNN..NNN....",
-  "....NNN..NNN....",
-  "....NNN..NNN....",
-  "...KKK....KKK...",
-  "...KKK....KKK...",
+  "....KKRRRRKK....",
+  "...KRRRRRRRRK...",
+  "...KRRRRRRRRK...",
+  "...KRRWRRWRRK...",
+  "...KHHHHHHHHK...",
+  "...KHHHHHHHHK...",
+  "...KHHHHHHHHK...",
+  "....KHHHHHHK....",
+  "....KSSSSSSK....",
+  "...KNNWNNWNNK...",
+  "..YKNNWNNWNNKY..",
+  "..YKNNWNNWNNKY..",
+  "..YKNNWNNWNNKY..",
+  "...KNNWNNWNNK...",
+  "...KMMKMMKMMK...",
+  "...KMMKMMKMMK...",
+  "...KMMK..KMMK...",
+  "...KMMK..KMMK...",
+  "...KKKK..KKKK...",
+  "...KWWK..KWWK...",
+];
+const HERO_UP2 = [
+  "....KKRRRRKK....",
+  "...KRRRRRRRRK...",
+  "...KRRRRRRRRK...",
+  "...KRRWRRWRRK...",
+  "...KHHHHHHHHK...",
+  "...KHHHHHHHHK...",
+  "...KHHHHHHHHK...",
+  "....KHHHHHHK....",
+  "....KSSSSSSK....",
+  "...KNNWNNWNNK...",
+  "..YKNNWNNWNNKY..",
+  "..YKNNWNNWNNKY..",
+  "..YKNNWNNWNNKY..",
+  "...KNNWNNWNNK...",
+  "...KMMKMMKMMK...",
+  "...KMMKMMKMMK...",
+  "....KMMMMMMK....",
+  "....KMMK.MMK....",
+  "...KKKK...KKK...",
+  "...KWWK...KWK...",
 ];
 const HERO_SIDE = [
-  ".....HHHHHH.....",
-  "....HHHHHHSS....",
-  "....HHHSSSS.....",
-  "....HHHSES......",
-  "....HHSSSS......",
-  ".....SSSS.......",
-  "....RRRRRR......",
-  "...SRRRRRRR.....",
-  "...SRRRRRRR.....",
-  "....RRRRRR......",
-  "....NNNNNN......",
-  "....NNNNNN......",
-  "....NNN.........",
-  "....NNN.........",
-  "...KKK..........",
-  "...KKK..........",
+  "....KKRRRKK.....",
+  "...KRRRRRRRK....",
+  "...KRWRRRRRK....",
+  "...KRRRRRRRK....",
+  "...KSSSSSWWWKK..",
+  "...KSSSSSSSK....",
+  "...KSSSKSSSK....",
+  "...KSSSSSSSK....",
+  "....KSSSSSK.....",
+  "...KNNWNNNK.....",
+  "...KNNWNNNNKS...",
+  "...KNNWNNNNKS...",
+  "...KNNWNNNNK....",
+  "...KNNWNNNK.....",
+  "...KMMKMMMK.....",
+  "...KMMK.MMK.....",
+  "...KMMK.MMK.....",
+  "...KMMK..MMK....",
+  "..KKKK....KKK...",
+  "..KWWK....KWK...",
+];
+const HERO_SIDE2 = [
+  "....KKRRRKK.....",
+  "...KRRRRRRRK....",
+  "...KRWRRRRRK....",
+  "...KRRRRRRRK....",
+  "...KSSSSSWWWKK..",
+  "...KSSSSSSSK....",
+  "...KSSSKSSSK....",
+  "...KSSSSSSSK....",
+  "....KSSSSSK.....",
+  "...KNNWNNNK.....",
+  "...KNNWNNNNKS...",
+  "...KNNWNNNNKS...",
+  "...KNNWNNNNK....",
+  "...KNNWNNNK.....",
+  "...KMMKMMMK.....",
+  "....KMMKMMMK....",
+  "....KMMK.MMK....",
+  "....KMMK..MMK...",
+  "...KKKK...KKK...",
+  "...KWWK...KWK...",
 ];
 
 function heroSet(shirt, hair) {
   const swap = (art) => art.map((r) =>
     r.split("").map((c) => (c === "R" ? shirt : c === "H" ? hair : c)).join(""));
-  return { down: [swap(HERO_DOWN), swap(HERO_DOWN2)], up: [swap(HERO_UP), swap(HERO_UP)], side: [swap(HERO_SIDE), swap(HERO_SIDE)] };
+  return { down: [swap(HERO_DOWN), swap(HERO_DOWN2)], up: [swap(HERO_UP), swap(HERO_UP2)], side: [swap(HERO_SIDE), swap(HERO_SIDE2)] };
 }
 
 export const HERO = { boy: heroSet("R", "H"), girl: heroSet("r", "h") };
 
 // Generic NPC: coat/body color param.
 function npc(shirt, pants, hair, coat = null) {
-  const art = [
-    ".....HHHHHH.....",
-    "....HHHHHHHH....",
-    "....HSSSSSSH....",
-    "....HSESSHSH....",
-    "....HSSSSSSH....",
-    ".....SSSSSS.....",
-    coat ? "..CCCCCCCCCC.." : "....SSSSSSSS....",
-    coat ? ".SCCCCCCCCCS." : "...SSSSSSSS...",
-    coat ? ".SCCCCCCCCCS." : "...SSSSSSSS...",
-    coat ? ".SCCCCCCCCCS." : "...SSSSSSSS...",
-    coat ? "..CCCCCCCCCC.." : "....SSSSSSSS....",
-    "....PPPPPPPP....",
-    "....PPP..PPP....",
-    "....PPP..PPP....",
-    "...KKK....KKK...",
-    "...KKK....KKK...",
+  const torso = (c) => [
+    `..HK${c}${c}${c}${c}${c}${c}${c}${c}KH..`,
+    `..HK${c}${c}${c}${c}${c}${c}${c}${c}KH..`,
+    `..HK${c}${c}${c}${c}${c}${c}${c}${c}KH..`,
+    `..HK${c}${c}${c}${c}${c}${c}${c}${c}KH..`,
+    `..HK${c}${c}${c}${c}${c}${c}${c}${c}KH..`,
+    `..HK${c}${c}${c}${c}${c}${c}${c}${c}KH..`,
+    `..HK${c}${c}${c}${c}${c}${c}${c}${c}KH..`,
   ];
-  return art.map((r) => r.split("").map((c) =>
-    c === "S" && shirt !== "S" ? c : c).join(""));
+  const art = [
+    "....KKHHHKK.....",
+    "...KHHHHHHHK....",
+    "...KHSSSSSHK....",
+    "...KHSKSSKSHK...",
+    "...KHSSSSSHK....",
+    "....KSSSSSSK....",
+    ...(coat ? torso("C") : torso("S")),
+    "...KPPKPPKPPK...",
+    "...KPPKPPKPPK...",
+    "...KPPK..KPPK...",
+    "...KPPK..KPPK...",
+    "...KKKK..KKKK...",
+    "...KWWK..KWWK...",
+  ];
+  return art;
 }
 
 function npcColored(shirt, pants, hair, coat) {
-  const base = npc();
+  const base = npc(null, null, null, coat ? true : null);
   return base.map((r) => r.split("").map((c) => {
     if (c === "H") return hair;
-    if (r.indexOf("C") >= 0 && c === "C") return coat || c;
+    if (c === "C") return coat || c;
     return c;
   }).join("")).map((r, y) => {
-    // recolor torso rows (6..10) S->shirt, legs rows (11..13) P->pants
-    if (y >= 6 && y <= 10) return r.split("").map((c) => (c === "S" ? shirt : c)).join("");
-    if (y >= 11 && y <= 13) return r.split("").map((c) => (c === "P" ? pants : c)).join("");
+    // torso rows (6..12) S->shirt, legs rows (13..16) P->pants
+    if (y >= 6 && y <= 12) return r.split("").map((c) => (c === "S" ? shirt : c)).join("");
+    if (y >= 13 && y <= 16) return r.split("").map((c) => (c === "P" ? pants : c)).join("");
     return r;
   });
 }
@@ -153,189 +218,284 @@ export const NPC = {
 
 // ---- creature fronts (20x20) ----
 const F_EMBERCUB = [
-  "....................",
-  ".......RRRR.........",
-  "......RRRRRRY.......",
-  "......RYRRRYYY......",
-  "......RRRRRYY.......",
-  ".......RRRR.........",
-  ".....OOSSSSOO.......",
-  "....OOSSSSSSOO......",
-  "....OSSKSSKSOO......",
-  "....OSSSSSSSOO......",
-  ".....OSSSSSOO.......",
-  "......OOOOOO........",
-  "....OOOOOOOOOO......",
-  "...OOOOWWWOOOO......",
-  "...OOOWWWWWOOO......",
-  "...OOOWWWWWOOO......",
-  "....OOOOOOOOO.......",
-  ".....OOO..OOO.......",
-  ".....KKK..KKK.......",
-  "....................",
+  "................................",
+  "..............KKKK..............",
+  ".............KYYYYK.............",
+  "............KYYYYYYK............",
+  "............KYRRRRYK............",
+  "....KRRRK...KYRRRRYK...KRRRK....",
+  "...KRRRRRK..KYRRRRYK..KRRRRRK...",
+  "......KOOOOOOOOOOOOOOOOOOK......",
+  ".....KOOOOOOOOOOOOOOOOOOOOK.....",
+  "....KOOOOOOOOOOOOOOOOOOOOOOK....",
+  "..KOOOOOOOOOOOOOOOOOOOOOOOOOOK..",
+  "..KOOOOOOOOOOOOOOOOOOOOOOOOOOK..",
+  "..KOOOOOKWWKOOOOOOOOKWWKOOOOOK..",
+  "..KOOOOOKWKKOOOOOOOOKWKKOOOOOK..",
+  "..KOOOOOOOOOOOOOOOOOOOOOOOOOOK..",
+  "..KOOOOOOWWWWWWWWWWWWOOOOOOOOK..",
+  "..KOOOOOOOWWWKKKKKKWWWOOOOOOOK..",
+  "..KOOOOOOWWWWWKWWKWWWWWWOOOOOK..",
+  "....KOOOOOOOOOOOOOOOOOOOOOOK....",
+  "...KOKOOOOOOOOOOOOOOOOOOOOKOK...",
+  "...KOKOOOOOWWWWWWWWWWOOOOOKOK...",
+  "...KOKOOOOOWWWWWWWWWWOOOOOKOK...",
+  "...KOKOOOOOWWWWWWWWWWOOOOOKOK...",
+  "....KOOOOOWWWWWWWWWWWWOOOOOK....",
+  "....KOOOOOOWWWWWWWWWWOOOOOOK....",
+  ".....KOOOOOWWWWWWWWOOOOOOOK.....",
+  "......KKKKKKK......KKKKKKK......",
+  "......KWKWKWK......KWKWKWK......",
+  "................................",
+  "................................",
+  "................................",
+  "................................",
 ];
 const F_AQUAPUP = [
-  "....................",
-  ".......CCCC.........",
-  "......CCCCCC........",
-  ".....CCCCCCCC.......",
-  "......CCCCCC........",
-  "....CCCSSSSCCC......",
-  "....CCSSSSSSCC......",
-  "....CSKSSSKSC.......",
-  "....CSSSSSSSC.......",
-  ".....SSSSSS.........",
-  "....CCCCCCCC........",
-  "...CCCCCCCCCC.......",
-  "...CCWWWWWWCC.......",
-  "...CCWWWWWWCC.......",
-  "....CCCCCCCC........",
-  ".....CCC..CC........",
-  ".....KK...KK........",
-  "....................",
-  "....................",
-  "....................",
+  "................................",
+  "................................",
+  ".....KK.................KK......",
+  "....KBBK................KBBK....",
+  "....KBBBK......KK......KBBBK....",
+  "....KBBBBK...KCCCCK...KBBBBK....",
+  "....KBBBBBK.KCCCCCCK.KBBBBBK....",
+  "......KCCCCCCCCCCCCCCCCCCK......",
+  ".....KCCCCCCCCCCCCCCCCCCCCK.....",
+  "....KCCCCCCCCCCCCCCCCCCCCCCK....",
+  "..KCCCCCCCCCCCCCCCCCCCCCCCCCCK..",
+  "..KCCCCCCCCCCCCCCCCCCCCCCCCCCK..",
+  "..KCCCCCKWWKCCCCCCCCKWWKCCCCCK..",
+  "..KCCCCCKWKKCCCCCCCCKWKKCCCCCK..",
+  "..KCCCCCCCCCCCCCCCCCCCCCCCCCCK..",
+  "..KCCCCCWWWWWWWWWWWWCCCCCCCCCK..",
+  "..KCCCCCCCWWWKKKKKKWWWCCCCCCCK..",
+  "..KCCCCCWWWWWWKWWKWWWWWWCCCCCK..",
+  "....KCCCCCCCCCCCCCCCCCCCCCCK....",
+  "...KCKCCCCCCCCCCCCCCCCCCCCKCK...",
+  "...KCKCCCCCWWWWWWWWWWCCCCCKCK...",
+  "...KCKCCCCCWWWWWWWWWWCCCCCKCK...",
+  "...KCKCCCCCWWWWWWWWWWCCCCCKCK...",
+  "....KCCCCCWWWWWWWWWWWWCCCCCK....",
+  "....KCCCCCCWWWWWWWWWWCCCCCCK....",
+  ".....KCCCCCWWWWWWWWCCCCCCCK.....",
+  "......KKKKKKK......KKKKKKK......",
+  "......KWKWKWK......KWKWKWK......",
+  "................................",
+  "................................",
+  "................................",
+  "................................",
 ];
 const F_LEAFHOG = [
-  "....................",
-  "......GGGGG.........",
-  ".....GGGGGGG........",
-  ".....GGgGGgG........",
-  ".....GGGGGGG........",
-  "......GGGGG.........",
-  ".....NNNNNNN.........",
-  "....NNSSSSSNN.......",
-  "....NSKSSKSNN.......",
-  "....NSSSSSSSNN......",
-  ".....SSSSSSN........",
-  "....NNNNNNNNN.......",
-  "...NNNGGGGNNNN......",
-  "...NNGGGGGGNNN......",
-  "...NNGGGGGGNNN......",
-  "....NNNNNNNN........",
-  ".....NN..NN.........",
-  ".....KK..KK.........",
-  "....................",
-  "....................",
+  "................................",
+  ".......K....KK....KK....K.......",
+  "......KgK..KggK..KggK..KgK......",
+  ".....KggggK..KgggggK..KggggK....",
+  "....KgggggK.KggggggK.KgggggK....",
+  "....KGGGK...KGGGGGGK...KGGGK....",
+  "...KGGGGGK.KGGGGGGGGK.KGGGGGK...",
+  "......KGGGGGGGGGGGGGGGGGGK......",
+  ".....KGGGGGGGGGGGGGGGGGGGGK.....",
+  "....KGGGGGGGGGGGGGGGGGGGGGGK....",
+  "..KGGGGGGGGGGGGGGGGGGGGGGGGGGK..",
+  "..KGGGGGGGGGGGGGGGGGGGGGGGGGGK..",
+  "..KGGGGGKWWKGGGGGGGGKWWKGGGGGK..",
+  "..KGGGGGKWKKGGGGGGGGKWKKGGGGGK..",
+  "..KGGGGGGGGGGGGGGGGGGGGGGGGGGK..",
+  "..KGGGGGWWWWWWWWWWWWGGGGGGGGGK..",
+  "..KGGGGGGGWWWKKKKKKWWWGGGGGGGK..",
+  "..KGGGGGWWWWWWKWWKWWWWWWGGGGGK..",
+  "....KGGGGGGGGGGGGGGGGGGGGGGK....",
+  "...KGKGGGGGGGGGGGGGGGGGGGGKGK...",
+  "...KGKGGGGGWWWWWWWWWWGGGGGKGK...",
+  "...KGKGGGGGWWWWWWWWWWGGGGGKGK...",
+  "...KGKGGGGGWWWWWWWWWWGGGGGKGK...",
+  "....KGGGGGWWWWWWWWWWWWGGGGGK....",
+  "....KGGGGGGWWWWWWWWWWGGGGGGK....",
+  ".....KGGGGGWWWWWWWWGGGGGGGK.....",
+  "......KKKKKKK......KKKKKKK......",
+  "......KWKWKWK......KWKWKWK......",
+  "................................",
+  "................................",
+  "................................",
+  "................................",
 ];
 const F_SKYRO = [
-  "....................",
-  "....................",
-  "........BB.........",
-  ".......BBBB........",
-  "......BBBWBB.......",
-  ".......BBBB........",
-  ".....WWSSSSWW.......",
-  "....WWSSKSKSWW......",
-  "....WWSSSSSSWW......",
-  ".....WSSSSSSW.......",
-  "...WWWWWWWWWWWW.....",
-  "..WWWWWWWWWWWWWW....",
-  "..WYYWWWWWWWWYYW....",
-  "...WWWWWWWWWWWW.....",
-  ".....WWWWWW.........",
-  "......W..W..........",
-  "......Y..Y..........",
-  "....................",
-  "....................",
-  "....................",
+  "................................",
+  "................................",
+  "..............KBBK..............",
+  ".............KBBBBK.............",
+  "............KBBBBBBK............",
+  "...........KWWWWWWWWK...........",
+  "..........KWWWWWWWWWWK..........",
+  "......KWWWWKWKWWWWKWKWWWWK......",
+  "......KWWWWKKKWWWWKKKWWWWK......",
+  "......KWWWWWWYYYYYYWWWWWWK......",
+  ".......KWWWWWWYYYYWWWWWWK.......",
+  "........KWWWWWWWWWWWWWWK........",
+  "KKKK....KWWWWWWWWWWWWWWK....KKKK",
+  "KBBBBK..KWWWWWWWWWWWWWWK..KBBBBK",
+  "KBBBBBK.KWWWWWWWWWWWWWWK.KBBBBBK",
+  "KBBBBBBK.KWWWWWWWWWWWWK.KBBBBBBK",
+  "KBBBWBBBK.KWWWWWWWWWWK.KBBBWBBBK",
+  ".KBBBBBK..KWWWWWWWWWWK..KBBBBBK.",
+  "..KBBBK....KWWWWWWWWK....KBBBK..",
+  "...KK......KWWWWWWWWK......KK...",
+  "..........KWWWWWWWWWWK..........",
+  "...........KWWWWWWWWK...........",
+  "...........KWWWWWWWWK...........",
+  "...........KWWKWWKWWK...........",
+  "............KYYYYYYK............",
+  "...........KKK....KKK...........",
+  "...........KWK....KWK...........",
+  "................................",
+  "................................",
+  "................................",
+  "................................",
 ];
 const F_NIBBLE = [
-  "....................",
-  "....................",
-  "....................",
-  ".......PPPPP........",
-  "......PPPPPPP.......",
-  "......PPPPPPP.......",
-  "....PPSSSSSSPP......",
-  "....PSSKSSKSPP......",
-  "....PSSSSSSSSPP.....",
-  ".....SSSSSSSP.......",
-  "....WWSSSSSS........",
-  "....WWWWWWWW........",
-  "...PPPPPPPPPP.......",
-  "...PPPPPPPPPPP......",
-  "....PPPPPPPP........",
-  "......PP..PP........",
-  "......KK..KK........",
-  "....................",
-  "....................",
-  "....................",
+  "................................",
+  "...KKK....................KKK...",
+  "..KPPPK..................KPPPK..",
+  "..KPPPK..................KPPPK..",
+  "..KPPPK..................KPPPK..",
+  "..KPPPPK.......KK.......KPPPPK..",
+  "..KPPPPPK....KPPPPK....KPPPPPK..",
+  "......KPPPPPPPPPPPPPPPPPPK......",
+  ".....KPPPPPPPPPPPPPPPPPPPPK.....",
+  "....KPPPPPPPPPPPPPPPPPPPPPPK....",
+  "..KPPPPPPPPPPPPPPPPPPPPPPPPPPK..",
+  "..KPPPPPPPPPPPPPPPPPPPPPPPPPPK..",
+  "..KPPPPPKWWKPPPPPPPPKWWKPPPPPK..",
+  "..KPPPPPKWKKPPPPPPPPKWKKPPPPPK..",
+  "..KPPPPPPPPPPPPPPPPPPPPPPPPPPK..",
+  "..KPPPPPWWWWWWWWWWWWPPPPPPPPPK..",
+  "..KPPPPPPPWWWKKKKKKWWWPPPPPPPK..",
+  "..KPPPPPWWWWWWKWWKWWWWWWPPPPPK..",
+  "....KPPPPPPPPWWWWWWPPPPPPPPK....",
+  "...KPKPPPPPPPPPPPPPPPPPPPPKPK...",
+  "...KPKPPPPPWWWWWWWWWWPPPPPKPK...",
+  "...KPKPPPPPWWWWWWWWWWPPPPPKPK...",
+  "...KPKPPPPPWWWWWWWWWWPPPPPKPK...",
+  "....KPPPPPWWWWWWWWWWWWPPPPPK....",
+  "....KPPPPPPWWWWWWWWWWPPPPPPK....",
+  ".....KPPPPPWWWWWWWWPPPPPPPK.....",
+  "......KKKKKKK......KKKKKKK......",
+  "......KWKWKWK......KWKWKWK......",
+  "................................",
+  "................................",
+  "................................",
+  "................................",
 ];
 const F_PINEBUG = [
-  "....................",
-  "....................",
-  "....................",
-  "....................",
-  ".......NNNN.........",
-  "......NNNNNN........",
-  "......NKWKWN........",
-  "......NNNNNN........",
-  "...G..NNNNNN..G.....",
-  "....GGNNNNNNGG......",
-  ".....GNNNNNNG.......",
-  ".....NNNNNNNN.......",
-  ".....NNNNNNNN.......",
-  "......NNNNNN........",
-  ".......NNNN.........",
-  "........NN..........",
-  "....................",
-  "....................",
-  "....................",
-  "....................",
+  "................................",
+  "................................",
+  "................................",
+  "................................",
+  ".............KKKKKK.............",
+  "...........KKNNNNNNKK...........",
+  "..........KNNNNNNNNNNK..........",
+  ".........KNNNNNNNNNNNNK.........",
+  "......KNNKWWWWKNNKWWWWKNNK......",
+  "......KNNKWKWWKNNKWKWWKNNK......",
+  "......KNNKWKWWKNNKWKWWKNNK......",
+  "......KNNKWWWWKNNKWWWWKNNK......",
+  "......KNNNNNNNNNNNNNNNNNNK......",
+  "......KNNNNNNNNNNNNNNNNNNK......",
+  "..GG..KNNNNNNNNNNNNNNNNNNK..GG..",
+  "..GGK.KNNNNNNNNNNNNNNNNNNK.KGG..",
+  "....GGGKNNNNNNNNNNNNNNNNKGGG....",
+  ".....KNNNNNNNNNNNNNNNNNNNNK.....",
+  ".....KNNNNNNNNNNNNNNNNNNNNK.....",
+  ".....GGKNNNNNNNNNNNNNNNNKGG.....",
+  "......KNNNNNNNNNNNNNNNNNNK......",
+  ".......KNNNNNNNNNNNNNNNNK.......",
+  ".......KNNNNNNNNNNNNNNNNK.......",
+  "......KKKKKKK......KKKKKKK......",
+  "......KWKWKWK......KWKWKWK......",
+  "................................",
+  "................................",
+  "................................",
+  "................................",
+  "................................",
+  "................................",
+  "................................",
 ];
 const F_GUSTHAWK = [
-  "....................",
-  "........YY..........",
-  ".......YYYY.........",
-  "......YYWWYY........",
-  ".......WWWW.........",
-  ".....CCSSSSCC.......",
-  "....CCSKSSKSCC......",
-  "....CCSSSSSSCC......",
-  ".....CSSSSSSSC......",
-  "......CCCCCC........",
-  "..CCCCCCCCCCCCCC....",
-  ".CCCCCCCCCCCCCCCC...",
-  ".CCWWCCCCCCCCWWCC...",
-  "..CCCCCCCCCCCCCC....",
-  "....CCCCCCCCCC......",
-  "......CC..CC........",
-  "......YY..YY........",
-  "....................",
-  "....................",
-  "....................",
+  "................................",
+  "................................",
+  "..............KYYK..............",
+  ".............KYYYYK.............",
+  "............KYYYYYYK............",
+  "...........KWWWWWWWWK...........",
+  "..........KWWWWWWWWWWK..........",
+  "......KWWWWKWKWWWWKWKWWWWK......",
+  "......KWWWWKKKWWWWKKKWWWWK......",
+  "......KWWWWWWYYYYYYWWWWWWK......",
+  ".......KWWWWWWYYYYWWWWWWK.......",
+  "........KWWWWWWWWWWWWWWK........",
+  "KKKK....KWWWWWWWWWWWWWWK....KKKK",
+  "KCCCCK..KWWWWWWWWWWWWWWK..KCCCCK",
+  "KCCCCCK.KWWWWWWWWWWWWWWK.KCCCCCK",
+  "KCCCCCCK.KWWWWWWWWWWWWK.KCCCCCCK",
+  "KCCCYCCCK.KWWWWWWWWWWK.KCCCYCCCK",
+  ".KCCCCCK..KWWWWWWWWWWK..KCCCCCK.",
+  "..KCCCK....KWWWWWWWWK....KCCCK..",
+  "...KK......KWWWWWWWWK......KK...",
+  "..........KWWWWWWWWWWK..........",
+  "...........KWWWWWWWWK...........",
+  "...........KWWWWWWWWK...........",
+  "...........KWWKWWKWWK...........",
+  "............KWWWKWWK............",
+  "............KYYYYYYK............",
+  "...........KKK....KKK...........",
+  "...........KWK....KWK...........",
+  "................................",
+  "................................",
+  "................................",
+  "................................",
 ];
 const F_VOLTPUP = [
-  "....................",
-  "....................",
-  "......YY..YY........",
-  "......YYY.YYY.......",
-  ".......YYYYY........",
-  "......YYYYYY........",
-  ".....YYSSSSYY.......",
-  ".....YSKSSKSY.......",
-  ".....YSSSSSSY.......",
-  "......SSSSSS........",
-  ".....YYYYYYYY.......",
-  "....YYYYYYYYYY......",
-  "....YYWWWWWWYY......",
-  "....YYWWWWWWYY......",
-  ".....YYYYYYYY.......",
-  "......YY..YY........",
-  "......KK..KK........",
-  "....................",
-  "....................",
-  "....................",
+  "................................",
+  "....KK....................KK....",
+  "....KYYK................KYYK....",
+  "....KYYK................KYYK....",
+  "....KYYYK......KK......KYYYK....",
+  "....KYYYK....KYYYYK....KYYYK....",
+  "....KYYYYK..KYYYYYYK..KYYYYK....",
+  "......KYYYYYYYYYYYYYYYYYYK......",
+  ".....KYYYYYYYYYYYYYYYYYYYYK.....",
+  "....KYYYYYYYYYYYYYYYYYYYYYYK....",
+  "..KYYYYYYYYYYYYYYYYYYYYYYYYYYK..",
+  "..KYYYYYYYYYYYYYYYYYYYYYYYYYYK..",
+  "..KYYYYYKWWKYYYYYYYYKWWKYYYYYK..",
+  "..KYYYYYKWKKYYYYYYYYKWKKYYYYYK..",
+  "..KYYRRRYYYYYYYYYYYYYYYYRRRYYK..",
+  "..KYYYYYWWWWWWWWWWWWYYYYYYYYYK..",
+  "..KYYYYYYWWWKKKKKKWWWYYYYYYYYK..",
+  "..KYYYYYWWWWWWKWWKWWWWWWYYYYYK..",
+  "....KYYYYYYYYYYYYYYYYYYYYYYK....",
+  "...KYKYYYYYYYYYYYYYYYYYYYYKYK...",
+  "...KYKYYYYYWWWWWWWWWWYYYYYKYK...",
+  "...KYKYYYYYWWWWWWWWWWYYYYYKYK...",
+  "...KYKYYYYYWWWWWWWWWWYYYYYKYK...",
+  "....KYYYYYWWWWWWWWWWWWYYYYYK....",
+  "....KYYYYYYWWWWWWWWWWYYYYYYK....",
+  ".....KYYYYYWWWWWWWWYYYYYYYK.....",
+  "......KKKKKKK......KKKKKKK......",
+  "......KWKWKWK......KWKWKWK......",
+  "................................",
+  "................................",
+  "................................",
+  "................................",
 ];
 
 // backs: simplified rear views (darker + head bump)
 function makeBack(front, dark) {
   return front.map((row, y) => {
-    if (y < 6) return "....................";
+    if (y < 2) return ".".repeat(row.length);
     return row.split("").map((c) => {
       if (c === "." || c === " ") return ".";
-      if ("KW".includes(c)) return c;
+      if (c === "K") return c;
       return dark;
     }).join("");
   });
@@ -357,86 +517,242 @@ export const MON_BACK = {
   voltpup: makeBack(F_VOLTPUP, "Y"),
 };
 
-// ---- procedural tiles (16x16), drawn with rects ----
+// ---- procedural tiles (16x16): textured 2-3 tone original pixel art ----
 export function drawTile(ctx, t, x, y, frame = 0) {
   const R = (cx, cy, w, h, c) => { ctx.fillStyle = c; ctx.fillRect(x + cx, y + cy, w, h); };
+  const P = (cx, cy, c) => { ctx.fillStyle = c; ctx.fillRect(x + cx, y + cy, 1, 1); };
   switch (t) {
-    case ",":
-      R(0, 0, 16, 16, "#5da862"); R(3, 5, 2, 2, "#529a58"); R(10, 9, 2, 2, "#529a58"); R(6, 12, 2, 2, "#67b46c");
+    case ",": { // meadow grass: base + dark tufts + light blades
+      R(0, 0, 16, 16, "#5da862");
+      for (let i = 0; i < 8; i++) {
+        const sx = (i * 5 + 1) % 14, sy = (i * 7 + 2) % 14;
+        P(sx, sy, "#4f9a55"); P(sx + 1, sy + 1, "#4f9a55");
+      }
+      P(2, 3, "#6cba70"); P(9, 2, "#6cba70"); P(13, 8, "#6cba70");
+      P(5, 11, "#6cba70"); P(11, 13, "#6cba70"); P(3, 14, "#6cba70");
+      P(7, 6, "#3f8a46"); P(12, 11, "#3f8a46"); P(0, 9, "#3f8a46");
       break;
-    case ".":
-      R(0, 0, 16, 16, "#d8b878"); R(0, 0, 16, 1, "#c8a868"); R(4, 4, 2, 1, "#c8a868"); R(9, 10, 2, 1, "#c8a868");
+    }
+    case ".": { // dirt path: warm sand + pebbles + edge shade
+      R(0, 0, 16, 16, "#d8b878");
+      R(0, 0, 16, 1, "#e8c890"); R(0, 15, 16, 1, "#c8a868");
+      for (let i = 0; i < 7; i++) {
+        const sx = (i * 5 + 3) % 14, sy = (i * 9 + 4) % 13 + 1;
+        P(sx, sy, "#c8a868");
+      }
+      P(5, 6, "#b8b8c8"); P(11, 4, "#e8c890"); P(9, 11, "#b8b8c8"); P(3, 10, "#e8c890");
       break;
-    case "~":
-      R(0, 0, 16, 16, "#c8a060"); R(0, 7, 16, 2, "#b89058"); R(0, 0, 16, 1, "#b89058");
+    }
+    case "~": { // packed earth: bands + speckle
+      R(0, 0, 16, 16, "#c8a060");
+      R(0, 0, 16, 1, "#d8b070"); R(0, 7, 16, 2, "#b89058"); R(0, 15, 16, 1, "#a88050");
+      for (let i = 0; i < 7; i++) {
+        const sx = (i * 7 + 2) % 14, sy = (i * 5 + 3) % 14;
+        P(sx, sy, "#b89058");
+      }
+      P(4, 2, "#e0c080"); P(12, 5, "#e0c080"); P(7, 11, "#e0c080");
       break;
-    case "G": {
+    }
+    case "G": { // tall grass: animated 3-tone blades
       R(0, 0, 16, 16, "#4c9448");
       const o = frame % 2;
-      R(2 + o, 3, 2, 8, "#3d7d3a"); R(7 - o, 2, 2, 9, "#3d7d3a"); R(12 + o, 4, 2, 8, "#3d7d3a");
-      R(3 + o, 2, 1, 3, "#67b46c"); R(8 - o, 1, 1, 3, "#67b46c");
+      R(1 + o, 4, 3, 9, "#3d7d3a"); R(6 - o, 2, 3, 11, "#3d7d3a"); R(11 + o, 4, 3, 9, "#3d7d3a");
+      R(2 + o, 2, 1, 4, "#6cba70"); R(7 - o, 1, 1, 4, "#6cba70"); R(12 + o, 3, 1, 4, "#6cba70");
+      R(5 - o, 8, 2, 5, "#35702f"); R(10 + o, 9, 2, 4, "#35702f");
+      P(0, 14, "#35702f"); P(15, 13, "#35702f"); P(8, 14, "#6cba70");
       break;
     }
-    case "F":
-      R(0, 0, 16, 16, "#5da862"); R(4, 4, 3, 3, "#f4f4f4"); R(5, 5, 1, 1, "#f8d838");
-      R(11, 9, 3, 3, "#e86a8a"); R(12, 10, 1, 1, "#f8d838");
+    case "F": { // flower patch: grass + stemmed blooms
+      R(0, 0, 16, 16, "#5da862");
+      P(1, 2, "#4f9a55"); P(14, 5, "#4f9a55"); P(6, 14, "#4f9a55"); P(12, 13, "#6cba70");
+      R(4, 6, 1, 3, "#38a048"); R(3, 3, 3, 3, "#f4f4f4"); P(4, 4, "#f8d838");
+      R(4, 3, 1, 1, "#ffffff"); R(11, 11, 1, 3, "#38a048");
+      R(10, 8, 3, 3, "#e86a8a"); P(11, 9, "#f8d838"); R(10, 8, 1, 1, "#f49aac");
       break;
-    case "T":
-      R(0, 0, 16, 16, "#5da862"); R(7, 10, 2, 6, "#704828");
-      R(3, 2, 10, 9, "#2e7d32"); R(5, 0, 6, 4, "#388e3c"); R(4, 4, 2, 2, "#4caf50");
+    }
+    case "T": { // tree: ground shadow, trunk, 3-tone canopy
+      R(0, 0, 16, 16, "#5da862");
+      P(1, 1, "#4f9a55"); P(14, 2, "#4f9a55");
+      R(3, 13, 10, 2, "#4f9a55"); R(4, 14, 8, 1, "#478e4d");
+      R(7, 9, 2, 6, "#704828"); R(7, 9, 1, 5, "#8a5a28");
+      R(4, 4, 8, 7, "#2e7d32"); R(2, 6, 12, 3, "#2e7d32");
+      R(5, 2, 6, 3, "#388e3c"); R(3, 5, 4, 2, "#388e3c");
+      R(4, 3, 2, 2, "#4caf50"); R(9, 6, 2, 1, "#4caf50"); R(6, 8, 3, 1, "#388e3c");
+      R(2, 8, 12, 1, "#1e5a20"); R(4, 11, 8, 1, "#1e5a20");
+      P(12, 4, "#388e3c"); P(3, 9, "#388e3c");
       break;
-    case "W": {
+    }
+    case "W": { // water: depth speckle + animated crest
       R(0, 0, 16, 16, "#3d7dc8");
+      for (let i = 0; i < 6; i++) {
+        const sx = (i * 6 + 1) % 14, sy = (i * 11 + 5) % 15;
+        P(sx, sy, "#2e6ab0");
+      }
       const o = frame % 2 ? 2 : 0;
-      R(2 + o, 4, 5, 1, "#7db8e8"); R(9 - o, 10, 5, 1, "#7db8e8"); R(4, 13, 4, 1, "#7db8e8");
+      R(2 + o, 4, 5, 1, "#7db8e8"); R(9 - o, 10, 5, 1, "#7db8e8");
+      R(4, 13, 4, 1, "#7db8e8"); R(2 + o, 3, 2, 1, "#c8e8f8"); R(9 - o, 9, 2, 1, "#c8e8f8");
       break;
     }
-    case "#":
-      R(0, 0, 16, 16, "#202028"); break;
-    case "H":
-      R(0, 0, 16, 16, "#e8d8b8"); R(0, 0, 16, 2, "#d0b898"); R(0, 7, 16, 1, "#d0b898"); R(0, 14, 16, 2, "#d0b898");
+    case "#": // out of bounds: near-black with faint grain
+      R(0, 0, 16, 16, "#101018");
+      P(3, 4, "#1c1c28"); P(11, 2, "#1c1c28"); P(7, 10, "#1c1c28"); P(13, 13, "#1c1c28"); P(1, 12, "#1c1c28");
       break;
-    case "R":
-      R(0, 0, 16, 16, "#c03828"); R(0, 3, 16, 1, "#982818"); R(0, 7, 16, 1, "#982818"); R(0, 11, 16, 1, "#982818"); R(0, 15, 16, 1, "#982818");
+    case "H": { // striped wallpaper: shadow crown + skirting
+      R(0, 0, 16, 16, "#f2e2c0");
+      for (let sx = 1; sx < 16; sx += 4) R(sx, 2, 2, 11, "#e9cf9e");
+      P(3, 5, "#e9cf9e"); P(11, 9, "#e9cf9e"); P(7, 11, "#e9cf9e");
+      R(0, 0, 16, 2, "#c8a878"); R(0, 0, 16, 1, "#a88050");
+      R(0, 13, 16, 3, "#8a5a28"); R(0, 13, 16, 1, "#c8a068");
       break;
-    case "D":
-      R(0, 0, 16, 16, "#d8b878"); R(3, 0, 10, 16, "#8a5a28"); R(5, 2, 6, 12, "#6e4520"); R(9, 7, 2, 2, "#f8d838");
+    }
+    case "R": { // tiled roof: courses + staggered joints
+      R(0, 0, 16, 16, "#c03828");
+      R(0, 0, 16, 1, "#e05848");
+      R(0, 3, 16, 1, "#982818"); R(0, 7, 16, 1, "#982818");
+      R(0, 11, 16, 1, "#982818"); R(0, 15, 16, 1, "#982818");
+      R(4, 1, 1, 2, "#a82818"); R(11, 1, 1, 2, "#a82818");
+      R(1, 4, 1, 3, "#a82818"); R(8, 4, 1, 3, "#a82818"); R(14, 4, 1, 3, "#a82818");
+      R(5, 8, 1, 3, "#a82818"); R(12, 8, 1, 3, "#a82818");
+      R(2, 12, 1, 3, "#a82818"); R(9, 12, 1, 3, "#a82818");
+      P(6, 2, "#e05848"); P(13, 6, "#e05848"); P(3, 10, "#e05848");
       break;
-    case "C":
-      R(0, 0, 16, 16, "#c8a068"); R(0, 0, 16, 6, "#e08080"); R(0, 0, 16, 1, "#f0a0a0"); R(0, 6, 16, 2, "#8a5a28");
+    }
+    case "D": { // paneled wooden door + knob + threshold
+      R(0, 0, 16, 16, "#8a5a28");
+      R(2, 0, 12, 14, "#6e4520");
+      R(2, 0, 12, 1, "#a87848");
+      R(4, 2, 3, 4, "#542f14"); R(9, 2, 3, 4, "#542f14");
+      R(4, 8, 3, 4, "#542f14"); R(9, 8, 3, 4, "#542f14");
+      R(4, 2, 3, 1, "#8a5a28"); R(9, 2, 3, 1, "#8a5a28");
+      R(4, 8, 3, 1, "#8a5a28"); R(9, 8, 3, 1, "#8a5a28");
+      R(11, 7, 2, 2, "#f8d838"); P(11, 7, "#fff8d0");
+      R(2, 12, 12, 1, "#542f14");
+      R(0, 14, 16, 2, "#d8b878"); R(0, 14, 16, 1, "#e8c890");
       break;
-    case "L":
-      R(0, 0, 16, 16, "#b8b8c8"); R(0, 0, 16, 3, "#d8d8e8"); R(4, 3, 2, 13, "#9898a8"); R(10, 3, 2, 13, "#9898a8");
+    }
+    case "C": { // TV stand / lab console: wood + glowing screen
+      R(0, 0, 16, 16, "#5e3a18");
+      R(1, 1, 14, 14, "#8a5a28");
+      R(1, 1, 14, 3, "#c8a068"); R(1, 1, 14, 1, "#e8c088");
+      R(3, 5, 10, 6, "#202028");
+      R(3, 5, 10, 1, "#585868"); R(3, 5, 1, 6, "#585868");
+      R(4, 6, 2, 3, "#585868"); P(4, 6, "#8a8aa8");
+      if (frame % 2) { P(10, 7, "#48c8e0"); P(8, 8, "#48c8e0"); } else { P(9, 7, "#48c8e0"); P(11, 8, "#48c8e0"); }
+      R(1, 12, 14, 1, "#5e3a18");
+      R(2, 13, 4, 2, "#704828"); R(10, 13, 4, 2, "#704828");
+      P(13, 13, "#e03030");
       break;
-    case "O":
-      R(0, 0, 16, 16, "#b8b8c8"); R(1, 10, 14, 6, "#888898");
-      R(2, 5, 3, 4, "#e03030"); R(2, 7, 3, 1, "#f4f4f4");
-      R(6, 5, 3, 4, "#f8d838"); R(6, 7, 3, 1, "#f4f4f4");
-      R(10, 5, 3, 4, "#38a048"); R(10, 7, 3, 1, "#f4f4f4");
+    }
+    case "L": { // wooden study desk: grain top, panels, paper
+      R(0, 0, 16, 16, "#5e3a18");
+      R(1, 0, 14, 6, "#c8a068");
+      R(1, 0, 14, 1, "#e8c088");
+      R(1, 2, 14, 1, "#b89058"); R(1, 4, 14, 1, "#b89058");
+      P(4, 3, "#b89058"); P(11, 5, "#b89058");
+      R(5, 1, 4, 3, "#f4f4f4"); R(5, 3, 4, 1, "#4858a8"); R(5, 1, 4, 1, "#ffffff");
+      R(1, 6, 14, 1, "#8a5a28");
+      R(1, 7, 14, 8, "#8a5a28");
+      R(2, 8, 5, 6, "#a87848"); R(9, 8, 5, 6, "#a87848");
+      R(2, 8, 5, 1, "#c8a068"); R(9, 8, 5, 1, "#c8a068");
+      R(2, 14, 5, 1, "#5e3a18"); R(9, 14, 5, 1, "#5e3a18");
+      P(4, 11, "#f8d838"); P(11, 11, "#f8d838");
       break;
-    case "B":
-      R(0, 0, 16, 16, "#8a5a28"); R(1, 1, 14, 4, "#4858a8"); R(1, 6, 14, 4, "#a84848"); R(1, 11, 14, 4, "#48a858");
-      R(0, 5, 16, 1, "#5e3a18"); R(0, 10, 16, 1, "#5e3a18");
+    }
+    case "O": { // monster-ball table: shelf + three balls
+      R(0, 0, 16, 16, "#5e3a18");
+      R(1, 8, 14, 7, "#888898"); R(1, 8, 14, 1, "#b8b8c8");
+      R(1, 14, 14, 1, "#585868");
+      R(1, 10, 14, 1, "#6e6e7e");
+      R(2, 4, 3, 4, "#e03030"); R(2, 6, 3, 2, "#f4f4f4"); P(2, 4, "#f46a6a"); P(3, 5, "#181820");
+      R(6, 4, 3, 4, "#e8a018"); R(6, 6, 3, 2, "#f4f4f4"); P(6, 4, "#f8d838"); P(7, 5, "#181820");
+      R(10, 4, 3, 4, "#38a048"); R(10, 6, 3, 2, "#f4f4f4"); P(10, 4, "#6cd878"); P(11, 5, "#181820");
+      R(1, 1, 14, 2, "#c8a068");
       break;
-    case "S":
-      R(0, 0, 16, 16, "#5da862"); R(6, 4, 4, 8, "#8a5a28"); R(5, 2, 6, 5, "#48a858"); R(6, 3, 4, 2, "#78c878");
+    }
+    case "B": { // bookshelf: frame + 3 stocked shelves
+      R(0, 0, 16, 16, "#4a2c12");
+      R(1, 1, 14, 14, "#704828");
+      const vols = ["#a84848", "#4858a8", "#48a858", "#c8a038", "#9848c8", "#c86818", "#48a8a8"];
+      for (let s = 0; s < 3; s++) {
+        const by = 2 + s * 5;
+        for (let i = 0; i < 7; i++) {
+          const bx = 2 + i * 2, c = vols[(i + s * 3) % vols.length];
+          R(bx, by, 1, 2, c); P(bx, by, "#f8e8c8");
+        }
+        R(1, by + 3, 14, 1, "#c8a068");
+      }
+      R(0, 0, 16, 1, "#6e4520"); R(0, 0, 1, 16, "#6e4520");
       break;
-    case "P":
-      R(0, 0, 16, 16, "#b8b8c8"); R(5, 9, 6, 5, "#a8542c"); R(4, 4, 8, 6, "#38a048"); R(6, 2, 4, 3, "#4caf50");
+    }
+    case "S": { // wooden signpost
+      R(0, 0, 16, 16, "#5da862");
+      P(1, 3, "#4f9a55"); P(14, 11, "#4f9a55"); P(5, 14, "#6cba70");
+      R(4, 12, 8, 1, "#4f9a55");
+      R(7, 7, 2, 9, "#8a5a28"); R(7, 7, 1, 9, "#a87848");
+      R(3, 1, 10, 7, "#5e3a18"); R(4, 2, 8, 5, "#c8a068");
+      R(5, 3, 6, 1, "#5e3a18"); R(5, 5, 4, 1, "#5e3a18");
       break;
-    case "=":
-      R(0, 0, 16, 16, "#5da862"); R(0, 3, 16, 2, "#e8d8b8"); R(0, 11, 16, 2, "#e8d8b8");
-      R(3, 0, 2, 16, "#c8b898"); R(11, 0, 2, 16, "#c8b898");
+    }
+    case "P": { // potted plant on wood floor
+      R(0, 0, 16, 16, "#cfa15e");
+      R(0, 7, 16, 1, "#a87848"); R(0, 15, 16, 1, "#a87848");
+      R(5, 0, 1, 7, "#a87848"); R(11, 8, 1, 7, "#a87848");
+      P(2, 3, "#bd8a4e"); P(13, 11, "#e0aa68"); P(8, 12, "#bd8a4e");
+      R(3, 12, 10, 2, "#b89058");
+      R(5, 5, 6, 4, "#207038");
+      R(3, 6, 2, 3, "#207038"); R(11, 6, 2, 3, "#207038");
+      R(6, 3, 4, 6, "#38a048"); R(4, 6, 2, 2, "#38a048"); R(10, 6, 2, 2, "#38a048");
+      R(6, 2, 3, 2, "#4caf50");
+      P(6, 3, "#6cd878"); P(8, 5, "#6cd878"); P(5, 6, "#6cd878"); P(11, 6, "#6cd878");
+      P(7, 7, "#207038"); P(9, 4, "#207038");
+      R(4, 9, 8, 2, "#8a3a20"); R(4, 9, 8, 1, "#d87848");
+      R(5, 11, 6, 4, "#a8542c"); R(5, 11, 1, 4, "#d87848"); R(10, 11, 1, 4, "#703318");
       break;
-    case "_":
-      R(0, 0, 16, 16, "#c8a068"); R(0, 5, 16, 1, "#b89058"); R(0, 11, 16, 1, "#b89058"); R(5, 0, 1, 16, "#b89058"); R(11, 0, 1, 16, "#b89058");
+    }
+    case "=": { // ranch fence: posts + lapped rails
+      R(0, 0, 16, 16, "#5da862");
+      P(6, 1, "#4f9a55"); P(12, 14, "#4f9a55"); P(1, 13, "#6cba70");
+      R(0, 3, 16, 3, "#e8d8b8"); R(0, 3, 16, 1, "#fff4e0"); R(0, 5, 16, 1, "#b89878");
+      R(0, 10, 16, 3, "#e8d8b8"); R(0, 10, 16, 1, "#fff4e0"); R(0, 12, 16, 1, "#b89878");
+      R(2, 0, 3, 16, "#c8b898"); R(2, 0, 1, 16, "#e8d8b8"); R(4, 0, 1, 16, "#a89878");
+      R(11, 0, 3, 16, "#c8b898"); R(11, 0, 1, 16, "#e8d8b8"); R(13, 0, 1, 16, "#a89878");
       break;
-    case ":":
-      R(0, 0, 16, 16, "#d0d0e0"); R(0, 0, 8, 8, "#c0c0d0"); R(8, 8, 8, 8, "#c0c0d0");
+    }
+    case "_": { // warm oak plank floor: staggered joints + grain
+      R(0, 0, 16, 16, "#cfa15e");
+      R(0, 4, 16, 4, "#c89c58"); R(0, 12, 16, 4, "#c89c58");
+      R(0, 0, 16, 1, "#e0b070");
+      R(0, 3, 16, 1, "#a87848"); R(0, 7, 16, 1, "#a87848");
+      R(0, 11, 16, 1, "#a87848"); R(0, 15, 16, 1, "#a87848");
+      R(5, 0, 1, 3, "#a87848"); R(11, 0, 1, 3, "#a87848");
+      R(2, 4, 1, 3, "#a87848"); R(9, 4, 1, 3, "#a87848"); R(14, 4, 1, 3, "#a87848");
+      R(6, 8, 1, 3, "#a87848"); R(12, 8, 1, 3, "#a87848");
+      R(3, 12, 1, 3, "#a87848"); R(10, 12, 1, 3, "#a87848");
+      P(1, 1, "#bd8a4e"); P(3, 2, "#bd8a4e"); P(8, 1, "#e0aa68"); P(13, 2, "#bd8a4e");
+      P(0, 5, "#bd8a4e"); P(7, 5, "#e0aa68"); P(12, 6, "#bd8a4e"); P(4, 6, "#bd8a4e");
+      P(2, 9, "#bd8a4e"); P(10, 9, "#e0aa68"); P(14, 10, "#bd8a4e");
+      P(5, 13, "#bd8a4e"); P(11, 14, "#e0aa68"); P(15, 13, "#bd8a4e"); P(8, 13, "#bd8a4e");
       break;
-    case "+":
-      R(0, 0, 16, 16, "#e8e0d0"); R(7, 0, 2, 16, "#c03828"); R(0, 7, 16, 2, "#c03828");
+    }
+    case ":": { // lab checker tile: grout + sheen
+      R(0, 0, 16, 16, "#b8b8d0");
+      R(0, 0, 8, 8, "#d0d0e8"); R(8, 8, 8, 8, "#d0d0e8");
+      R(0, 0, 16, 1, "#e4e4f4"); R(7, 0, 1, 16, "#9898b8"); R(0, 7, 16, 1, "#9898b8");
+      R(15, 0, 1, 16, "#9898b8"); R(0, 15, 16, 1, "#9898b8");
+      P(3, 3, "#e4e4f4"); P(11, 11, "#e4e4f4");
       break;
+    }
+    case "+": { // woven rug / gym mat: bordered medallion
+      R(0, 0, 16, 16, "#f2e8d0");
+      R(0, 0, 16, 2, "#c03828"); R(0, 14, 16, 2, "#c03828");
+      R(0, 0, 2, 16, "#c03828"); R(14, 0, 2, 16, "#c03828");
+      R(2, 2, 12, 1, "#e08080"); R(2, 13, 12, 1, "#e08080");
+      R(2, 2, 1, 12, "#e08080"); R(13, 2, 1, 12, "#e08080");
+      R(7, 3, 2, 10, "#c03828"); R(3, 7, 10, 2, "#c03828");
+      R(7, 7, 2, 2, "#f8d838");
+      P(4, 4, "#c03828"); P(11, 4, "#c03828"); P(4, 11, "#c03828"); P(11, 11, "#c03828");
+      break;
+    }
     default:
       R(0, 0, 16, 16, "#ff00ff");
   }

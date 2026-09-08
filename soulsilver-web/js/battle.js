@@ -342,10 +342,20 @@ export class Battle {
     const sub = this.state === "moves" ? this.moveMenu.i : this.state === "bag" ? this.bagMenu.i
       : this.state === "party" || this.state === "faintpick" ? this.partyMenu.i : -1;
     window.__bt = { state: this.state, foe: this.foe.sp + " L" + this.foe.lv + " " + this.foe.hp + "/" + this.foe.maxhp, me: this.me().sp + " L" + this.me().lv + " " + this.me().hp + "/" + this.me().maxhp, menu: this.state === "menu" ? this.menu.i : -1, sub, php: this.party.map((m) => m.hp), ppp: this.me().moves.map((m) => m.pp) };
-    g.fillStyle = "#78c878"; g.fillRect(0, 0, W, H);
-    g.fillStyle = "#5da862"; g.fillRect(0, 130, W, 62);
-    // platforms
-    g.fillStyle = "#8fd08f";
+    // full-canvas DS field: sky-to-grass gradient, never any void
+    const sky = g.createLinearGradient(0, 0, 0, H);
+    sky.addColorStop(0, "#93d898");
+    sky.addColorStop(0.62, "#6fbf73");
+    sky.addColorStop(0.625, "#4f9a55");
+    sky.addColorStop(1, "#3f7f46");
+    g.fillStyle = sky; g.fillRect(0, 0, W, H);
+    g.fillStyle = "rgba(0,0,0,0.08)";
+    for (let i = 0; i < 40; i++) g.fillRect((i * 53) % W, (i * 29) % 124, 2, 1);
+    // platforms with dark rims
+    g.fillStyle = "#3f7a44";
+    g.beginPath(); g.ellipse(196, 68, 44, 12, 0, 0, 7); g.fill();
+    g.beginPath(); g.ellipse(60, 130, 44, 12, 0, 0, 7); g.fill();
+    g.fillStyle = "#a5dd9f";
     g.beginPath(); g.ellipse(196, 66, 44, 12, 0, 0, 7); g.fill();
     g.beginPath(); g.ellipse(60, 128, 44, 12, 0, 0, 7); g.fill();
     // foe sprite (20x20 scaled 2x)
@@ -356,28 +366,54 @@ export class Battle {
     const me = this.me();
     g.save(); g.translate(20, 88); g.scale(2, 2);
     blit(g, MON_BACK[me.sp], 0, 0); g.restore();
-    // HP plates
-    plate(g, 8, 8, this.foe, true);
-    plate(g, W - 108, 96, me, false);
+    // bottom command strip behind the action menus
+    if (this.state === "menu" || this.state === "moves" || this.state === "bag") {
+      drawPanel(g, 2, H - 44, W - 4, 42);
+    }
+    // anchored HP plates: enemy top-left, ally bottom-right
+    plate(g, 4, 4, this.foe, true);
+    plate(g, W - 112, 92, me, false);
     if (this.state === "menu") this.menu.draw(g);
     if (this.state === "moves" && this.moveMenu) this.moveMenu.draw(g);
     if (this.state === "bag" && this.bagMenu) this.bagMenu.draw(g);
     if (this.state === "party" || this.state === "faintpick") {
-      if (this.state === "faintpick") text(g, "Choose next!", 8, 28);
+      if (this.state === "faintpick") text(g, "Choose next!", 8, 44, "#f8f8f8", 8, true);
       this.partyMenu.draw(g);
     }
-    if (this.shaking) text(g, "…wobble…", 110, 60, "#181820");
+    if (this.shaking) text(g, "...wobble...", 110, 60, "#181820", 8, true);
   }
 }
 
 function nm(m) { return `${SPECIES[m.sp].name} LV${m.lv}`; }
 
 function plate(g, x, y, m, foe) {
-  drawPanel(g, x, y, 100, 30);
-  text(g, `${SPECIES[m.sp].name} :L${m.lv}`, x + 5, y + 4);
-  const w = 90, frac = m.hp / m.maxhp;
-  g.fillStyle = "#581818"; g.fillRect(x + 5, y + 16, w, 5);
-  g.fillStyle = frac > 0.5 ? "#38c838" : frac > 0.2 ? "#e8b838" : "#e83838";
-  g.fillRect(x + 5, y + 16, Math.floor(w * frac), 5);
-  text(g, foe ? "" : `${m.hp}/${m.maxhp}`, x + 5, y + 22);
+  const w = 104, h = foe ? 30 : 40;
+  drawPanel(g, x, y, w, h);
+  const nm_ = SPECIES[m.sp].name;
+  text(g, nm_, x + 8, y + 7, "#182028", 8, true);
+  const lv = "Lv" + m.lv;
+  text(g, lv, x + w - 9 - lv.length * 5, y + 7, "#14305a", 8, true);
+  // HP bar with label tag
+  text(g, "HP", x + 8, y + 16, "#a07818", 7, true);
+  const bx = x + 24, bw = w - 32, frac = Math.max(0, Math.min(1, m.hp / m.maxhp));
+  g.fillStyle = "#283028"; g.fillRect(bx - 1, y + 15, bw + 2, 7);
+  const col = frac > 0.5 ? "#48c848" : frac > 0.25 ? "#e8c838" : "#e84038";
+  const fill = Math.floor(bw * frac);
+  g.fillStyle = col; g.fillRect(bx, y + 16, Math.max(0, fill), 5);
+  g.fillStyle = "rgba(255,255,255,0.55)"; g.fillRect(bx, y + 16, Math.max(0, fill), 1);
+  if (!foe) {
+    text(g, `${m.hp}/${m.maxhp}`, x + 8, y + 24, "#182028", 7, true);
+    // XP bar along the plate foot
+    const lo = m.lv * m.lv * m.lv, hi = (m.lv + 1) * (m.lv + 1) * (m.lv + 1);
+    const xf = Math.max(0, Math.min(1, (m.exp - lo) / Math.max(1, hi - lo)));
+    g.fillStyle = "#283028"; g.fillRect(x + 8, y + h - 6, w - 16, 3);
+    g.fillStyle = "#58a8e8"; g.fillRect(x + 8, y + h - 6, Math.floor((w - 16) * xf), 3);
+  }
+  // status pill (BRN / PAR)
+  if (m.status === "brn" || m.status === "par") {
+    const lbl = m.status === "brn" ? "BRN" : "PAR";
+    g.fillStyle = m.status === "brn" ? "#e87038" : "#e8c838";
+    g.fillRect(x + w - 28, y + h - 11, 21, 8);
+    text(g, lbl, x + w - 26, y + h - 10, "#181820", 6, true);
+  }
 }

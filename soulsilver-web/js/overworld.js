@@ -484,7 +484,6 @@ function paintTile(g, t, dx, dy, frame, tx, ty, m, map) {
         R(0, 15, 16, 1, "#5e1408");
         const off = hash2(tx, ty) % 4;
         for (let x = off; x < 16; x += 4) P(x, 14, "#a82818");
-        P((off + 2) % 16, 14, "#f08070");
       }
       houseEdge(seatFootprint());
       break;

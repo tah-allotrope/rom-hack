@@ -389,6 +389,12 @@
       "win": false,
       "gap": "90% unreached. Battle loop HELD on critic oscillation (R7 vs R11 contradiction). Tiles 81, battle 78, UI 85, sprites 40.",
       "note": "63 rounds. Tree clean, all node checks pass, playable verified."
+    },
+    {
+      "piece": "tiles-critic-r8",
+      "win": false,
+      "gap": "OSCILLATION: R8 wants 6px trunk back (R5/R7 wanted narrow). HELD 4px; critics flip-flopping trunk width.",
+      "note": "TileCriticR8: BAR wins, ours 70%. No trunk change applied."
     }
   ]
 }

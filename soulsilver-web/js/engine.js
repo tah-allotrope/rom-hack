@@ -53,19 +53,116 @@ export function bindTouch() {
   });
 }
 
-// ---- DS chrome helpers: rounded panels, proportional font ----
+// ---- DS chrome helpers: rounded panels, 1-bit proportional bitmap font ----
 // HGSS look: off-white rounded panels, dark-navy outer border + pale-blue
-// inner border (double border), soft drop shadow, 8px proportional text
-// with true alphabetic-baseline descenders and measure-based layout.
+// inner border (double border), soft drop shadow, hand-drawn 5x7-ish 1-bit
+// glyphs stamped as crisp fillRect pixels (no smoothing, no canvas text).
+// Per-glyph advance widths + 1px letter spacing; measure() shares the draw
+// advances so name-plate/padding/clamp math keeps working. Chars absent
+// from BIT_G fall back to the canvas font (missing glyphs only).
 const DS_FONT = 'Tahoma, Verdana, "DejaVu Sans", sans-serif';
-const DS_SIZE = 8;          // HGSS body glyph size
-const DS_BASELINE = 7;      // ascent px for 8px Verdana: top-anchored y -> baseline
-const DS_LINE_H = 10;       // tight HGSS textbox line step (8px glyph + 2px gap)
+const DS_SIZE = 8;          // HGSS body glyph size (bitmap cap height 7px)
+const DS_BASELINE = 7;      // ascent px: top-anchored y -> baseline pixel row
+const DS_LINE_H = 10;       // tight HGSS textbox line step (9px glyph + 1px gap)
 const DS_MENU_RH = 12;      // tight menu row step
 const ARROW_PERIOD = 480;   // ms per blink phase (HGSS ~1Hz arrow blink)
 
+// Hand-drawn 1-bit glyphs: "." = empty, "#" = ink. Row 0 is the cap top;
+// the last body row sits one pixel above the baseline (y + DS_BASELINE).
+// Lowercase x-height glyphs are 5-6 rows (top gap), ascenders 7 rows.
+// Glyphs named in BIT_D extend that many rows below the baseline.
+const BIT_G = {
+  A: [".###.", "#...#", "#...#", "#####", "#...#", "#...#", "#...#"],
+  B: ["####.", "#...#", "#...#", "####.", "#...#", "#...#", "####."],
+  C: [".####", "#....", "#....", "#....", "#....", "#....", ".####"],
+  D: ["####.", "#...#", "#...#", "#...#", "#...#", "#...#", "####."],
+  E: ["#####", "#....", "#....", "####.", "#....", "#....", "#####"],
+  F: ["#####", "#....", "#....", "####.", "#....", "#....", "#...."],
+  G: [".####", "#....", "#....", "#.###", "#...#", "#...#", ".###."],
+  H: ["#...#", "#...#", "#...#", "#####", "#...#", "#...#", "#...#"],
+  I: [".###.", "..#..", "..#..", "..#..", "..#..", "..#..", ".###."],
+  J: ["...##", "....#", "....#", "....#", "....#", "#...#", ".###."],
+  K: ["#...#", "#..#.", "#.#..", "##...", "#.#..", "#..#.", "#...#"],
+  L: ["#....", "#....", "#....", "#....", "#....", "#....", "#####"],
+  M: ["#...#", "##.##", "#.#.#", "#.#.#", "#...#", "#...#", "#...#"],
+  N: ["#...#", "##..#", "##..#", "#.#.#", "#..##", "#..##", "#...#"],
+  O: [".###.", "#...#", "#...#", "#...#", "#...#", "#...#", ".###."],
+  P: ["####.", "#...#", "#...#", "####.", "#....", "#....", "#...."],
+  Q: [".###.", "#...#", "#...#", "#...#", "#.#.#", "#..#.", ".##.#"],
+  R: ["####.", "#...#", "#...#", "####.", "#.#..", "#..#.", "#...#"],
+  S: [".####", "#....", "#....", ".###.", "....#", "....#", "####."],
+  T: ["#####", "..#..", "..#..", "..#..", "..#..", "..#..", "..#.."],
+  U: ["#...#", "#...#", "#...#", "#...#", "#...#", "#...#", ".###."],
+  V: ["#...#", "#...#", "#...#", "#...#", "#...#", ".#.#.", "..#.."],
+  W: ["#...#", "#...#", "#...#", "#.#.#", "#.#.#", "##.##", "#...#"],
+  X: ["#...#", "#...#", ".#.#.", "..#..", ".#.#.", "#...#", "#...#"],
+  Y: ["#...#", "#...#", ".#.#.", "..#..", "..#..", "..#..", "..#.."],
+  Z: ["#####", "....#", "...#.", "..#..", ".#...", "#....", "#####"],
+  a: [".##.", "...#", ".###", "#..#", "#..#", ".##."],
+  b: ["#....", "#....", "####.", "#...#", "#...#", "#...#", "####."],
+  c: [".###.", "#....", "#....", "#....", ".###."],
+  d: ["....#", "....#", ".####", "#...#", "#...#", "#...#", ".####"],
+  e: [".###.", "#...#", "#####", "#....", ".###."],
+  f: ["..##.", "...#.", "...#.", "####.", "...#.", "...#.", "...#."],
+  g: [".####", "#...#", "#...#", ".####", "....#", ".###.", "...#.", ".##.."],
+  h: ["#....", "#....", "#.##.", "##..#", "#...#", "#...#", "#...#"],
+  i: ["..#..", ".....", "..#..", "..#..", "..#..", "..#..", "..#.."],
+  j: ["...#.", ".....", "...#.", "...#.", "...#.", "...#.", "...#.", ".#...", ".#..."],
+  k: ["#....", "#....", "#..#.", "#.#..", "##...", "#.#..", "#..#."],
+  l: ["#", "#", "#", "#", "#", "#", "#"],
+  m: [".....", "#.#.#", "##.##", "#.#.#", "#.#.#", "#.#.#"],
+  n: [".....", "#.##.", "##..#", "#...#", "#...#", "#...#"],
+  o: [".###.", "#...#", "#...#", "#...#", ".###."],
+  p: ["#....", "#....", "####.", "#...#", "#...#", "####.", "#....", "#...."],
+  q: ["....#", "....#", ".####", "#...#", "#...#", ".####", "....#", "....#"],
+  r: [".....", "#.##.", "##..#", "#....", "#....", "#...."],
+  s: [".####", "#....", ".###.", "....#", "####."],
+  t: [".#..", ".#..", "###.", ".#..", ".#..", ".#..", ".##."],
+  u: ["#...#", "#...#", "#...#", "#...#", ".###."],
+  v: [".....", "#...#", "#...#", "#...#", ".#.#.", "..#.."],
+  w: [".....", "#...#", "#...#", "#.#.#", "#.#.#", "##.##"],
+  x: [".....", "#...#", ".#.#.", "..#..", ".#.#.", "#...#"],
+  y: ["#...#", "#...#", ".#.#.", "..#..", "..#..", "..#..", ".#..."],
+  z: [".....", "#####", "...#.", "..#..", ".#...", "#####"],
+  0: [".###.", "#...#", "#..##", "#.#.#", "##..#", "#...#", ".###."],
+  1: ["..#..", ".##..", "..#..", "..#..", "..#..", "..#..", ".###."],
+  2: [".###.", "#...#", "....#", "...#.", "..#..", ".#...", "#####"],
+  3: ["####.", "....#", "....#", ".###.", "....#", "....#", "####."],
+  4: ["...#.", "..##.", ".#.#.", "#..#.", "#####", "...#.", "...#."],
+  5: ["#####", "#....", "####.", "....#", "....#", "#...#", ".###."],
+  6: [".###.", "#....", "#....", "####.", "#...#", "#...#", ".###."],
+  7: ["#####", "....#", "...#.", "..#..", ".#...", ".#...", ".#..."],
+  8: [".###.", "#...#", "#...#", ".###.", "#...#", "#...#", ".###."],
+  9: [".###.", "#...#", "#...#", ".####", "....#", "....#", ".###."],
+  ":": ["", "#", "", "", "", "#", ""],
+  ".": ["#"],
+  ",": ["#", "#"],
+  "!": ["#", "#", "#", "#", "#", "", "#"],
+  "?": [".###.", "#...#", "....#", "...#.", "..#..", ".....", "..#.."],
+  "-": ["", "", "", "####", "", "", ""],
+  "/": ["....#", "....#", "...#.", "...#.", "..#..", ".#...", "#...."],
+  "%": ["##..#", "##..#", "..#..", "..#..", ".#...", "#..##", "#..##"],
+  "+": [".....", "..#..", "..#..", "#####", "..#..", "..#..", "....."],
+  "'": ["#", "#", "", "", "", "", ""],
+  "(": ["..#", ".#.", "#..", "#..", "#..", ".#.", "..#"],
+  ")": ["#..", ".#.", "..#", "..#", "..#", ".#.", "#.."],
+  "\u00e9": ["...#.", "..#..", ".###.", "#...#", "#####", "#....", ".###."],
+  ";": ["", "#", "", "", "", "#", "#"],
+};
+const BIT_D = { g: 2, j: 2, p: 2, q: 2, ",": 1, ";": 1, y: 1 };
+
 function dsFont(size, bold) {
   return `${bold ? "bold " : ""}${size}px ${DS_FONT}`;
+}
+
+// ink width of a glyph's rows (space = 2px); -1 when the canvas fallback owns it
+function bitW(ch) {
+  if (ch === " ") return 2;
+  const rows = BIT_G[ch];
+  if (!rows) return -1;
+  let w = 0;
+  for (const row of rows) if (row.length > w) w = row.length;
+  return w;
 }
 function rr(g, x, y, w, h, r) {
   r = Math.max(0, Math.min(r, w / 2, h / 2));
@@ -77,13 +174,24 @@ function rr(g, x, y, w, h, r) {
   g.arcTo(x, y, x + w, y, r);
   g.closePath();
 }
-// variable-width measure with the real canvas font (never char-count * N)
+// variable-width measure through the bitmap advances (never char-count * N)
 function measure(g, s, size = DS_SIZE, bold = false) {
-  g.save();
-  g.font = dsFont(size, bold);
-  const w = g.measureText(s).width;
-  g.restore();
-  return w;
+  s = String(s);
+  if (!s.length) return 0;
+  let w = 0;
+  for (const ch of s) {
+    const bw = bitW(ch);
+    if (bw < 0) {
+      // fallback char: canvas width, same +1px spacing as the bitmap path
+      g.save();
+      g.font = dsFont(size, bold);
+      w += Math.ceil(g.measureText(ch).width) + 1;
+      g.restore();
+      continue;
+    }
+    w += bw + 1 + (bold ? 1 : 0);
+  }
+  return w - 1; // drop trailing letter spacing
 }
 function triR(g, x, y, s, color) {
   g.fillStyle = color;
@@ -211,17 +319,45 @@ export function drawPanel(g, x, y, w, h) {
 }
 
 export function text(g, s, x, y, color = "#f8f8f8", size = 8, bold = false) {
-  // x/y name the TOP-LEFT of the text run; glyphs use a true alphabetic
-  // baseline so descenders (g, y, p, q, j) render below the baseline
-  // instead of clipping, with proportional (variable) advances.
+  // x/y name the TOP-LEFT of the text run. Bitmap path: each 1-bit glyph
+  // is stamped with fillRect (no smoothing); bold double-strikes +1px.
+  // Descenders (g, j, p, q, y, comma) render below the baseline instead
+  // of clipping, with proportional (variable) advances matching measure().
   // HGSS body text is flat: no shadow/outline pass under the glyphs.
   x = Math.round(x); y = Math.round(y);
-  const base = y + (size === DS_SIZE ? DS_BASELINE : Math.round(size * 0.88));
+  s = String(s);
+  if (!s.length) return;
   g.save();
-  g.font = dsFont(size, bold);
-  g.textBaseline = "alphabetic"; g.textAlign = "left";
   g.fillStyle = color;
-  g.fillText(s, x, base);
+  let px = x, fbFont = false;
+  for (const ch of s) {
+    if (ch === " ") { px += 3; continue; }
+    const rows = BIT_G[ch];
+    if (!rows) {
+      // fallback: canvas font for missing glyphs only
+      if (!fbFont) {
+        g.font = dsFont(size, bold);
+        g.textBaseline = "alphabetic"; g.textAlign = "left";
+        fbFont = true;
+      }
+      const base = y + (size === DS_SIZE ? DS_BASELINE : Math.round(size * 0.88));
+      g.fillText(ch, px, base);
+      px += Math.ceil(g.measureText(ch).width) + 1;
+      continue;
+    }
+    const d = BIT_D[ch] || 0;
+    const top = y + DS_BASELINE - (rows.length - d);
+    for (let r = 0; r < rows.length; r++) {
+      const row = rows[r];
+      for (let c = 0; c < row.length; c++) {
+        if (row.charCodeAt(c) === 35) { // "#"
+          g.fillRect(px + c, top + r, 1, 1);
+          if (bold) g.fillRect(px + c + 1, top + r, 1, 1);
+        }
+      }
+    }
+    px += bitW(ch) + 1 + (bold ? 1 : 0);
+  }
   g.restore();
 }
 

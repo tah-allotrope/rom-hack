@@ -599,6 +599,12 @@
       "win": false,
       "gap": "Flat torso centers vs wrapped gradients. Fix: mid-tone + dither into centers.",
       "note": "SpriteCriticR18: BAR wins, ours 35%. Flank rim present."
+    },
+    {
+      "piece": "ui-critic-r9",
+      "win": false,
+      "gap": "No auto word-wrap; long lines overflow. Fix: measure-wrap before paging.",
+      "note": "UiCriticR9: BAR wins, ours 86%. Plate kill + 2-line pass."
     }
   ]
 }

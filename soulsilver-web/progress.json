@@ -743,6 +743,12 @@
       "win": false,
       "gap": "Zebra course bands vs uniform slopes. Fix applied: shade=false.",
       "note": "TileJudgeV5 pinned: BAR wins at 83%, ours misses 90%."
+    },
+    {
+      "piece": "tile-judge-v6",
+      "win": false,
+      "gap": "White sparkle on lips vs clean terracotta. Fix applied: pass deleted.",
+      "note": "TileJudgeV6 pinned: ours 89%, one point off 90%."
     }
   ],
   "bar": {

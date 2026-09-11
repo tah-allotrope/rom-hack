@@ -497,7 +497,7 @@ const F_GUSTHAWK = [
   "..KWCCCCBK..KEWWWEEK..KWCCCCBK..",
   "....KCCK....KWEWEWEK....KCCK....",
   "..........KEWWWWWWWEEK..........",
-  "..........KEEWEKKWEWEK..........",
+  "..........KEEKKKKKKKEEK..........",
   "...........KWWWKKWWWK...........",
   "...........KEWEWEWEEK...........",
   "............KYYKYYK.............",

@@ -326,7 +326,7 @@ const F_AQUAPUP = [
   "...........CCWKKKKKECC..........",
   "..........CCCKKKKKKECCC.........",
   "..........BCCKMMMMKECCB.........",
-  ".........BBCCKKKKKKECCBB........",
+  ".........BBCCKMMMMKECCBB........",
   "..........BCCEEEEEEECCB.........",
   ".........CCCCCEEEEEECCC.........",
   "......CCCCCCCE....ECCCCCCC......",

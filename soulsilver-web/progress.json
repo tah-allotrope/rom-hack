@@ -893,6 +893,12 @@
       "win": false,
       "gap": "Aquapup flat mouth vs open jaw. Tail tip capped.",
       "note": "SpriteJudgeV13 pinned: BAR wins, ours 75% (73-78/species). Tail contiguous."
+    },
+    {
+      "piece": "jaw-verify",
+      "win": false,
+      "gap": "Awaiting SpriteJudgeV14.",
+      "note": "Screenshot: Aquapup open jaw + chin. Committed."
     }
   ],
   "bar": {

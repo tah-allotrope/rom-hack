@@ -376,30 +376,55 @@ function nm(m) { return `${SPECIES[m.sp].name} LV${m.lv}`; }
 
 function plate(g, x, y, m, foe) {
   const w = 108, h = foe ? 34 : 42;
-  // thin-border tabbed chrome anchored to the near edge (foe: left, ally: right)
+  // detached rounded chrome: 4px screen inset, 6px corners, slanted inner
+  // edge (parallelogram lean toward the battler) instead of a wedge tab
+  const R = 6, SL = 10;
   const ax = foe ? 0 : x;
   const aw = foe ? x + w : W - x;
+  const cw = w + SL;
+  const cx = foe ? x : W - 4 - cw;
+  const trace = () => {
+    g.beginPath();
+    if (foe) {
+      // slant on the right edge: top (cx+cw-SL, y) -> bottom (cx+cw, y+h)
+      g.moveTo(cx + R, y);
+      g.lineTo(cx + cw - SL, y);
+      g.arcTo(cx + cw - SL, y, cx + cw, y + h, R);
+      g.lineTo(cx + cw, y + h);
+      g.arcTo(cx + cw, y + h, cx, y + h, R);
+      g.lineTo(cx + R, y + h);
+      g.arcTo(cx, y + h, cx, y, R);
+      g.lineTo(cx, y + R);
+      g.arcTo(cx, y, cx + R, y, R);
+    } else {
+      // mirrored slant on the left edge: top (cx, y) -> bottom (cx+SL, y+h)
+      g.moveTo(cx + cw - R, y);
+      g.lineTo(cx, y);
+      g.arcTo(cx, y, cx + SL, y + h, R);
+      g.lineTo(cx + SL, y + h);
+      g.arcTo(cx + SL, y + h, cx + cw, y + h, R);
+      g.lineTo(cx + cw, y + h);
+      g.arcTo(cx + cw, y + h, cx + cw, y, R);
+      g.lineTo(cx + cw, y);
+      g.arcTo(cx + cw, y, cx, y, R);
+    }
+    g.closePath();
+  };
+  g.save();
+  g.translate(1, 2);
+  trace();
   g.fillStyle = "rgba(0,0,0,0.25)";
-  g.fillRect(ax + 1, y + 2, aw, h);
+  g.fill();
+  g.restore();
+  trace();
   g.fillStyle = "#fbfbf0";
-  g.fillRect(ax, y, aw, h);
+  g.fill();
   g.fillStyle = "rgba(255,255,255,0.8)";
-  g.fillRect(ax + 1, y + 1, aw - 2, 1);
+  g.fillRect(cx + R, y + 1, (foe ? cw - SL : cw) - 2 * R, 1);
   g.strokeStyle = "#334f80";
   g.lineWidth = 1;
-  g.strokeRect(ax + 0.5, y + 0.5, aw - 1, h - 1);
-  // wedge tab pointing toward the battler (foe: bottom edge; ally: top edge)
-  const tx0 = foe ? ax + aw - 36 : x + 18;
-  const tx1 = foe ? ax + aw - 22 : x + 32;
-  const txTip = foe ? ax + aw - 29 : x + 25;
-  const tyBase = foe ? y + h : y;
-  const tyTip = foe ? y + h + 6 : y - 6;
-  g.beginPath();
-  g.moveTo(tx0, tyBase); g.lineTo(tx1, tyBase); g.lineTo(txTip, tyTip);
-  g.closePath();
-  g.fillStyle = "#fbfbf0"; g.fill();
-  g.strokeStyle = "#334f80"; g.lineWidth = 1;
-  g.beginPath(); g.moveTo(tx0, tyBase); g.lineTo(txTip, tyTip); g.lineTo(tx1, tyBase); g.stroke();
+  trace();
+  g.stroke();
   const pad = 10;
   // padded name (left) + measured right-aligned level (proportional font)
   text(g, SPECIES[m.sp].name, x + pad, y + 6, "#182028", 8, true);

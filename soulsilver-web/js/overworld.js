@@ -201,7 +201,7 @@ function paintTile(g, t, dx, dy, frame, tx, ty, m, map) {
         R(3, 14, 10, 1, "#2f6b33"); R(4, 13, 8, 1, "#35702f"); R(4, 15, 8, 1, "#2a5a2e");
         // 4px stub rising from the tile base; the skirt drawn next hides its top
         if (southGround) {
-          R(5, 10, 6, 6, "#8a5a28");
+          R(6, 9, 4, 7, "#8a5a28");
           R(6, 10, 1, 6, "#c8a068");
           R(9, 10, 1, 6, "#5e3a18");
           P(8, 14, "#5e3a18");

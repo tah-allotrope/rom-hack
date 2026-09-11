@@ -617,6 +617,12 @@
       "win": false,
       "gap": "Isolated checker island vs full cylinder gradient. Fix: highlight-center to dark-edge full height.",
       "note": "SpriteCriticR19: BAR wins, ours 30%. Rows/eyes/backs pass."
+    },
+    {
+      "piece": "ui-critic-r10",
+      "win": false,
+      "gap": "Wrap collapses intentional spacing. Fix applied: gap-preserving tokens.",
+      "note": "UiCriticR10: BAR wins, ours 86%. Zero overflow, paging terminates."
     }
   ]
 }

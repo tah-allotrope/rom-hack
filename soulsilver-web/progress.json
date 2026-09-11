@@ -833,6 +833,18 @@
       "win": false,
       "gap": "Floating blob feet + Pinebug sutured mouth. Fix: dark soles + shadow + mouth.",
       "note": "SpriteJudgeV8 pinned: BAR wins ~72/28, ours 70-72%. Best sprite score."
+    },
+    {
+      "piece": "feet-verify",
+      "win": false,
+      "gap": "Awaiting SpriteJudgeV9.",
+      "note": "Screenshot: Gusthawk talons + Pinebug planted. Committed."
+    },
+    {
+      "piece": "sprite-judge-v9",
+      "win": false,
+      "gap": "Redraw flattened shading depth. Fix: single-sided dither shade, protect eyes/mouths/feet.",
+      "note": "SpriteJudgeV9 pinned: BAR wins, ours 35%. Feet/mouths pass."
     }
   ],
   "bar": {

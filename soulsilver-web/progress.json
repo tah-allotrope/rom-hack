@@ -461,6 +461,12 @@
       "win": false,
       "gap": "Dither contaminated outlines/highlights (Nibble N, Skyro WW). Fix: dither E-vs-light only.",
       "note": "SpriteCriticR13: BAR wins 82/18, ours 18%. Parity overreach."
+    },
+    {
+      "piece": "grass-breakup-verify",
+      "win": false,
+      "gap": "Awaiting re-critic.",
+      "note": "Screenshot: broken-tuft perimeters, no light lip. Band rects deleted."
     }
   ]
 }

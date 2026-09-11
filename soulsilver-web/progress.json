@@ -899,6 +899,12 @@
       "win": false,
       "gap": "Awaiting SpriteJudgeV14.",
       "note": "Screenshot: Aquapup open jaw + chin. Committed."
+    },
+    {
+      "piece": "sprite-judge-v14",
+      "win": false,
+      "gap": "Single-row cavity vs Totodile gape. Fix applied: two M rows.",
+      "note": "SpriteJudgeV14: Aquapup wins blind at 82%. First sprite near-win."
     }
   ],
   "bar": {

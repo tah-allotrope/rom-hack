@@ -467,6 +467,18 @@
       "win": false,
       "gap": "Awaiting re-critic.",
       "note": "Screenshot: broken-tuft perimeters, no light lip. Band rects deleted."
+    },
+    {
+      "piece": "sprite-repair-verify",
+      "win": false,
+      "gap": "Awaiting SpriteCriticR14.",
+      "note": "Screenshot: Skyro front + Nibble rear clean. Repair committed 4a71ceb."
+    },
+    {
+      "piece": "tiles-critic-r11",
+      "win": false,
+      "gap": "Even static dots vs clustered tufts. Fix: low-frequency cluster hash gate.",
+      "note": "TileCriticR11: BAR wins, ours 71%. Continuous lip gone."
     }
   ]
 }

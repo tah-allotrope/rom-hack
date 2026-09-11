@@ -142,18 +142,20 @@ function paintTile(g, t, dx, dy, frame, tx, ty, m, map) {
         const x0 = isTallG(lfG) ? 2 : 0, x1 = isTallG(rtG) ? 14 : 16;
         const BED = "#4c9448";
         const [spD, spL] = fringeSpeck(inC);
-        // Broken tuft fringe: no solid rects. Every edge/inner pixel is an
-        // independent bed-vs-fringe hash pick so no continuous lip survives.
+        // Tuft clustering: low-frequency cluster gate (global px quantized
+        // 4px, edge-row separated) shared by edge/inner/j picks at this
+        // x so fringe dots clump into tufts with gaps, not even static.
         for (let x = x0; x < x1; x++) {
           // outer row sparse (~1/3) so tufts read as dots, never a lip;
           // inner row denser (~1/2) to root each tuft.
           const he = hash2(tx * 16 + x, ty * 29 + (up ? 7 : 8));
-          const heF = (he % 3 === 0);
+          const cl = hash2((tx * 16 + x) >> 2, (ty << 2) + (up ? 7 : 8));
+          const heF = (he % 3 === 0) && (cl % 3 !== 0);
           P(x, yE, heF ? edgeC : BED);
           const hi = hash2(tx * 16 + x, ty * 29 + (up ? 9 : 10));
-          P(x, yI, (hi % 2 === 0) ? BED : inC);
+          P(x, yI, (hi % 2 === 0 || (cl % 3 === 0)) ? BED : inC);
           const j = hash2(tx * 16 + x, ty * 7 + (up ? 1 : 2)) % 3;
-          if (j === 0) P(x, yJ, inC);
+          if (j === 0 && (cl % 3 !== 0)) P(x, yJ, inC);
           // sparse sun-catch on fringe pixels only; hashed so it never lines up
           if (heF && (hash2(tx * 11 + x, ty * 13 + (up ? 21 : 22)) % 7 === 0))
             P(x, yE, (x % 2 ? spD : spL));
@@ -177,18 +179,20 @@ function paintTile(g, t, dx, dy, frame, tx, ty, m, map) {
         const y0 = isTallG(upG) ? 2 : 0, y1 = isTallG(dnG) ? 14 : 16;
         const BED = "#4c9448";
         const [spD, spL] = fringeSpeck(inC);
-        // Broken tuft fringe: no solid rects. Every edge/inner pixel is an
-        // independent bed-vs-fringe hash pick so no continuous lip survives.
+        // Tuft clustering: low-frequency cluster gate (global py quantized
+        // 4px, edge-side separated) shared by edge/inner/j picks at this
+        // y so fringe dots clump into tufts with gaps, not even static.
         for (let y = y0; y < y1; y++) {
           // outer row sparse (~1/3) so tufts read as dots, never a lip;
           // inner row denser (~1/2) to root each tuft.
           const he = hash2(tx * 29 + (left ? 7 : 8), ty * 16 + y);
-          const heF = (he % 3 === 0);
+          const cl = hash2((tx << 2) + (left ? 7 : 8), (ty * 16 + y) >> 2);
+          const heF = (he % 3 === 0) && (cl % 3 !== 0);
           P(xE, y, heF ? edgeC : BED);
           const hi = hash2(tx * 7 + (left ? 1 : 2), ty * 16 + y);
-          P(xI, y, (hi % 2 === 0) ? BED : inC);
+          P(xI, y, (hi % 2 === 0 || (cl % 3 === 0)) ? BED : inC);
           const j = hash2(tx * 13 + (left ? 21 : 22), ty * 11 + y) % 3;
-          if (j === 0) P(xJ, y, inC);
+          if (j === 0 && (cl % 3 !== 0)) P(xJ, y, inC);
           // sparse sun-catch on fringe pixels only; hashed so it never lines up
           if (heF && (hash2(tx * 13 + (left ? 21 : 22), ty * 11 + y + 5) % 7 === 0))
             P(xE, y, (y % 2 ? spD : spL));

@@ -515,6 +515,18 @@
       "win": false,
       "gap": "Flat fills need mid-tone shading; Pinebug weakest mouth. Fix applied: MKKKKM slit.",
       "note": "SpriteCriticR17: BAR wins 80/20, ours 20%. 7/8 mouths readable."
+    },
+    {
+      "piece": "ui-critic-r4",
+      "win": false,
+      "gap": "Canvas AA raster (structural) + highlight ring. Ring deleted.",
+      "note": "UiCriticR4: BAR wins, ours 85%. Not 90% yet."
+    },
+    {
+      "piece": "ui-critic-r5",
+      "win": false,
+      "gap": "System AA font vs 1-bit bitmap (structural). Fix: embedded bitmap-font atlas.",
+      "note": "UiCriticR5: BAR wins, ours 78%. Chrome/menus/padding pass."
     }
   ]
 }

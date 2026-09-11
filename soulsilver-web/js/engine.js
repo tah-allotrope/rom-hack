@@ -241,16 +241,63 @@ function panelChrome(g, x, y, w, h) {
   g.restore();
 }
 
+// TextBox line prep: greedy word wrap to the HW body width via measure().
+// Box metrics mirror draw(): bw = W - 8 with 10px text pads each side.
+const BOX_MAXW = W - 8 - 20;
+let _boxMC = null;
+function boxMC() {
+  if (!_boxMC) _boxMC = document.createElement("canvas").getContext("2d");
+  return _boxMC;
+}
+// Greedy word wrap of one raw line; overlong words break char by char.
+// Returns the wrapped lines ([""] for blank input, so explicit \n survive).
+function wrapBoxLine(line, maxW) {
+  const mc = boxMC();
+  const words = String(line).split(" ").filter((w) => w.length);
+  if (!words.length) return [""];
+  const out = [];
+  const breakWord = (w) => {
+    let part = "";
+    for (const ch of w) {
+      const t = part + ch;
+      if (!part.length || measure(mc, t) <= maxW) part = t;
+      else { out.push(part); part = ch; }
+    }
+    return part;
+  };
+  let cur = "";
+  for (const w of words) {
+    const trial = cur ? cur + " " + w : w;
+    if (measure(mc, trial) <= maxW) { cur = trial; continue; }
+    if (cur) { out.push(cur); cur = ""; }
+    cur = measure(mc, w) <= maxW ? w : breakWord(w);
+  }
+  out.push(cur);
+  return out;
+}
+// Wrap each explicit \n line of a page; join back so paging stays \n-based.
+function wrapBoxPage(page) {
+  return String(page).split("\n").flatMap((ln) => wrapBoxLine(ln, BOX_MAXW)).join("\n");
+}
 // ---- text box ----
 export class TextBox {
-  constructor() { this.queue = []; this.chars = 0; this.offset = 0; this.open = false; this.onDone = null; }
+  constructor() { this.queue = []; this.chars = 0; this.offset = 0; this.open = false; this.onDone = null; this._wkey = null; this._wcache = []; }
   say(pages, onDone = null) {
-    // pages: array of strings, \n = newline. The HW message box shows at
-    // most 2 body lines; longer pages scroll within the page 2 lines per
-    // press-A via offset before the queue shifts.
+    // pages: array of strings, \n = newline. Pages are greedily
+    // word-wrapped (measure() to the inner box width) on read, so no
+    // line overflows the box. The HW message box shows at most 2 body
+    // lines; longer pages scroll within the page 2 lines per press-A
+    // via offset before the queue shifts.
     this.queue = [...pages]; this.chars = 0; this.offset = 0; this.open = true; this.onDone = onDone;
+    this._wkey = null;
   }
-  get text() { return this.queue[0] || ""; }
+  // wrapped pages, cached by queue contents (direct queue edits stay valid)
+  wrappedQueue() {
+    const key = JSON.stringify(this.queue);
+    if (key !== this._wkey) { this._wcache = this.queue.map(wrapBoxPage); this._wkey = key; }
+    return this._wcache;
+  }
+  get text() { return this.wrappedQueue()[0] || ""; }
   get lines() { return this.text.split("\n"); }
   // [start, end) char range of the visible 2-line window within text.
   winRange() {

@@ -695,6 +695,12 @@
       "win": false,
       "gap": "Black-K flanks vs dithered colored outlines. Fix: recolor outer K runs.",
       "note": "SpriteJudgeV2 pinned: BAR wins 65/35, ours 35%. Second tone verified."
+    },
+    {
+      "piece": "eave-verify",
+      "win": false,
+      "gap": "Awaiting re-judge.",
+      "note": "Screenshot: dark eave bands under roofs. Committed."
     }
   ],
   "bar": {

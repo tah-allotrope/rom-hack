@@ -731,6 +731,12 @@
       "win": false,
       "gap": "Outlines nick eave lips + flat roofs vs pitched 3/4 (big). Eave guard applied.",
       "note": "TileJudgeV4 pinned: BAR wins, ours 76%. Outlines/seating/eaves land."
+    },
+    {
+      "piece": "roof-pitch-verify",
+      "win": false,
+      "gap": "Awaiting re-judge.",
+      "note": "Screenshot: ridge + stepped courses read pitched. Committed."
     }
   ],
   "bar": {

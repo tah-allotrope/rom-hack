@@ -395,6 +395,24 @@
       "win": false,
       "gap": "OSCILLATION: R8 wants 6px trunk back (R5/R7 wanted narrow). HELD 4px; critics flip-flopping trunk width.",
       "note": "TileCriticR8: BAR wins, ours 70%. No trunk change applied."
+    },
+    {
+      "piece": "sprite-shade3-commit",
+      "win": false,
+      "gap": "Awaiting SpriteCriticR11.",
+      "note": "162-row belly/dorsal shading committed 594cf4a after network-failure retry."
+    },
+    {
+      "piece": "sprite-shade-verify",
+      "win": false,
+      "gap": "Awaiting verdict.",
+      "note": "Screenshot: Pinebug rear + Embercub front read clean, shading intact, no damage."
+    },
+    {
+      "piece": "sprites-critic-r11",
+      "win": false,
+      "gap": "Flat horizontal shade bands vs wrapped gradients. Fix: arch bands 1px/row with torso.",
+      "note": "SpriteCriticR11: BAR wins, ours 60%. Biggest sprite jump yet."
     }
   ]
 }

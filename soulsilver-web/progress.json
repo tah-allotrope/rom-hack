@@ -269,6 +269,18 @@
       "win": false,
       "gap": "Awaiting re-critic.",
       "note": "Stub base 4px to 6px on south-ground fringe only."
+    },
+    {
+      "piece": "sprites-critic-r5-final",
+      "win": false,
+      "gap": "Flat W-block mask faces vs expressive eyes/mouths. Next: sclera+pupil+highlight + distinct mouths.",
+      "note": "SpriteCriticR5: BAR wins, ours 35%. Nape/backs/fronts/shading all pass."
+    },
+    {
+      "piece": "session-scoreboard",
+      "win": false,
+      "gap": "90% not reached on any piece. Closest: UI 85 (ours wins). Battle 40-68, tiles 35-70 (critics oscillate), sprites 30-35, title wins original-art bar.",
+      "note": "Playable end-to-end verified: title, house, town, route, forced battles all screenshot-confirmed. 4 commits on main."
     }
   ]
 }

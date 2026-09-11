@@ -341,6 +341,18 @@
       "win": false,
       "gap": "Voltpup/Gusthawk belly checkers + flat fills. Fix: solid W + E edge.",
       "note": "SpriteCriticR8: all 3 defects pass, ours 30%. Eyes/muzzles/backs verified."
+    },
+    {
+      "piece": "battle-critic-r10",
+      "win": false,
+      "gap": "Soft R2 tips vs hard points. Fix applied: R 0.",
+      "note": "BattleCriticR10: BAR wins, ours 78%. Sharp flat 1x parallelograms pass."
+    },
+    {
+      "piece": "sprite-belly-commit",
+      "win": false,
+      "gap": "Awaiting SpriteCriticR9.",
+      "note": "Solid belly centers committed as c07b3d4."
     }
   ]
 }

@@ -911,6 +911,12 @@
       "win": false,
       "gap": "Lopsided fangs. Fix applied: mirrored right fang.",
       "note": "SpriteJudgeV15: Aquapup wins 78/90 (87%). Gape lands."
+    },
+    {
+      "piece": "sprite-judge-v16",
+      "win": false,
+      "gap": "Fang washes out vs E. Fix applied: C neighbor.",
+      "note": "SpriteJudgeV16: Aquapup wins 79/90 (88%)."
     }
   ],
   "bar": {

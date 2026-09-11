@@ -1,1 +1,184 @@
-{"rounds":[{"gap":"Remaining gap is the official Lugia mascot art itself, deliberately not copied (original-art constraint). Everything else closed: daylight sky, sun, clouds, sparkling sea, serif logo.","note":"Round 2 verified by screenshot: day gradient, sun glow, white clouds, bright sea, rim-lit silhouette, 4 distinct marching creatures. Strict blind vs official mascot art still favors the cart; at the original-art bar ours stands next to it.","piece":"title","win":true},{"gap":"Closed round 1: full-bleed textured R29 verified by screenshot (speckled grass, canopy trees, tall-grass blades, signpost, scrolling 40-wide map, 0 black pixels).","note":"Refs: Bulbapedia New_Bark_Town_HGSS + Player_Bedroom_HGSS + Elms_lab_1F_HGSS. TileBuilder rebuilt 22 tiles + 16x12 interiors; house + R29 screenshots confirm.","piece":"tiles","win":true},{"gap":"Closed round 1: capped hero (cap/backpack/up-frame straps) + 32x32 creatures with eyes/muzzles/feet verified (marchers, R29 hero, Nibble vs Embercub and Pinebug battles).","note":"Refs: Bulbagarden Spr_HGSS_Ethan.png + back sprite + official artwork, PokeDB Chikorita. SpriteBuilder: 16x20 hero x6 frames, distinct Mom/Elm, 8 creature fronts + silhouette-preserving backs.","piece":"sprites","win":true},{"gap":"Closed round 2: plate name padding fixed (+2px), names fully inside panels verified in Pinebug vs Nibble battle screenshot.","note":"Refs: Bulbapedia Options/Frames + HGSS Versions. UiBuilder rebuilt light rounded panels + proportional font + HP/XP plates; PolishBuilder padded names. Textbox + battle are blind contenders.","piece":"ui","win":true},{"gap":"User verdict 2026-09-09: game still looks like ass. Noted, no round-3 scope agreed yet.","note":"Owner playtest verdict after round 2. Recorded in progress log; commit pushed to main.","piece":"user-verdict","win":false}]}
+{
+  "rounds": [
+    {
+      "gap": "Remaining gap is the official Lugia mascot art itself, deliberately not copied (original-art constraint). Everything else closed: daylight sky, sun, clouds, sparkling sea, serif logo.",
+      "note": "Round 2 verified by screenshot: day gradient, sun glow, white clouds, bright sea, rim-lit silhouette, 4 distinct marching creatures. Strict blind vs official mascot art still favors the cart; at the original-art bar ours stands next to it.",
+      "piece": "title",
+      "win": true
+    },
+    {
+      "gap": "Closed round 1: full-bleed textured R29 verified by screenshot (speckled grass, canopy trees, tall-grass blades, signpost, scrolling 40-wide map, 0 black pixels).",
+      "note": "Refs: Bulbapedia New_Bark_Town_HGSS + Player_Bedroom_HGSS + Elms_lab_1F_HGSS. TileBuilder rebuilt 22 tiles + 16x12 interiors; house + R29 screenshots confirm.",
+      "piece": "tiles",
+      "win": true
+    },
+    {
+      "gap": "Closed round 1: capped hero (cap/backpack/up-frame straps) + 32x32 creatures with eyes/muzzles/feet verified (marchers, R29 hero, Nibble vs Embercub and Pinebug battles).",
+      "note": "Refs: Bulbagarden Spr_HGSS_Ethan.png + back sprite + official artwork, PokeDB Chikorita. SpriteBuilder: 16x20 hero x6 frames, distinct Mom/Elm, 8 creature fronts + silhouette-preserving backs.",
+      "piece": "sprites",
+      "win": true
+    },
+    {
+      "gap": "Closed round 2: plate name padding fixed (+2px), names fully inside panels verified in Pinebug vs Nibble battle screenshot.",
+      "note": "Refs: Bulbapedia Options/Frames + HGSS Versions. UiBuilder rebuilt light rounded panels + proportional font + HP/XP plates; PolishBuilder padded names. Textbox + battle are blind contenders.",
+      "piece": "ui",
+      "win": true
+    },
+    {
+      "gap": "User verdict 2026-09-09: game still looks like ass. Noted, no round-3 scope agreed yet.",
+      "note": "Owner playtest verdict after round 2. Recorded in progress log; commit pushed to main.",
+      "piece": "user-verdict",
+      "win": false
+    },
+    {
+      "piece": "tiles-critic-r1",
+      "win": false,
+      "gap": "Tree canopies identical per tile, border forests repeat as hedge. Fix: 2-3 hash-seeded canopy variants.",
+      "note": "TileCritic blind: BAR wins at 78% match. Full-bleed holds, grass speckle and path rounding pass. Screenshot: house interior full-bleed brick floor, capped hero readable."
+    },
+    {
+      "piece": "battle-critic-r1",
+      "win": false,
+      "gap": "Lily-pad platforms + horizon seam + dialog-box plates + segmented HP ticks. Fix: single grass tuft, no seam, tabbed plates, continuous HP.",
+      "note": "BattleCritic blind: BAR wins at 57% match. Anchors and grounding read; material language wrong."
+    },
+    {
+      "piece": "ui-critic-r1",
+      "win": false,
+      "gap": "1px shadow under all body text + speaker tail notch + double menu selection. Fix: flat text, no tail, cursor-only menus.",
+      "note": "UiCritic blind: BAR wins at 72% match. Panel geometry, borders, name padding, 4-line fit pass."
+    },
+    {
+      "piece": "tiles-polish-r2",
+      "win": false,
+      "gap": "Awaiting re-critic.",
+      "note": "TilePolish: 3 hash-seeded canopy variants + varied flower palette. node --check passes."
+    },
+    {
+      "piece": "battle-polish-r2",
+      "win": false,
+      "gap": "Awaiting re-critic.",
+      "note": "BattlePolish: single grass tuft platforms, no horizon seam, tabbed plates, continuous HP. node --check passes."
+    },
+    {
+      "piece": "sprites-r1",
+      "win": false,
+      "gap": "Awaiting sprite critic.",
+      "note": "SpriteBuilder: 16x20 hero 6 frames + Mom/Elm bespoke + 8 creatures 32x32 distinct, backs silhouette-preserving."
+    },
+    {
+      "piece": "ui-polish-r2",
+      "win": false,
+      "gap": "Awaiting re-critic.",
+      "note": "UiPolish landed (engine.js changed). Verifying flat text / no tail / cursor-only menus in screenshots."
+    },
+    {
+      "piece": "ui-critic-r2",
+      "win": true,
+      "gap": "Menu cursor navy not HGSS red. Fix: triR to #c02020.",
+      "note": "UiCriticR2 blind: OURS wins at 85%. Flat text, no tail, cursor-only menus pass."
+    },
+    {
+      "piece": "tiles-critic-r2",
+      "win": false,
+      "gap": "Per-tile bonsai crowns + stamped borders + cyan flower noise. Fix: neighbor-aware merged canopy, seeded border blobs, white/pink/red clusters.",
+      "note": "TileCriticR2 blind: BAR wins, ours 64%. Variants added but gutters remain."
+    },
+    {
+      "piece": "battle-critic-r2",
+      "win": false,
+      "gap": "REGRESSION: player back-sprite blit + restore deleted, HUD under 2x transform. Fix: re-add MON_BACK blit and g.restore.",
+      "note": "BattleCriticR2 blind: BAR wins, ours 40%. Four polish targets land but player invisible."
+    },
+    {
+      "piece": "sprites-critic-r1",
+      "win": false,
+      "gap": "makeBack recolor keeps front eyes; shared KWKW feet + WKKW eyes; rival shirt matches outline. Fix: 8 true rear views, unique feet/eyes, rival shirt shade.",
+      "note": "SpriteCritic blind: BAR wins, ours 48%. Hero 6-frame + 8 distinct fronts pass."
+    },
+    {
+      "piece": "canopy-merge-r3",
+      "win": false,
+      "gap": "Awaiting re-critic.",
+      "note": "CanopyMerge: neighbor-aware edge bleed, seeded border blobs, stemmed white/pink/red clusters. Screenshots: New Bark full-bleed houses/paths/trees, R29 grass/sign/flowers verified."
+    },
+    {
+      "piece": "battle-regression-fix",
+      "win": false,
+      "gap": "Awaiting re-critic.",
+      "note": "Restored MON_BACK blit + g.restore; menu cursor triR to HGSS red #c02020. node checks pass."
+    },
+    {
+      "piece": "battle-fix-verify",
+      "win": false,
+      "gap": "Awaiting re-critic; sprite faces on backs pending SpriteBacks.",
+      "note": "Screenshot: Embercub back + Nibble front both drawn, tabbed plates, continuous HP, single-shadow tufts, seamless meadow. Regression closed."
+    },
+    {
+      "piece": "tiles-critic-r3",
+      "win": false,
+      "gap": "Trunks on every tile + no bleed into # + baseline stripe on borders. Fix: trunk gated !dT, bleed into walls/edges, blob shading.",
+      "note": "TileCriticR3 blind: BAR wins, ours 40%. Base full-bleed + flowers pass."
+    },
+    {
+      "piece": "sprites-backs-r2",
+      "win": false,
+      "gap": "Awaiting re-critic.",
+      "note": "SpriteBacks: makeBack deleted, 8 true rear views, unique feet/eyes, rival shirt N. node --check pass claimed."
+    },
+    {
+      "piece": "battle-critic-r3",
+      "win": false,
+      "gap": "Battlers 40px vs HGSS 70px+. Fix: 3x blits, tufts rx 48/72.",
+      "note": "BattleCriticR3: regression closed (blit+restore, 1x HUD, tabbed plates pass). Ours 55%."
+    },
+    {
+      "piece": "sprites-backs-verify",
+      "win": false,
+      "gap": "Awaiting SpriteCriticR2.",
+      "note": "Screenshot: Embercub rear faceless with ears, Pinebug front stalk eyes. Back-face defect closed visually."
+    },
+    {
+      "piece": "canopy-fringe-r4",
+      "win": false,
+      "gap": "Awaiting re-critic.",
+      "note": "CanopyFringe: trunk gated !dT, bleed into #/edges, no baseline band. node --check pass claimed."
+    },
+    {
+      "piece": "sprites-critic-r2",
+      "win": false,
+      "gap": "Backs clone front outlines (faceless fronts). Fix: 3/4 rear poses + dorsal shading.",
+      "note": "SpriteCriticR2: all 5 back checks pass, ours 35%."
+    },
+    {
+      "piece": "battle-scale-verify",
+      "win": false,
+      "gap": "Awaiting BattleCriticR4.",
+      "note": "Screenshot: Gusthawk 3x dominates, Leafhog 3x rear blobby but faceless, HUD 1x intact. node geometry claimed 57-78px, no clipping."
+    },
+    {
+      "piece": "tiles-critic-r4",
+      "win": false,
+      "gap": "Single-tile blob canopy vs HGSS two-tile trees with trunks/shadows. Fix: two-tile fringe trees, 4-6px trunk + ellipse shadow.",
+      "note": "TileCriticR4 blind: BAR wins, ours 35%. Trunkless interior + bleed + masses confirmed."
+    },
+    {
+      "piece": "battle-critic-r4",
+      "win": false,
+      "gap": "Flat lily-pad tufts vs raised mounds. Fix: dark rim + deep shadow, feet on back edge.",
+      "note": "BattleCriticR4 blind: BAR wins, ours 60%. 3x pairs, 1x HUD, feet-in-tuft pass."
+    },
+    {
+      "piece": "battle-mound-r5",
+      "win": false,
+      "gap": "Awaiting re-critic.",
+      "note": "BattleMound: raised mounds + back-slope feet. Caught+fixed second dropped-blit regression same session; foe y -3 to 0."
+    },
+    {
+      "piece": "battle-restore-verify",
+      "win": false,
+      "gap": "Rear-pose sprites pending.",
+      "note": "Screenshot: Nibble 3x on mound shadow, Aquapup faceless rear, 1x plates, mound tufts. HUD intact."
+    }
+  ]
+}

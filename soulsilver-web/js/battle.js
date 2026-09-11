@@ -342,37 +342,25 @@ export class Battle {
     const sub = this.state === "moves" ? this.moveMenu.i : this.state === "bag" ? this.bagMenu.i
       : this.state === "party" || this.state === "faintpick" ? this.partyMenu.i : -1;
     window.__bt = { state: this.state, foe: this.foe.sp + " L" + this.foe.lv + " " + this.foe.hp + "/" + this.foe.maxhp, me: this.me().sp + " L" + this.me().lv + " " + this.me().hp + "/" + this.me().maxhp, menu: this.state === "menu" ? this.menu.i : -1, sub, php: this.party.map((m) => m.hp), ppp: this.me().moves.map((m) => m.pp) };
-    // full-canvas DS field: sky-to-grass gradient, never any void
-    const sky = g.createLinearGradient(0, 0, 0, H);
-    sky.addColorStop(0, "#93d898");
-    sky.addColorStop(0.62, "#6fbf73");
-    sky.addColorStop(0.625, "#4f9a55");
-    sky.addColorStop(1, "#3f7f46");
-    g.fillStyle = sky; g.fillRect(0, 0, W, H);
-    g.fillStyle = "rgba(0,0,0,0.08)";
-    for (let i = 0; i < 40; i++) g.fillRect((i * 53) % W, (i * 29) % 124, 2, 1);
-    // platforms with dark rims
-    g.fillStyle = "#3f7a44";
-    g.beginPath(); g.ellipse(196, 68, 44, 12, 0, 0, 7); g.fill();
-    g.beginPath(); g.ellipse(60, 130, 44, 12, 0, 0, 7); g.fill();
-    g.fillStyle = "#a5dd9f";
-    g.beginPath(); g.ellipse(196, 66, 44, 12, 0, 0, 7); g.fill();
-    g.beginPath(); g.ellipse(60, 128, 44, 12, 0, 0, 7); g.fill();
-    // foe sprite (20x20 scaled 2x)
+    drawBattleBg(g);
+    // grass tufts: back tuft grounds the foe, wide front tuft grounds us
+    drawPlatform(g, 196, 80, 48, 12);
+    drawPlatform(g, 60, 132, 72, 15);
+    // foe sprite (32x32 at 3x); feet seated on the mound's back slope.
+    // idle bob when alive (shadow lives in tuft)
     const bob = Math.floor(this.t * 2) % 2;
-    g.save(); g.translate(176, 26 + (this.foe.hp > 0 ? bob : 0)); g.scale(2, 2);
+    g.save(); g.translate(148, 0 + (this.foe.hp > 0 ? bob : 0)); g.scale(3, 3);
     blit(g, MON_FRONT[this.foe.sp], 0, 0); g.restore();
-    // player back sprite
+    // player back sprite seated on its mound's back slope (feet in the grass)
     const me = this.me();
-    g.save(); g.translate(20, 88); g.scale(2, 2);
+    g.save(); g.translate(12, 50); g.scale(3, 3);
     blit(g, MON_BACK[me.sp], 0, 0); g.restore();
-    // bottom command strip behind the action menus
     if (this.state === "menu" || this.state === "moves" || this.state === "bag") {
       drawPanel(g, 2, H - 44, W - 4, 42);
     }
     // anchored HP plates: enemy top-left, ally bottom-right
-    plate(g, 4, 4, this.foe, true);
-    plate(g, W - 112, 92, me, false);
+    plate(g, 4, 6, this.foe, true);
+    plate(g, W - 116, 96, me, false);
     if (this.state === "menu") this.menu.draw(g);
     if (this.state === "moves" && this.moveMenu) this.moveMenu.draw(g);
     if (this.state === "bag" && this.bagMenu) this.bagMenu.draw(g);
@@ -387,33 +375,156 @@ export class Battle {
 function nm(m) { return `${SPECIES[m.sp].name} LV${m.lv}`; }
 
 function plate(g, x, y, m, foe) {
-  const w = 104, h = foe ? 30 : 40;
-  drawPanel(g, x, y, w, h);
-  const nm_ = SPECIES[m.sp].name;
-  text(g, nm_, x + 8, y + 7, "#182028", 8, true);
+  const w = 108, h = foe ? 34 : 42;
+  // thin-border tabbed chrome anchored to the near edge (foe: left, ally: right)
+  const ax = foe ? 0 : x;
+  const aw = foe ? x + w : W - x;
+  g.fillStyle = "rgba(0,0,0,0.25)";
+  g.fillRect(ax + 1, y + 2, aw, h);
+  g.fillStyle = "#fbfbf0";
+  g.fillRect(ax, y, aw, h);
+  g.fillStyle = "rgba(255,255,255,0.8)";
+  g.fillRect(ax + 1, y + 1, aw - 2, 1);
+  g.strokeStyle = "#334f80";
+  g.lineWidth = 1;
+  g.strokeRect(ax + 0.5, y + 0.5, aw - 1, h - 1);
+  // wedge tab pointing toward the battler (foe: bottom edge; ally: top edge)
+  const tx0 = foe ? ax + aw - 36 : x + 18;
+  const tx1 = foe ? ax + aw - 22 : x + 32;
+  const txTip = foe ? ax + aw - 29 : x + 25;
+  const tyBase = foe ? y + h : y;
+  const tyTip = foe ? y + h + 6 : y - 6;
+  g.beginPath();
+  g.moveTo(tx0, tyBase); g.lineTo(tx1, tyBase); g.lineTo(txTip, tyTip);
+  g.closePath();
+  g.fillStyle = "#fbfbf0"; g.fill();
+  g.strokeStyle = "#334f80"; g.lineWidth = 1;
+  g.beginPath(); g.moveTo(tx0, tyBase); g.lineTo(txTip, tyTip); g.lineTo(tx1, tyBase); g.stroke();
+  const pad = 10;
+  // padded name (left) + measured right-aligned level (proportional font)
+  text(g, SPECIES[m.sp].name, x + pad, y + 6, "#182028", 8, true);
   const lv = "Lv" + m.lv;
-  text(g, lv, x + w - 9 - lv.length * 5, y + 7, "#14305a", 8, true);
-  // HP bar with label tag
-  text(g, "HP", x + 8, y + 16, "#a07818", 7, true);
-  const bx = x + 24, bw = w - 32, frac = Math.max(0, Math.min(1, m.hp / m.maxhp));
-  g.fillStyle = "#283028"; g.fillRect(bx - 1, y + 15, bw + 2, 7);
+  g.save();
+  g.font = `bold 8px Verdana, Tahoma, "DejaVu Sans", sans-serif`;
+  const lvw = g.measureText(lv).width;
+  g.restore();
+  text(g, lv, ax + aw - 8 - Math.ceil(lvw), y + 6, "#14305a", 8, true);
+  // HP row: gold label + bordered color-changing continuous bar
+  text(g, "HP", x + pad, y + 17, "#a07818", 7, true);
+  const bx = x + 26, bw = w - 36, frac = Math.max(0, Math.min(1, m.hp / m.maxhp));
+  g.fillStyle = "#283028"; g.fillRect(bx - 1, y + 16, bw + 2, 7);
   const col = frac > 0.5 ? "#48c848" : frac > 0.25 ? "#e8c838" : "#e84038";
   const fill = Math.floor(bw * frac);
-  g.fillStyle = col; g.fillRect(bx, y + 16, Math.max(0, fill), 5);
-  g.fillStyle = "rgba(255,255,255,0.55)"; g.fillRect(bx, y + 16, Math.max(0, fill), 1);
+  g.fillStyle = col; g.fillRect(bx, y + 17, Math.max(0, fill), 5);
+  g.fillStyle = "rgba(255,255,255,0.55)"; g.fillRect(bx, y + 17, Math.max(0, fill), 1);
   if (!foe) {
-    text(g, `${m.hp}/${m.maxhp}`, x + 8, y + 24, "#182028", 7, true);
+    // status pill left, HP numbers right-aligned on the same row
+    if (m.status === "brn" || m.status === "par") {
+      const lbl = m.status === "brn" ? "BRN" : "PAR";
+      g.fillStyle = m.status === "brn" ? "#e87038" : "#e8c838";
+      g.fillRect(x + pad, y + 25, 21, 8);
+      text(g, lbl, x + pad + 2, y + 26, "#181820", 6, true);
+    }
+    const hpS = `${m.hp}/${m.maxhp}`;
+    g.save();
+    g.font = `7px Verdana, Tahoma, "DejaVu Sans", sans-serif`;
+    const hpw = g.measureText(hpS).width;
+    g.restore();
+    text(g, hpS, ax + aw - 8 - Math.ceil(hpw), y + 25, "#182028", 7, true);
     // XP bar along the plate foot
     const lo = m.lv * m.lv * m.lv, hi = (m.lv + 1) * (m.lv + 1) * (m.lv + 1);
     const xf = Math.max(0, Math.min(1, (m.exp - lo) / Math.max(1, hi - lo)));
-    g.fillStyle = "#283028"; g.fillRect(x + 8, y + h - 6, w - 16, 3);
-    g.fillStyle = "#58a8e8"; g.fillRect(x + 8, y + h - 6, Math.floor((w - 16) * xf), 3);
-  }
-  // status pill (BRN / PAR)
-  if (m.status === "brn" || m.status === "par") {
+    g.fillStyle = "#283028"; g.fillRect(x + 8, y + h - 6, aw - (x - ax) - 16, 3);
+    g.fillStyle = "#58a8e8"; g.fillRect(x + 8, y + h - 6, Math.floor((aw - (x - ax) - 16) * xf), 3);
+    g.fillStyle = "rgba(255,255,255,0.5)"; g.fillRect(x + 8, y + h - 6, Math.floor((aw - (x - ax) - 16) * xf), 1);
+  } else if (m.status === "brn" || m.status === "par") {
+    // foe plate has no XP row: pill sits bottom-left under the HP bar
     const lbl = m.status === "brn" ? "BRN" : "PAR";
     g.fillStyle = m.status === "brn" ? "#e87038" : "#e8c838";
-    g.fillRect(x + w - 28, y + h - 11, 21, 8);
-    text(g, lbl, x + w - 26, y + h - 10, "#181820", 6, true);
+    g.fillRect(x + pad, y + h - 10, 21, 8);
+    text(g, lbl, x + pad + 2, y + h - 9, "#181820", 6, true);
+  }
+}
+
+// Sky-over-R29-meadow backdrop: pale gradient sky, grass base with R29
+// meadow speckle (#4f9a55 dark tufts, #6cba70 light blades on #5da862).
+function drawBattleBg(g) {
+  const HOR = 78; // sky-meadow boundary (soft blend, no seam)
+  const sky = g.createLinearGradient(0, 0, 0, HOR + 6);
+  sky.addColorStop(0, "#c9f0c9");
+  sky.addColorStop(1, "#a5e0ab");
+  g.fillStyle = sky; g.fillRect(0, 0, W, HOR + 6);
+  const gr = g.createLinearGradient(0, HOR - 6, 0, H);
+  gr.addColorStop(0, "#a5e0ab");
+  gr.addColorStop(0.2, "#6cba70");
+  gr.addColorStop(0.4, "#5da862");
+  gr.addColorStop(1, "#478e4d");
+  g.fillStyle = gr; g.fillRect(0, HOR - 6, W, H - HOR + 6);
+  // grass tufts straddling the boundary break the straight edge
+  for (let i = 0; i < 40; i++) {
+    const sx = (i * 53 + 7) % W;
+    const sy = HOR - 4 + ((i * 29 + 11) % 10);
+    g.fillStyle = i % 2 ? "#4f9a55" : "#6cba70";
+    g.fillRect(sx, sy, 2, 1);
+  }
+  // deterministic grass speckle across the whole grass base
+  for (let i = 0; i < 150; i++) {
+    const sx = (i * 53 + 7) % W;
+    const sy = HOR + 4 + ((i * 29 + 11) % (H - HOR - 6));
+    if (i % 3 === 0) { g.fillStyle = "#6cba70"; g.fillRect(sx, sy, 1, 1); }
+    else { g.fillStyle = i % 3 === 1 ? "#4f9a55" : "#478e4d"; g.fillRect(sx, sy, 2, 1); }
+  }
+  // short vertical blades for texture
+  g.fillStyle = "#3d7d3a";
+  for (let i = 0; i < 30; i++) {
+    const bx = (i * 71 + 3) % W;
+    const by = HOR + 6 + ((i * 37 + 9) % (H - HOR - 10));
+    g.fillRect(bx, by, 1, 2);
+  }
+}
+
+// Raised perspective mound: deep offset drop shadow grounds it, dark rim
+// base peeks below a lifted light crown, denser dark speckle toward the
+// back (top) edge sells the far slope; battler feet sit on that back slope.
+function drawPlatform(g, cx, cy, rx, ry) {
+  cx = Math.round(cx); cy = Math.round(cy);
+  // deep offset drop shadow (ground contact, not a hairline)
+  g.fillStyle = "rgba(0,0,0,0.30)";
+  g.beginPath(); g.ellipse(cx + 3, cy + 7, rx, Math.max(4, ry * 0.62), 0, 0, 7); g.fill();
+  g.fillStyle = "rgba(0,0,0,0.20)";
+  g.beginPath(); g.ellipse(cx + 2, cy + 5, rx * 0.96, Math.max(3, ry * 0.55), 0, 0, 7); g.fill();
+  // dark rim base pushed down so its front lip peeks under the crown
+  g.fillStyle = "#3d7d3a";
+  g.beginPath(); g.ellipse(cx, cy + 2, rx, ry, 0, 0, 7); g.fill();
+  // light crown lifted above the rim
+  g.fillStyle = "#63b168";
+  g.beginPath(); g.ellipse(cx, cy - 1, rx, ry, 0, 0, 7); g.fill();
+  // light catch along the back (top) arc of the crown
+  g.strokeStyle = "#86cc80"; g.lineWidth = 1;
+  g.beginPath(); g.ellipse(cx, cy - 1, rx - 1, Math.max(2, ry - 1), 0, Math.PI * 1.05, Math.PI * 1.95); g.stroke();
+  // dense dark crown shading toward the back edge (upper half)
+  for (let i = 0; i < 30; i++) {
+    const px = cx - rx + 2 + ((i * 37 + 11) % Math.max(4, rx * 2 - 4));
+    const py = cy - 1 - ry + 2 + ((i * 23 + 5) % Math.max(2, ry - 1));
+    const dx = (px - cx) / rx, dy = (py - (cy - 1)) / ry;
+    if (dx * dx + dy * dy > 1) continue;
+    g.fillStyle = i % 3 === 2 ? "#478e4d" : "#4f9a55";
+    g.fillRect(px, py, 2, 1);
+  }
+  // sparse light blades toward the front slope
+  for (let i = 0; i < 12; i++) {
+    const px = cx - rx + 3 + ((i * 53 + 9) % Math.max(4, rx * 2 - 6));
+    const py = cy + ((i * 31 + 3) % Math.max(2, ry - 1));
+    const dx = (px - cx) / rx, dy = (py - (cy - 1)) / ry;
+    if (dx * dx + dy * dy > 1) continue;
+    g.fillStyle = i % 2 ? "#6cba70" : "#86cc80";
+    g.fillRect(px, py, 2, 1);
+  }
+  // upright blade fringe along the back rim
+  const blades = Math.max(8, Math.round(rx / 6));
+  g.fillStyle = "#3d7d3a";
+  for (let i = 0; i < blades; i++) {
+    const px = cx - rx + 4 + ((i * 41 + 7) % Math.max(4, rx * 2 - 8));
+    g.fillRect(px, cy - 1 - ry - 1 + (i % 2), 1, 2);
   }
 }

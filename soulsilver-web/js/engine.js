@@ -54,7 +54,19 @@ export function bindTouch() {
 }
 
 // ---- DS chrome helpers: rounded panels, proportional font ----
+// HGSS look: off-white rounded panels, dark-navy outer border + pale-blue
+// inner border (double border), soft drop shadow, 8px proportional text
+// with true alphabetic-baseline descenders and measure-based layout.
 const DS_FONT = 'Verdana, Tahoma, "DejaVu Sans", sans-serif';
+const DS_SIZE = 8;          // HGSS body glyph size
+const DS_BASELINE = 7;      // ascent px for 8px Verdana: top-anchored y -> baseline
+const DS_LINE_H = 10;       // tight HGSS textbox line step (8px glyph + 2px gap)
+const DS_MENU_RH = 12;      // tight menu row step
+const ARROW_PERIOD = 480;   // ms per blink phase (HGSS ~1Hz arrow blink)
+
+function dsFont(size, bold) {
+  return `${bold ? "bold " : ""}${size}px ${DS_FONT}`;
+}
 function rr(g, x, y, w, h, r) {
   r = Math.max(0, Math.min(r, w / 2, h / 2));
   g.beginPath();
@@ -64,6 +76,14 @@ function rr(g, x, y, w, h, r) {
   g.arcTo(x, y + h, x, y, r);
   g.arcTo(x, y, x + w, y, r);
   g.closePath();
+}
+// variable-width measure with the real canvas font (never char-count * N)
+function measure(g, s, size = DS_SIZE, bold = false) {
+  g.save();
+  g.font = dsFont(size, bold);
+  const w = g.measureText(s).width;
+  g.restore();
+  return w;
 }
 function triR(g, x, y, s, color) {
   g.fillStyle = color;
@@ -75,6 +95,14 @@ function triR(g, x, y, s, color) {
   g.fill();
 }
 function triD(g, cx, y, s, color) {
+  // white edge under the red arrow so it reads on the off-white panel
+  g.fillStyle = "rgba(255,255,255,0.9)";
+  g.beginPath();
+  g.moveTo(cx - s / 2 - 1, y - 1);
+  g.lineTo(cx + s / 2 + 1, y - 1);
+  g.lineTo(cx, y + s + 1);
+  g.closePath();
+  g.fill();
   g.fillStyle = color;
   g.beginPath();
   g.moveTo(cx - s / 2, y);
@@ -83,28 +111,27 @@ function triD(g, cx, y, s, color) {
   g.closePath();
   g.fill();
 }
+function arrowOn(period = ARROW_PERIOD) {
+  return Math.floor(performance.now() / period) % 2 === 0;
+}
 function panelChrome(g, x, y, w, h) {
   x = Math.round(x); y = Math.round(y); w = Math.round(w); h = Math.round(h);
   g.save();
+  // drop shadow (offset, translucent, same rounded shape)
   g.fillStyle = "rgba(0,0,0,0.35)";
-  rr(g, x + 1, y + 2, w, h, 5); g.fill();
-  g.fillStyle = "#fdfdf4";
-  rr(g, x, y, w, h, 5); g.fill();
+  rr(g, x + 1, y + 2, w, h, 6); g.fill();
+  // off-white face
+  g.fillStyle = "#fbfbf0";
+  rr(g, x, y, w, h, 6); g.fill();
+  // outer highlight just inside the face
   g.lineWidth = 2; g.strokeStyle = "#ffffff";
-  rr(g, x + 1, y + 1, w - 2, h - 2, 4); g.stroke();
-  g.lineWidth = 1; g.strokeStyle = "#3c5a8a";
-  rr(g, x + 2.5, y + 2.5, w - 5, h - 5, 3); g.stroke();
-  g.strokeStyle = "#9fb4d8";
-  rr(g, x + 4, y + 4, w - 8, h - 8, 2); g.stroke();
+  rr(g, x + 1, y + 1, w - 2, h - 2, 5); g.stroke();
+  // double border: dark navy outer + pale blue inner
+  g.lineWidth = 1; g.strokeStyle = "#334f80";
+  rr(g, x + 2.5, y + 2.5, w - 5, h - 5, 4); g.stroke();
+  g.strokeStyle = "#a9c1e6";
+  rr(g, x + 4, y + 4, w - 8, h - 8, 3); g.stroke();
   g.restore();
-}
-function isDarkColor(c) {
-  const m = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(c || "");
-  if (!m) return true;
-  let h = m[1];
-  if (h.length === 3) h = h.split("").map((ch) => ch + ch).join("");
-  const r = parseInt(h.slice(0, 2), 16), gg = parseInt(h.slice(2, 4), 16), b = parseInt(h.slice(4, 6), 16);
-  return (0.299 * r + 0.587 * gg + 0.114 * b) < 128;
 }
 
 // ---- text box ----
@@ -133,26 +160,26 @@ export class TextBox {
     if (!this.open) return;
     const bx = 4, bw = W - 8, bh = 52, by = H - 56;
     panelChrome(g, bx, by, bw, bh);
-    // tail notch on the top edge, right side (speaker tab)
-    const tx = bx + bw - 46;
-    g.save();
-    g.fillStyle = "#fdfdf4";
-    g.strokeStyle = "#3c5a8a"; g.lineWidth = 1;
-    g.beginPath();
-    g.moveTo(tx, by + 1); g.lineTo(tx + 6, by - 5); g.lineTo(tx + 12, by + 1);
-    g.closePath();
-    g.fill(); g.stroke();
-    g.restore();
-    // name-plate row: a "NAME: ..." prefix gets its own plate above the box
+    // name-plate row: a "NAME: ..." prefix gets its own plate straddling
+    // the top border. Width is measured (variable widths) + padding so the
+    // name can never clip, and the plate is clamped inside the canvas.
     const m = this.shown.match(/^([A-Z][A-Z .'\-]{1,11}):(?:\s|\n)/);
     if (m) {
-      const nw = m[1].length * 7 + 16;
-      panelChrome(g, bx + 6, by - 13, nw, 15);
-      text(g, m[1], bx + 14, by - 10, "#14305a", 8, true);
+      const name = m[1];
+      const tw = measure(g, name, DS_SIZE, true);
+      const padX = 6, extra = 2; // +2px breathing room past the padding
+      const nw = Math.min(Math.ceil(tw) + padX * 2 + extra, bw - 12, W - (bx + 6) - 2);
+      const nx = Math.min(bx + 6, W - 2 - nw);
+      const nh = 15, ny = by - 13;
+      panelChrome(g, nx, ny, nw, nh);
+      // text top sits 3px inside the plate; baseline + descenders stay inside
+      text(g, name, nx + padX + 1, ny + 3, "#14305a", DS_SIZE, true);
     }
     const lines = this.shown.split("\n");
-    lines.slice(0, 4).forEach((ln, i) => text(g, ln, bx + 10, by + 8 + i * 11, "#182028"));
-    if (this.done && Math.floor(performance.now() / 400) % 2 === 0) triD(g, bx + bw - 14, by + bh - 12, 6, "#c02020");
+    // strip the "NAME:" prefix from the first body line so it is not doubled
+    if (m && lines.length) lines[0] = lines[0].slice(m[1].length + 1).replace(/^\s/, "");
+    lines.slice(0, 4).forEach((ln, i) => text(g, ln, bx + 10, by + 7 + i * DS_LINE_H, "#182028"));
+    if (this.done && arrowOn()) triD(g, bx + bw - 14, by + bh - 12, 6, "#c02020");
   }
 }
 export const textbox = new TextBox();
@@ -187,14 +214,17 @@ export function drawPanel(g, x, y, w, h) {
 }
 
 export function text(g, s, x, y, color = "#f8f8f8", size = 8, bold = false) {
+  // x/y name the TOP-LEFT of the text run; glyphs use a true alphabetic
+  // baseline so descenders (g, y, p, q, j) render below the baseline
+  // instead of clipping, with proportional (variable) advances.
+  // HGSS body text is flat: no shadow/outline pass under the glyphs.
   x = Math.round(x); y = Math.round(y);
+  const base = y + (size === DS_SIZE ? DS_BASELINE : Math.round(size * 0.88));
   g.save();
-  g.font = `${bold ? "bold " : ""}${size}px ${DS_FONT}`;
-  g.textBaseline = "top"; g.textAlign = "left";
-  g.fillStyle = isDarkColor(color) ? "rgba(0,0,0,0.55)" : "rgba(255,255,255,0.7)";
-  g.fillText(s, x + 1, y + 1);
+  g.font = dsFont(size, bold);
+  g.textBaseline = "alphabetic"; g.textAlign = "left";
   g.fillStyle = color;
-  g.fillText(s, x, y);
+  g.fillText(s, x, base);
   g.restore();
 }
 
@@ -209,13 +239,16 @@ export class Menu {
     return null;
   }
   draw(g) {
-    const rh = 13, h = this.items.length * rh + 8;
-    drawPanel(g, this.x, this.y, this.w, h);
+    const rh = DS_MENU_RH, h = this.items.length * rh + 10;
+    // clamp inside the 256x192 frame so panels never clip the screen edge
+    const w = Math.min(this.w, W - this.x - 2);
+    drawPanel(g, this.x, this.y, w, h);
     this.items.forEach((it, k) => {
-      const iy = this.y + 5 + k * rh, sel = k === this.i;
-      if (sel) { g.fillStyle = "#dce8f8"; rr(g, this.x + 4, iy - 1, this.w - 8, rh, 3); g.fill(); }
-      if (sel) triR(g, this.x + 7, iy + 2, 8, "#2a4a8a");
-      text(g, it, this.x + 18, iy + 1, sel ? "#102848" : "#33405a", 8, sel);
+      const iy = this.y + 6 + k * rh, sel = k === this.i;
+      // HGSS selection is cursor-arrow-only: no row highlight fill.
+      if (sel) triR(g, this.x + 7, iy + 2, 7, "#c02020");
+      // +2px start pad past the cursor; row top keeps descenders inside
+      text(g, it, this.x + 18, iy + 1, "#33405a", DS_SIZE, false);
     });
   }
 }

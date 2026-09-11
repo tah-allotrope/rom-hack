@@ -8,6 +8,436 @@ import { sfx } from "./audio.js";
 
 const SOLID = new Set(["#", "T", "W", "H", "R", "C", "L", "O", "B", "S", "P", "="]);
 const TALL = new Set(["G"]);
+// ---- Overworld tile painters (owned here): textured 16px procedural art ----
+// Deterministic per-tile hash so speckle varies tile-to-tile without shimmer.
+const INDOOR = new Set(["house", "lab", "center", "violethouse", "gym", "violetgate"]);
+const GRASSY = new Set([",", "G", "F", "T", "S", "=", "#"]);
+const WALKY = new Set([".", "~", "D", "+"]);
+function hash2(x, y) {
+  let h = ((x | 0) * 374761393 + (y | 0) * 668265263) | 0;
+  h = Math.imul(h ^ (h >>> 13), 1274126177);
+  h ^= h >>> 16;
+  return h >>> 0;
+}
+function tileAt(m, x, y) {
+  if (x < 0 || y < 0 || x >= m.w || y >= m.h) return null;
+  return m.rows[y][x];
+}
+// Full-bleed paint entry. (dx,dy) = screen px, (tx,ty) = tile coords, m = map def.
+function paintTile(g, t, dx, dy, frame, tx, ty, m, map) {
+  const R = (cx, cy, w, h, c) => { g.fillStyle = c; g.fillRect(dx + cx, dy + cy, w, h); };
+  const P = (cx, cy, c) => { g.fillStyle = c; g.fillRect(dx + cx, dy + cy, 1, 1); };
+  let seed = hash2(tx, ty);
+  const RND = (n) => { seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0; return seed % n; };
+  const grassSpeckle = () => {
+    R(0, 0, 16, 16, "#5da862");
+    for (let i = 0; i < 12; i++) {
+      const sx = RND(16), sy = RND(16);
+      P(sx, sy, i % 3 === 0 ? "#6cba70" : "#4f9a55");
+      if (i % 4 === 0) P((sx + 1) % 16, sy, "#4f9a55");
+    }
+    // blade ticks break the flat grid
+    for (let i = 0; i < 3; i++) {
+      const sx = RND(15), sy = RND(14);
+      R(sx, sy, 1, 2, "#3f8a46"); P(sx, sy, "#6cba70");
+    }
+  };
+  switch (t) {
+    case ",": {
+      grassSpeckle();
+      // plain-grass blooms: white/pink/red stemmed clusters only (no lone pixels)
+      const h = hash2(tx * 3 + 1, ty * 5 + 2);
+      const heads = ["#ffffff", "#f4a8c0", "#e03030"];
+      const centers = ["#f8d838", "#ffffff", "#f8d838"];
+      const clusters = 1 + (h % 2);
+      for (let i = 0; i < clusters; i++) {
+        const hh = hash2(tx * 7 + i * 13 + 5, ty * 11 + i * 17 + 3);
+        const cx = 2 + (hh % 11), cy = 2 + ((hh >>> 3) % 9);
+        const head = heads[(hh >>> 5) % heads.length];
+        const ctr = centers[(hh >>> 5) % centers.length];
+        R(cx, cy + 2, 1, 2, "#38a048");
+        R(cx - 1, cy, 3, 2, head);
+        P(cx, cy, ctr); P(cx, cy + (head === "#ffffff" ? 1 : 0), ctr);
+      }
+      break;
+    }
+    case ".": {
+      // dirt path: warm sand + pebble speckle
+      R(0, 0, 16, 16, "#d8b878");
+      for (let i = 0; i < 10; i++) {
+        const sx = RND(16), sy = RND(16);
+        P(sx, sy, i % 3 === 0 ? "#b89058" : (i % 3 === 1 ? "#e8c890" : "#c8a868"));
+      }
+      P(RND(16), RND(16), "#b8b8c8"); P(RND(16), RND(16), "#8a8a9a");
+      P(RND(16), RND(16), "#e8c890"); P(RND(16), RND(16), "#a88050");
+      // rounded grass edges where the path meets grass
+      const nb = (x, y) => { const c = tileAt(m, x, y); return c === null ? "." : c; };
+      const up = nb(tx, ty - 1), dn = nb(tx, ty + 1), lf = nb(tx - 1, ty), rt = nb(tx + 1, ty);
+      const isG = (c) => GRASSY.has(c);
+      if (isG(up)) {
+        R(0, 0, 16, 2, "#5da862");
+        if (isG(lf) || isG(nb(tx - 1, ty - 1))) { P(0, 0, "#5da862"); P(0, 1, "#5da862"); P(1, 0, "#5da862"); P(1, 1, "#d8b878"); }
+        else { P(0, 0, "#d8b878"); P(0, 1, "#d8b878"); }
+        if (isG(rt) || isG(nb(tx + 1, ty - 1))) { P(15, 0, "#5da862"); P(15, 1, "#5da862"); P(14, 0, "#5da862"); P(14, 1, "#d8b878"); }
+        else { P(15, 0, "#d8b878"); P(15, 1, "#d8b878"); }
+        R(0, 2, 16, 1, "#c8a868");
+      }
+      if (isG(dn)) {
+        R(0, 14, 16, 2, "#5da862");
+        if (isG(lf) || isG(nb(tx - 1, ty + 1))) { P(0, 15, "#5da862"); P(0, 14, "#5da862"); P(1, 15, "#5da862"); P(1, 14, "#d8b878"); }
+        else { P(0, 15, "#d8b878"); P(0, 14, "#d8b878"); }
+        if (isG(rt) || isG(nb(tx + 1, ty + 1))) { P(15, 15, "#5da862"); P(15, 14, "#5da862"); P(14, 15, "#5da862"); P(14, 14, "#d8b878"); }
+        else { P(15, 15, "#d8b878"); P(15, 14, "#d8b878"); }
+        R(0, 13, 16, 1, "#c8a868");
+      }
+      if (isG(lf)) { R(0, 0, 2, 16, "#5da862"); R(2, 0, 1, 16, "#c8a868"); }
+      if (isG(rt)) { R(14, 0, 2, 16, "#5da862"); R(13, 0, 1, 16, "#c8a868"); }
+      break;
+    }
+    case "~": {
+      R(0, 0, 16, 16, "#c8a060");
+      R(0, 0, 16, 1, "#d8b070"); R(0, 7, 16, 2, "#b89058"); R(0, 15, 16, 1, "#a88050");
+      for (let i = 0; i < 9; i++) { P(RND(16), RND(16), i % 2 ? "#b89058" : "#e0c080"); }
+      P(RND(16), RND(16), "#8a8a9a");
+      break;
+    }
+    case "G": {
+      // tall grass: dark bed + animated swaying blades
+      R(0, 0, 16, 16, "#4c9448");
+      for (let i = 0; i < 8; i++) P(RND(16), RND(16), "#3d7d3a");
+      const o = frame % 2;
+      const blades = [[1, 5, 9], [5, 3, 11], [9, 4, 10], [13, 5, 8]];
+      for (const [bx, by, bh] of blades) {
+        const sway = ((bx + frame) % 3 === 0) ? o : -o;
+        R(bx + sway, by, 2, bh, "#35702f");
+        R(bx + sway, by, 1, bh - 2, "#3d7d3a");
+        P(bx + sway, by - 1 >= 0 ? by - 1 : by, "#6cba70");
+        P(bx + sway + 1, by + 1, "#6cba70");
+      }
+      R(0, 14, 16, 2, "#35702f");
+      P(RND(16), 15, "#6cba70"); P(RND(16), 14, "#6cba70");
+      break;
+    }
+    case "F": {
+      grassSpeckle();
+      // stemmed blooms: white daisy + pink + yellow buds
+      R(4, 7, 1, 3, "#38a048"); R(3, 3, 3, 3, "#f4f4f4"); P(4, 4, "#f8d838"); R(4, 3, 1, 1, "#ffffff");
+      R(11, 11, 1, 3, "#38a048"); R(10, 8, 3, 3, "#e86a8a"); P(11, 9, "#f8d838"); R(10, 8, 1, 1, "#f49aac");
+      const h = hash2(tx * 7 + 3, ty * 11 + 5);
+      const dots = ["#f8d838", "#ffffff", "#f4a8c0", "#e03030"];
+      P(1 + (h % 13), 12 + (h % 3), dots[h % dots.length]);
+      P(13 - (h % 6), 2 + (h % 4), dots[(h >>> 2) % dots.length]);
+      break;
+    }
+    case "T": {
+      // canopy tree: neighbor-aware crowns merge into continuous canopy
+      grassSpeckle();
+      // canopy-continuous neighbors: forest trees, wall mass, and OOB edge
+      const isCanopy = (c) => c === "T" || c === "#" || c === null;
+      const nbT = (x, y) => isCanopy(tileAt(m, x, y));
+      const lT = nbT(tx - 1, ty), rT = nbT(tx + 1, ty);
+      const uT = nbT(tx, ty - 1), dT = nbT(tx, ty + 1);
+      const tv = hash2(tx, ty) % 3;
+      // horizontal bleed bounds for the canopy mid-band (no grass gutter)
+      const lx = lT ? 0 : 2, rx = rT ? 16 : 14;
+      if (tv === 0) {
+        // round crown, sun highlight top-left
+        if (uT) { R(5, 0, 6, 4, "#388e3c"); R(4, 0, 3, 3, "#4caf50"); P(5, 0, "#7ddb84"); P(4, 1, "#7ddb84"); }
+        else { R(5, 2, 6, 3, "#388e3c"); R(4, 3, 3, 2, "#4caf50"); P(5, 2, "#7ddb84"); P(4, 4, "#7ddb84"); }
+        R(4, 4, 8, 7, "#2e7d32");
+        R(lx, 6, rx - lx, 3, "#2e7d32");
+        R(3, 5, 4, 2, "#388e3c");
+        P(3, 5, "#4caf50");
+        P(9, 6, "#4caf50"); P(10, 5, "#7ddb84");
+        R(9, 8, 4, 2, "#256b28"); R(11, 6, 2, 3, "#256b28");
+        P(12, 9, "#1e5a20"); P(5, 9, "#1e5a20");
+        if (dT) R(4, 11, 8, 5, "#2e7d32");
+        else R(4, 11, 8, 1, "#1e5a20");
+      } else if (tv === 1) {
+        // tall crown shifted right, highlight top-right
+        if (uT) { R(6, 0, 5, 3, "#388e3c"); R(9, 0, 3, 3, "#4caf50"); P(10, 0, "#7ddb84"); P(9, 1, "#7ddb84"); P(11, 1, "#7ddb84"); }
+        else { R(6, 1, 5, 3, "#388e3c"); R(9, 2, 3, 2, "#4caf50"); P(10, 1, "#7ddb84"); P(9, 3, "#7ddb84"); P(11, 3, "#7ddb84"); }
+        R(4, 3, 8, 8, "#2e7d32");
+        R(lx, 6, rx - lx, 3, "#2e7d32");
+        R(9, 4, 4, 2, "#388e3c");
+        P(5, 5, "#4caf50"); P(4, 4, "#7ddb84");
+        R(3, 8, 4, 2, "#256b28"); R(3, 6, 2, 3, "#256b28");
+        P(3, 9, "#1e5a20"); P(10, 9, "#1e5a20");
+        if (dT) R(4, 11, 8, 5, "#2e7d32");
+        else R(4, 11, 8, 1, "#1e5a20");
+      } else {
+        // wide flat crown, highlight center-left
+        if (uT) { R(4, 0, 8, 3, "#388e3c"); R(5, 0, 3, 3, "#4caf50"); P(6, 0, "#7ddb84"); P(5, 1, "#7ddb84"); P(7, 1, "#7ddb84"); }
+        else { R(4, 3, 8, 2, "#388e3c"); R(5, 4, 3, 2, "#4caf50"); P(6, 3, "#7ddb84"); P(5, 5, "#7ddb84"); P(7, 4, "#7ddb84"); }
+        R(3, 5, 10, 6, "#2e7d32");
+        R(lx, 7, rx - lx, 2, "#2e7d32");
+        R(3, 5, 3, 2, "#388e3c"); R(10, 5, 3, 2, "#388e3c");
+        P(11, 6, "#4caf50"); P(4, 7, "#4caf50");
+        R(10, 8, 3, 2, "#256b28"); R(11, 6, 2, 3, "#256b28");
+        P(12, 9, "#1e5a20"); P(6, 9, "#1e5a20");
+        if (dT) R(3, 11, 10, 5, "#2e7d32");
+        else R(4, 11, 8, 1, "#1e5a20");
+      }
+      // side walls bleed to the tile edge when merged; stretch full height
+      // toward canopy neighbors so interior reads as one crown mass
+      const sy = tv === 2 ? 5 : 4, sh = tv === 2 ? 6 : 7;
+      if (lT) R(0, uT ? 0 : sy, 2, sh + (uT ? sy : 0) + (dT ? 16 - sy - sh : 0), "#2e7d32");
+      if (rT) R(14, uT ? 0 : sy, 2, sh + (uT ? sy : 0) + (dT ? 16 - sy - sh : 0), "#2e7d32");
+      // corners close only where both edges are canopy-continuous
+      if (uT && lT) R(0, 0, 4, 4, "#2e7d32");
+      if (uT && rT) R(12, 0, 4, 4, "#2e7d32");
+      if (dT && lT) R(0, 11, 4, 5, "#2e7d32");
+      if (dT && rT) R(12, 11, 4, 5, "#2e7d32");
+      // HGSS-scale fringe tree: full-bleed crown + wide trunk + ellipse shadow
+      // (south fringe only; interior mass stays trunkless). Single-tile only:
+      // no map-format change, so this tile carries crown, trunk, and shadow.
+      if (!dT) {
+        // wide crown: force full-bleed mid-band + skirt to the tile edges
+        R(0, 6, 4, 5, "#2e7d32"); R(12, 6, 4, 5, "#2e7d32");
+        R(0, 10, 16, 3, "#2e7d32");
+        R(0, 6, 1, 5, "#388e3c"); R(15, 6, 1, 5, "#388e3c");
+        P(1, 7, "#4caf50"); P(14, 8, "#4caf50"); P(2, 9, "#388e3c"); P(13, 7, "#388e3c");
+        R(0, 10, 16, 1, "#388e3c");
+        R(0, 12, 16, 1, "#256b28");
+        P(3, 10, "#4caf50"); P(12, 10, "#4caf50"); P(5, 12, "#1e5a20"); P(10, 12, "#1e5a20");
+        // ellipse ground shadow on the grass below the skirt
+        R(1, 13, 14, 1, "#3f8a46"); R(0, 14, 16, 1, "#3f8a46"); R(1, 15, 14, 1, "#35702f");
+        R(3, 14, 10, 1, "#2f6b33"); R(4, 13, 8, 1, "#35702f"); R(4, 15, 8, 1, "#2a5a2e");
+        // centered 6px trunk running from inside the crown to the tile base
+        R(5, 5, 6, 11, "#5e3a18");
+        R(6, 5, 4, 11, "#8a5a28");
+        R(6, 5, 1, 11, "#c8a068");
+        R(10, 5, 1, 11, "#3a2010");
+        P(8, 7, "#5e3a18"); P(8, 10, "#5e3a18"); P(7, 12, "#5e3a18");
+        P(6, 6, "#e8c088");
+        // root flare seated in the shadow
+        R(4, 14, 8, 2, "#5e3a18"); R(5, 14, 6, 2, "#8a5a28"); R(5, 14, 1, 2, "#c8a068");
+        // canopy lips overlap the trunk top so it emerges from the crown
+        R(3, 5, 3, 2, "#388e3c"); R(10, 5, 3, 2, "#388e3c");
+        P(4, 5, "#7ddb84"); P(11, 5, "#4caf50");
+      }
+      break;
+    }
+    case "W": {
+      R(0, 0, 16, 16, "#3d7dc8");
+      for (let i = 0; i < 6; i++) P(RND(16), RND(16), "#2e6ab0");
+      const o = frame % 2 ? 2 : 0;
+      R(2 + o, 4, 5, 1, "#7db8e8"); R(9 - o, 10, 5, 1, "#7db8e8");
+      R(4, 13, 4, 1, "#7db8e8"); R(2 + o, 3, 2, 1, "#c8e8f8"); R(9 - o, 9, 2, 1, "#c8e8f8");
+      break;
+    }
+    case "#": {
+      if (INDOOR.has(map)) {
+        R(0, 0, 16, 16, "#3a2412");
+        for (let i = 0; i < 6; i++) P(RND(16), RND(16), "#4a2c12");
+        R(0, 0, 16, 1, "#5e3a18");
+      } else {
+        // out-of-bounds forest wall: seeded blob layout hides the 16px stamp
+        const h = hash2(tx, ty);
+        R(0, 0, 16, 16, "#256b28");
+        // canopy-continuous neighbors bleed with no grass gutter
+        const isCan = (c) => c === "#" || c === "T" || c === null;
+        const uC = isCan(tileAt(m, tx, ty - 1)), dC = isCan(tileAt(m, tx, ty + 1));
+        const lC = isCan(tileAt(m, tx - 1, ty)), rC = isCan(tileAt(m, tx + 1, ty));
+        // edge-anchored masses: blobs always touch shared canopy edges
+        if (uC) R(0, 0, 16, 3, "#2e7d32");
+        if (dC) R(0, 13, 16, 3, "#2e7d32");
+        if (lC) R(0, 0, 3, 16, "#2e7d32");
+        if (rC) R(13, 0, 3, 16, "#2e7d32");
+        if (uC && lC) R(0, 0, 5, 5, "#2e7d32");
+        if (uC && rC) R(11, 0, 5, 5, "#2e7d32");
+        if (dC && lC) R(0, 11, 5, 5, "#2e7d32");
+        if (dC && rC) R(11, 11, 5, 5, "#2e7d32");
+        // seeded interior blobs, each touching at least one tile edge so
+        // adjacent tiles merge into masses instead of stamped stripes
+        const b1x = (h % 2) ? 0 : 1 + (h % 2), b1y = 0;
+        const b1w = 7, b1h = 5 + ((h >>> 2) % 2);
+        const b2x = 9 - ((h >>> 4) % 2), b2y = 0;
+        const b2w = 7 + ((h >>> 4) % 2), b2h = 5;
+        const b3left = (h >>> 8) % 2 === 0;
+        const b3x = b3left ? 0 : 8 - ((h >>> 8) % 3), b3y = 7 + ((h >>> 10) % 3);
+        const b3w = b3left ? 8 : 16 - b3x - ((h >>> 6) % 2), b3h = 6;
+        R(b1x, b1y, b1w, b1h, "#2e7d32"); R(b2x, b2y, b2w, b2h, "#2e7d32"); R(b3x, b3y, b3w, b3h, "#2e7d32");
+        R(b1x, b1y, 5 - (h % 2), 2, "#388e3c"); R(b2x + 1, b2y + 1, 3, 2, "#388e3c");
+        P(b1x + 1 + (h % 3), b1y + 1, "#4caf50"); P(b1x + 2, b1y + 2 - (h % 2), "#7ddb84");
+        P(b2x + 2 - ((h >>> 3) % 2), b2y + 1, "#4caf50"); P(b3x + 1 + ((h >>> 5) % 4), b3y + 1, "#4caf50");
+        P(b3x + 2, b3y + 2, "#7ddb84"); P(b1x + 4, b3y + 3, "#1e5a20");
+        // low shade as seeded edge-anchored blobs, never a full-width band
+        const s1w = 6 + ((h >>> 12) % 3), s1y = 12 + ((h >>> 3) % 2);
+        const s2w = 5 + ((h >>> 14) % 3), s2y = 12 + ((h >>> 5) % 2);
+        R(0, s1y, s1w, 16 - s1y, "#1e5a20");
+        R(16 - s2w, s2y, s2w, 16 - s2y, "#1e5a20");
+        P(RND(16), RND(16), "#388e3c"); P(RND(16), RND(16), "#1e5a20"); P(RND(16), RND(16), "#2e7d32");
+      }
+      break;
+    }
+    case "H": {
+      R(0, 0, 16, 16, "#f2e2c0");
+      for (let sx = 1; sx < 16; sx += 4) R(sx, 2, 2, 11, "#e9cf9e");
+      P(3, 5, "#e9cf9e"); P(11, 9, "#e9cf9e"); P(7, 11, "#e9cf9e");
+      R(0, 0, 16, 2, "#c8a878"); R(0, 0, 16, 1, "#a88050");
+      R(0, 13, 16, 3, "#8a5a28"); R(0, 13, 16, 1, "#c8a068");
+      break;
+    }
+    case "R": {
+      // house roof: courses + staggered joints + ridge/eave trim
+      R(0, 0, 16, 16, "#c03828");
+      R(0, 0, 16, 2, "#e05848"); R(0, 0, 16, 1, "#f08070");
+      R(0, 5, 16, 1, "#982818"); R(0, 9, 16, 1, "#982818"); R(0, 13, 16, 1, "#982818");
+      R(0, 15, 16, 1, "#5e1408"); R(0, 14, 16, 1, "#e05848");
+      R(4, 2, 1, 3, "#a82818"); R(11, 2, 1, 3, "#a82818");
+      R(1, 6, 1, 3, "#a82818"); R(8, 6, 1, 3, "#a82818"); R(14, 6, 1, 3, "#a82818");
+      R(5, 10, 1, 3, "#a82818"); R(12, 10, 1, 3, "#a82818");
+      P(6, 3, "#f08070"); P(13, 7, "#f08070"); P(3, 11, "#f08070");
+      P(2, 5, "#701808"); P(9, 9, "#701808");
+      break;
+    }
+    case "D": {
+      R(0, 0, 16, 16, "#8a5a28");
+      R(2, 0, 12, 14, "#6e4520");
+      R(2, 0, 12, 1, "#c8a068"); R(2, 0, 12, 2, "#a87848");
+      R(4, 3, 3, 4, "#542f14"); R(9, 3, 3, 4, "#542f14");
+      R(4, 8, 3, 4, "#542f14"); R(9, 8, 3, 4, "#542f14");
+      R(4, 3, 3, 1, "#8a5a28"); R(9, 3, 3, 1, "#8a5a28");
+      R(4, 8, 3, 1, "#8a5a28"); R(9, 8, 3, 1, "#8a5a28");
+      R(11, 7, 2, 2, "#f8d838"); P(11, 7, "#fff8d0");
+      R(2, 12, 12, 1, "#3a2010");
+      R(0, 14, 16, 2, "#d8b878"); R(0, 14, 16, 1, "#e8c890");
+      break;
+    }
+    case "C": {
+      R(0, 0, 16, 16, "#5e3a18");
+      R(1, 1, 14, 14, "#8a5a28");
+      R(1, 1, 14, 3, "#c8a068"); R(1, 1, 14, 1, "#e8c088");
+      R(3, 5, 10, 6, "#202028");
+      R(3, 5, 10, 1, "#8a8aa8"); R(3, 5, 1, 6, "#8a8aa8"); R(3, 10, 10, 1, "#585868"); R(12, 5, 1, 6, "#585868");
+      R(4, 6, 2, 3, "#585868"); P(4, 6, "#8a8aa8");
+      if (frame % 2) { P(10, 7, "#48c8e0"); P(8, 8, "#48c8e0"); } else { P(9, 7, "#48c8e0"); P(11, 8, "#48c8e0"); }
+      R(1, 12, 14, 1, "#5e3a18");
+      R(2, 13, 4, 2, "#704828"); R(10, 13, 4, 2, "#704828");
+      P(13, 13, "#e03030");
+      break;
+    }
+    case "L": {
+      R(0, 0, 16, 16, "#5e3a18");
+      R(1, 0, 14, 6, "#c8a068");
+      R(1, 0, 14, 1, "#e8c088");
+      R(1, 2, 14, 1, "#b89058"); R(1, 4, 14, 1, "#b89058");
+      P(4, 3, "#b89058"); P(11, 5, "#b89058");
+      R(5, 1, 4, 3, "#f4f4f4"); R(5, 3, 4, 1, "#4858a8"); R(5, 1, 4, 1, "#ffffff");
+      R(1, 6, 14, 1, "#8a5a28");
+      R(1, 7, 14, 8, "#8a5a28");
+      R(2, 8, 5, 6, "#a87848"); R(9, 8, 5, 6, "#a87848");
+      R(2, 8, 5, 1, "#c8a068"); R(9, 8, 5, 1, "#c8a068");
+      R(2, 14, 5, 1, "#5e3a18"); R(9, 14, 5, 1, "#5e3a18");
+      P(4, 11, "#f8d838"); P(11, 11, "#f8d838");
+      break;
+    }
+    case "O": {
+      R(0, 0, 16, 16, "#5e3a18");
+      R(1, 8, 14, 7, "#888898"); R(1, 8, 14, 1, "#d8d8e8");
+      R(1, 14, 14, 1, "#585868");
+      R(1, 10, 14, 1, "#6e6e7e");
+      R(2, 4, 3, 4, "#e03030"); R(2, 6, 3, 2, "#f4f4f4"); P(2, 4, "#f46a6a"); P(3, 5, "#181820");
+      R(6, 4, 3, 4, "#e8a018"); R(6, 6, 3, 2, "#f4f4f4"); P(6, 4, "#f8d838"); P(7, 5, "#181820");
+      R(10, 4, 3, 4, "#38a048"); R(10, 6, 3, 2, "#f4f4f4"); P(10, 4, "#6cd878"); P(11, 5, "#181820");
+      R(1, 1, 14, 2, "#c8a068"); R(1, 1, 14, 1, "#e8c088");
+      break;
+    }
+    case "B": {
+      R(0, 0, 16, 16, "#4a2c12");
+      R(1, 1, 14, 14, "#704828");
+      const vols = ["#a84848", "#4858a8", "#48a858", "#c8a038", "#9848c8", "#c86818", "#48a8a8"];
+      for (let s = 0; s < 3; s++) {
+        const by = 2 + s * 5;
+        for (let i = 0; i < 7; i++) {
+          const bx = 2 + i * 2, c = vols[(i + s * 3 + RND(2)) % vols.length];
+          R(bx, by, 1, 2, c); P(bx, by, "#f8e8c8");
+        }
+        R(1, by + 3, 14, 1, "#c8a068");
+      }
+      R(0, 0, 16, 1, "#8a5a28"); R(0, 0, 1, 16, "#8a5a28");
+      break;
+    }
+    case "S": {
+      grassSpeckle();
+      R(3, 13, 10, 2, "#3f8a46");
+      R(7, 7, 2, 9, "#6e4520"); R(7, 7, 1, 9, "#a87848"); P(7, 7, "#c8a068");
+      R(2, 1, 12, 7, "#5e3a18");
+      R(3, 2, 10, 5, "#c8a068"); R(3, 2, 10, 1, "#e8c088");
+      R(4, 3, 8, 1, "#5e3a18"); R(4, 5, 6, 1, "#5e3a18");
+      P(3, 2, "#fff4e0"); R(2, 7, 12, 1, "#3a2010");
+      P(3, 2, "#8a5a28"); P(13, 2, "#8a5a28");
+      break;
+    }
+    case "P": {
+      R(0, 0, 16, 16, "#cfa15e");
+      R(0, 7, 16, 1, "#a87848"); R(0, 15, 16, 1, "#a87848");
+      P(2, 3, "#bd8a4e"); P(13, 11, "#e0aa68"); P(8, 12, "#bd8a4e");
+      R(3, 12, 10, 2, "#b89058");
+      R(5, 5, 6, 4, "#207038");
+      R(3, 6, 2, 3, "#207038"); R(11, 6, 2, 3, "#207038");
+      R(6, 3, 4, 6, "#38a048"); R(4, 6, 2, 2, "#38a048"); R(10, 6, 2, 2, "#38a048");
+      R(6, 2, 3, 2, "#4caf50");
+      P(6, 3, "#6cd878"); P(8, 5, "#6cd878"); P(5, 6, "#6cd878"); P(11, 6, "#6cd878");
+      P(7, 7, "#207038"); P(9, 4, "#207038");
+      R(4, 9, 8, 2, "#8a3a20"); R(4, 9, 8, 1, "#e08050");
+      R(5, 11, 6, 4, "#a8542c"); R(5, 11, 1, 4, "#d87848"); R(10, 11, 1, 4, "#703318");
+      break;
+    }
+    case "=": {
+      grassSpeckle();
+      R(0, 3, 16, 3, "#c8b898"); R(0, 3, 16, 1, "#fff4e0"); R(0, 5, 16, 1, "#8a7a5e");
+      R(0, 10, 16, 3, "#c8b898"); R(0, 10, 16, 1, "#fff4e0"); R(0, 12, 16, 1, "#8a7a5e");
+      R(2, 0, 3, 16, "#a8906a"); R(2, 0, 2, 16, "#c8b898"); R(2, 0, 1, 16, "#e8d8b8");
+      R(11, 0, 3, 16, "#a8906a"); R(11, 0, 2, 16, "#c8b898"); R(11, 0, 1, 16, "#e8d8b8");
+      R(2, 0, 3, 1, "#fff4e0"); R(11, 0, 3, 1, "#fff4e0");
+      P(2, 4, "#8a7a5e"); P(11, 11, "#8a7a5e");
+      break;
+    }
+    case "_": {
+      // warm oak plank floor: staggered joints + seeded grain lines
+      R(0, 0, 16, 16, "#cfa15e");
+      R(0, 4, 16, 4, "#c89c58"); R(0, 12, 16, 4, "#c89c58");
+      R(0, 0, 16, 1, "#e8c088");
+      R(0, 3, 16, 1, "#a87848"); R(0, 7, 16, 1, "#a87848");
+      R(0, 11, 16, 1, "#a87848"); R(0, 15, 16, 1, "#a87848");
+      const j0 = 5 + (hash2(tx, 0) % 7), j1 = 2 + (hash2(0, ty) % 9);
+      R(j0 % 16, 0, 1, 3, "#a87848"); R((j0 + 6) % 16, 0, 1, 3, "#a87848");
+      R(j1 % 16, 4, 1, 3, "#a87848"); R((j1 + 7) % 16, 4, 1, 3, "#a87848");
+      R((j0 + 3) % 16, 8, 1, 3, "#a87848"); R((j0 + 10) % 16, 8, 1, 3, "#a87848");
+      R((j1 + 5) % 16, 12, 1, 3, "#a87848"); R((j1 + 11) % 16, 12, 1, 3, "#a87848");
+      // grain: short horizontal dashes seeded per tile
+      for (let i = 0; i < 6; i++) {
+        const gx = RND(13), gy = RND(16);
+        if (gy % 4 === 3) continue;
+        R(gx, gy, 2, 1, i % 2 ? "#bd8a4e" : "#e0aa68");
+      }
+      break;
+    }
+    case ":": {
+      R(0, 0, 16, 16, "#b8b8d0");
+      R(0, 0, 8, 8, "#d0d0e8"); R(8, 8, 8, 8, "#d0d0e8");
+      R(0, 0, 16, 1, "#e4e4f4"); R(7, 0, 1, 16, "#9898b8"); R(0, 7, 16, 1, "#9898b8");
+      R(15, 0, 1, 16, "#9898b8"); R(0, 15, 16, 1, "#9898b8");
+      P(3, 3, "#ffffff"); P(11, 11, "#ffffff");
+      break;
+    }
+    case "+": {
+      R(0, 0, 16, 16, "#f2e8d0");
+      R(0, 0, 16, 2, "#c03828"); R(0, 14, 16, 2, "#c03828");
+      R(0, 0, 2, 16, "#c03828"); R(14, 0, 2, 16, "#c03828");
+      R(2, 2, 12, 1, "#e08080"); R(2, 13, 12, 1, "#e08080");
+      R(2, 2, 1, 12, "#e08080"); R(13, 2, 1, 12, "#e08080");
+      R(7, 3, 2, 10, "#c03828"); R(3, 7, 10, 2, "#c03828");
+      R(7, 7, 2, 2, "#f8d838"); P(7, 7, "#fff8d0");
+      P(4, 4, "#c03828"); P(11, 4, "#c03828"); P(4, 11, "#c03828"); P(11, 11, "#c03828");
+      break;
+    }
+    default:
+      R(0, 0, 16, 16, "#ff00ff");
+  }
+}
 
 function sub(s, game) {
   return s.replace("{name}", game.name).replace("{rival}", game.rivalName).replace("{mon}", game.lastMon || "");
@@ -294,15 +724,25 @@ export class Overworld {
     textbox.say(["You hurry home to heal..."], () => this.goto("house", 3, 3));
   }
   draw(g) {
-    g.fillStyle = "#000"; g.fillRect(0, 0, 256, 192);
     const m = MAPS[this.map];
-    const ox = Math.max(0, Math.min(m.w * TILE - W, Math.floor(this.px + 8 - W / 2)));
-    const oy = Math.max(0, Math.min(m.h * TILE - H, Math.floor(this.py + 8 - H / 2)));
+    const indoor = INDOOR.has(this.map);
+    // full-bleed base: never black void (grass outdoors, oak indoors)
+    g.fillStyle = indoor ? "#cfa15e" : "#5da862"; g.fillRect(0, 0, 256, 192);
+    const mw = m.w * TILE, mh = m.h * TILE;
+    // center small maps; clamp scrolling maps to their edges
+    const ox = mw <= W ? -Math.floor((W - mw) / 2)
+      : Math.max(0, Math.min(mw - W, Math.floor(this.px + 8 - W / 2)));
+    const oy = mh <= H ? -Math.floor((H - mh) / 2)
+      : Math.max(0, Math.min(mh - H, Math.floor(this.py + 8 - H / 2)));
+    const frame = Math.floor(this.frame / 30);
     const x0 = Math.floor(ox / TILE), y0 = Math.floor(oy / TILE);
     for (let y = y0; y <= y0 + H / TILE; y++) {
       for (let x = x0; x <= x0 + W / TILE; x++) {
-        if (x < 0 || y < 0 || x >= m.w || y >= m.h) continue;
-        drawTile(g, m.rows[y][x], x * TILE - ox, y * TILE - oy, Math.floor(this.frame / 30));
+        const dx = x * TILE - ox, dy = y * TILE - oy;
+        let t;
+        if (x < 0 || y < 0 || x >= m.w || y >= m.h) t = indoor ? "_" : ",";
+        else t = m.rows[y][x];
+        paintTile(g, t, dx, dy, frame, x, y, m, this.map);
       }
     }
     const drawChar = (sx, sy, art) => {

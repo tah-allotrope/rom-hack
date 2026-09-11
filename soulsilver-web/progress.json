@@ -761,6 +761,18 @@
       "win": false,
       "gap": "Flat interior masses vs staged dither gradients. Fix: second-tone interior dither.",
       "note": "SpriteJudgeV4 pinned: BAR wins, ours 45%. Rules verified."
+    },
+    {
+      "piece": "interior-verify",
+      "win": false,
+      "gap": "Awaiting SpriteJudgeV5.",
+      "note": "Screenshot: Voltpup + Aquapup volumed. Committed."
+    },
+    {
+      "piece": "sprite-judge-v5",
+      "win": false,
+      "gap": "Single-pixel rim, no mid-tone step. Fix: mid-tone + dither column.",
+      "note": "SpriteJudgeV5 pinned: BAR wins, ours 63%. Biggest sprite jump."
     }
   ],
   "bar": {

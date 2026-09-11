@@ -430,11 +430,8 @@ function plate(g, x, y, m, foe) {
   text(g, SPECIES[m.sp].name, x + pad, y + 6, "#182028", 8, true);
   text(g, m.gd === "F" ? "♀" : "♂", x + pad + measure(g, SPECIES[m.sp].name, 8, true) + 3, y + 6, m.gd === "F" ? "#e05050" : "#2850c8", 8, true);
   const lv = "Lv" + m.lv;
-  g.save();
-  g.font = `bold 8px Verdana, Tahoma, "DejaVu Sans", sans-serif`;
-  const lvw = g.measureText(lv).width;
-  g.restore();
-  text(g, lv, ax + aw - 8 - Math.ceil(lvw), y + 6, "#14305a", 8, true);
+  const lvw = measure(g, lv, 8, true);
+  text(g, lv, ax + aw - 8 - lvw, y + 6, "#14305a", 8, true);
   // HP row: gold label + bordered color-changing continuous bar
   text(g, "HP", x + pad, y + 17, "#a07818", 7, true);
   const bx = x + 26, bw = w - 36, frac = Math.max(0, Math.min(1, m.hp / m.maxhp));
@@ -452,11 +449,8 @@ function plate(g, x, y, m, foe) {
       text(g, lbl, x + pad + 2, y + 26, "#181820", 6, true);
     }
     const hpS = `${m.hp}/${m.maxhp}`;
-    g.save();
-    g.font = `7px Verdana, Tahoma, "DejaVu Sans", sans-serif`;
-    const hpw = g.measureText(hpS).width;
-    g.restore();
-    text(g, hpS, ax + aw - 8 - Math.ceil(hpw), y + 25, "#182028", 7, true);
+    const hpw = measure(g, hpS, 7, true);
+    text(g, hpS, ax + aw - 8 - hpw, y + 25, "#182028", 7, true);
     // XP bar along the plate foot
     const lo = m.lv * m.lv * m.lv, hi = (m.lv + 1) * (m.lv + 1) * (m.lv + 1);
     const xf = Math.max(0, Math.min(1, (m.exp - lo) / Math.max(1, hi - lo)));

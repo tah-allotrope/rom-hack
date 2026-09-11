@@ -551,6 +551,24 @@
       "win": false,
       "gap": "None. Locked by owner 2026-09-11.",
       "note": "LOCKED: detached slanted plates (no revert), 4px narrow trunks (no widen), full loop continues. Critics must judge other gaps."
+    },
+    {
+      "piece": "battle-critic-r13",
+      "win": false,
+      "gap": "Missing gender symbols. Fix applied: atlas glyphs + plate marks.",
+      "note": "BattleCriticR13: BAR wins, ours 86%. Locks respected."
+    },
+    {
+      "piece": "tiles-critic-r12",
+      "win": false,
+      "gap": "Flat meadow sheet. Fix applied: parity checkerboard base.",
+      "note": "TileCriticR12: BAR wins, ours 71%. Lock respected."
+    },
+    {
+      "piece": "gender-verify",
+      "win": false,
+      "gap": "Possible HP-number clipping on ally plate (20/2 cut) — needs check.",
+      "note": "Screenshot: red/blue gender marks render. HP clip flagged."
     }
   ]
 }

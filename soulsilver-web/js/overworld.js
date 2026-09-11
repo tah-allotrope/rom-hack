@@ -77,12 +77,13 @@ function paintTile(g, t, dx, dy, frame, tx, ty, m, map) {
     const D = "#3a2010", L = "#5e3a18";
     const dith = (x, y) => (hash2(tx * 16 + x, ty * 16 + y) % 3 === 0 ? L : D);
     const y1 = seated ? 13 : 16;
-    if (lO) for (let y = 0; y < y1; y++) P(0, y, dith(0, y));
-    if (rO) for (let y = 0; y < y1; y++) P(15, y, dith(15, y));
+    const y0 = tileAt(m, tx, ty - 1) === "R" ? 2 : 0;
+    if (lO) for (let y = y0; y < y1; y++) P(0, y, dith(0, y));
+    if (rO) for (let y = y0; y < y1; y++) P(15, y, dith(15, y));
     if (uO) for (let x = 0; x < 16; x++) P(x, 0, dith(x, 0));
     if (dO && !seated) for (let x = 0; x < 16; x++) P(x, 15, dith(x, 15));
-    if (lO && uO) { R(0, 0, 2, 2, D); P(1, 1, L); }
-    if (rO && uO) { R(14, 0, 2, 2, D); P(14, 1, L); }
+    if (lO && uO && !y0) { R(0, 0, 2, 2, D); P(1, 1, L); }
+    if (rO && uO && !y0) { R(14, 0, 2, 2, D); P(14, 1, L); }
     if (lO && dO && !seated) { R(0, 14, 2, 2, D); P(1, 14, L); }
     if (rO && dO && !seated) { R(14, 14, 2, 2, D); P(14, 14, L); }
   };

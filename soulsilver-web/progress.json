@@ -533,6 +533,12 @@
       "win": false,
       "gap": "Possible HP-number clipping on ally plate (21/2 cut). Awaiting UiCriticR6.",
       "note": "Screenshot: 1-bit dialogue + plates render. FontAtlas committed 2657ec4."
+    },
+    {
+      "piece": "ui-critic-r6",
+      "win": false,
+      "gap": "Wide i/j stems pad words. Fix applied: stem-width rows.",
+      "note": "UiCriticR6: BAR wins, ours 84%. Atlas/density/wrap pass, zero fallback."
     }
   ]
 }

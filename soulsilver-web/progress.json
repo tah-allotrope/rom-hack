@@ -635,6 +635,24 @@
       "win": false,
       "gap": "Flank masses + K outlines vs dithered colored outlines. Sprite micro-rounds PAUSED (non-converging lens); focus tiles/UI 90-push.",
       "note": "SpriteCriticR20: BAR wins 80/20, ours 20%. Cylinders clean."
+    },
+    {
+      "piece": "ui-critic-r11",
+      "win": false,
+      "gap": "DISPUTED-HELD: R11 wants AA glyphs, but DS hardware font is 1-bit (no AA); R6 direction stands.",
+      "note": "UiCriticR11: BAR wins, ours 84%. Chrome/paging/wrap/hook pass."
+    },
+    {
+      "piece": "tiles-critic-r13",
+      "win": false,
+      "gap": "OSCILLATION: R13 wants weave REMOVED (R12 ordered it added). HELD weave.",
+      "note": "TileCriticR13: BAR wins, ours 70%."
+    },
+    {
+      "piece": "loop-pattern",
+      "win": false,
+      "gap": "Critics relitigate settled direction (plates, trunk, raster, weave) instead of converging.",
+      "note": "Battle 90 holds. UI 84, tiles 70, sprites 20-35. All holds logged with evidence."
     }
   ]
 }

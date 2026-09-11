@@ -569,6 +569,24 @@
       "win": false,
       "gap": "Possible HP-number clipping on ally plate (20/2 cut) — needs check.",
       "note": "Screenshot: red/blue gender marks render. HP clip flagged."
+    },
+    {
+      "piece": "battle-critic-r14",
+      "win": false,
+      "gap": "Canvas-vs-bitmap measure mismatch clips HP. Fix applied: bitmap measure.",
+      "note": "BattleCriticR14: BAR wins, ours 80%. Gender passes."
+    },
+    {
+      "piece": "hp-align-verify",
+      "win": false,
+      "gap": "Awaiting re-critic.",
+      "note": "Screenshot: 20/34 fully inside plate. Clip closed visually."
+    },
+    {
+      "piece": "ui-critic-r8",
+      "win": false,
+      "gap": "Gen-V plate + 4-line windows vs HW 2-line inline. Fix: kill plate, 2-line paging.",
+      "note": "UiCriticR8 live-rendered: BAR wins, ours 72%. Chrome/cursor/atlas pass."
     }
   ]
 }

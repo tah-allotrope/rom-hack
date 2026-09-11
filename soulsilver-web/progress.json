@@ -797,6 +797,18 @@
       "win": false,
       "gap": "Judge variance 64 to 22 on same direction; sprite judging PAUSED as non-convergent.",
       "note": "SpriteJudgeV7: BAR wins 78/22. Light verified, rows intact."
+    },
+    {
+      "piece": "tile-hold-v8-WIN",
+      "win": true,
+      "gap": "None.",
+      "note": "TileJudgeV8: holds-90 YES at 90%. Byte-identical to winning commit."
+    },
+    {
+      "piece": "ui-hold-v2-WIN",
+      "win": true,
+      "gap": "None.",
+      "note": "UiJudgeV2: holds-90 YES at 92%. Byte-identical + glyph inspection."
     }
   ],
   "bar": {

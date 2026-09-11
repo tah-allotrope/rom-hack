@@ -593,6 +593,12 @@
       "win": true,
       "gap": "None required. Plate shape gap is owner-locked out of scope.",
       "note": "BattleCriticR15: ours 90%. HP clip closed (20/34 spans 214-248). FIRST 90."
+    },
+    {
+      "piece": "sprites-critic-r18",
+      "win": false,
+      "gap": "Flat torso centers vs wrapped gradients. Fix: mid-tone + dither into centers.",
+      "note": "SpriteCriticR18: BAR wins, ours 35%. Flank rim present."
     }
   ]
 }

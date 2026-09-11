@@ -376,9 +376,9 @@ function nm(m) { return `${SPECIES[m.sp].name} LV${m.lv}`; }
 
 function plate(g, x, y, m, foe) {
   const w = 108, h = foe ? 34 : 42;
-  // detached rounded chrome: 4px screen inset, 6px corners, slanted inner
+  // detached sharp chrome: 4px screen inset, 2px corners, slanted inner
   // edge (parallelogram lean toward the battler) instead of a wedge tab
-  const R = 6, SL = 10;
+  const R = 2, SL = 10;
   const ax = foe ? 0 : x;
   const aw = foe ? x + w : W - x;
   const cw = w + SL;

@@ -701,6 +701,18 @@
       "win": false,
       "gap": "Awaiting re-judge.",
       "note": "Screenshot: dark eave bands under roofs. Committed."
+    },
+    {
+      "piece": "outline-verify",
+      "win": false,
+      "gap": "Awaiting judges.",
+      "note": "Screenshot: Nibble + Leafhog dithered edges read softer. Committed."
+    },
+    {
+      "piece": "tile-judge-v3",
+      "win": false,
+      "gap": "No dark perimeter outline; houses read paper cutouts. Fix: outline + corner posts.",
+      "note": "TileJudgeV3 pinned: BAR wins, ours 76%. Eaves + seating land."
     }
   ],
   "bar": {

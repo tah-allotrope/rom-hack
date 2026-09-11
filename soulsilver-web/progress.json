@@ -539,6 +539,12 @@
       "win": false,
       "gap": "Wide i/j stems pad words. Fix applied: stem-width rows.",
       "note": "UiCriticR6: BAR wins, ours 84%. Atlas/density/wrap pass, zero fallback."
+    },
+    {
+      "piece": "ui-critic-r7",
+      "win": false,
+      "gap": "Hookless j stick from my narrowing. Fix applied: 2px foot hooking left.",
+      "note": "UiCriticR7: BAR wins, ours 87%. Advances verify via shared bitW."
     }
   ]
 }

@@ -243,23 +243,37 @@ function panelChrome(g, x, y, w, h) {
 
 // ---- text box ----
 export class TextBox {
-  constructor() { this.queue = []; this.chars = 0; this.open = false; this.onDone = null; }
+  constructor() { this.queue = []; this.chars = 0; this.offset = 0; this.open = false; this.onDone = null; }
   say(pages, onDone = null) {
-    // pages: array of strings, \n = newline
-    this.queue = [...pages]; this.chars = 0; this.open = true; this.onDone = onDone;
+    // pages: array of strings, \n = newline. The HW message box shows at
+    // most 2 body lines; longer pages scroll within the page 2 lines per
+    // press-A via offset before the queue shifts.
+    this.queue = [...pages]; this.chars = 0; this.offset = 0; this.open = true; this.onDone = onDone;
   }
   get text() { return this.queue[0] || ""; }
-  get shown() { return this.text.slice(0, Math.floor(this.chars)); }
-  get done() { return this.chars >= this.text.length; }
+  get lines() { return this.text.split("\n"); }
+  // [start, end) char range of the visible 2-line window within text.
+  winRange() {
+    const ls = this.lines;
+    let s = 0;
+    for (let i = 0; i < this.offset && i < ls.length; i++) s += ls[i].length + 1;
+    let e = s;
+    const n = Math.max(0, Math.min(ls.length - this.offset, 2));
+    for (let i = 0; i < n; i++) e += ls[this.offset + i].length + (i < n - 1 ? 1 : 0);
+    return [s, e];
+  }
+  get shown() { const [s] = this.winRange(); return this.text.slice(s, Math.floor(this.chars)); }
+  get done() { const [, e] = this.winRange(); return this.chars >= e; }
   update(dt) {
     if (!this.open) return;
-    if (!this.done) this.chars = Math.min(this.text.length, this.chars + dt * 60);
+    if (!this.done) { const [, e] = this.winRange(); this.chars = Math.min(e, this.chars + dt * 60); }
   }
   // returns true when fully closed (caller should proceed)
   advance() {
     if (!this.open) return true;
-    if (!this.done) { this.chars = this.text.length; return false; }
-    this.queue.shift(); this.chars = 0;
+    if (!this.done) { const [, e] = this.winRange(); this.chars = e; return false; }
+    if (this.offset + 2 < this.lines.length) { this.offset += 2; return false; }
+    this.queue.shift(); this.chars = 0; this.offset = 0;
     if (this.queue.length === 0) { this.open = false; const f = this.onDone; this.onDone = null; if (f) f(); return true; }
     return false;
   }
@@ -267,25 +281,9 @@ export class TextBox {
     if (!this.open) return;
     const bx = 4, bw = W - 8, bh = 52, by = H - 56;
     panelChrome(g, bx, by, bw, bh);
-    // name-plate row: a "NAME: ..." prefix gets its own plate straddling
-    // the top border. Width is measured (variable widths) + padding so the
-    // name can never clip, and the plate is clamped inside the canvas.
-    const m = this.shown.match(/^([A-Z][A-Z .'\-]{1,11}):(?:\s|\n)/);
-    if (m) {
-      const name = m[1];
-      const tw = measure(g, name, DS_SIZE, true);
-      const padX = 6, extra = 2; // +2px breathing room past the padding
-      const nw = Math.min(Math.ceil(tw) + padX * 2 + extra, bw - 12, W - (bx + 6) - 2);
-      const nx = Math.min(bx + 6, W - 2 - nw);
-      const nh = 15, ny = by - 13;
-      panelChrome(g, nx, ny, nw, nh);
-      // text top sits 3px inside the plate; baseline + descenders stay inside
-      text(g, name, nx + padX + 1, ny + 3, "#14305a", DS_SIZE, true);
-    }
+    // HW body: no speaker plate; "NAME: ..." stays inline, 2 lines visible.
     const lines = this.shown.split("\n");
-    // strip the "NAME:" prefix from the first body line so it is not doubled
-    if (m && lines.length) lines[0] = lines[0].slice(m[1].length + 1).replace(/^\s/, "");
-    lines.slice(0, 4).forEach((ln, i) => text(g, ln, bx + 10, by + 7 + i * DS_LINE_H, "#182028"));
+    lines.slice(0, 2).forEach((ln, i) => text(g, ln, bx + 10, by + 7 + i * DS_LINE_H, "#182028"));
     if (this.done && arrowOn()) triD(g, bx + bw - 14, by + bh - 12, 6, "#c02020");
   }
 }

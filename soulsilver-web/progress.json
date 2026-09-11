@@ -587,6 +587,12 @@
       "win": false,
       "gap": "Gen-V plate + 4-line windows vs HW 2-line inline. Fix: kill plate, 2-line paging.",
       "note": "UiCriticR8 live-rendered: BAR wins, ours 72%. Chrome/cursor/atlas pass."
+    },
+    {
+      "piece": "battle-critic-r15-WIN",
+      "win": true,
+      "gap": "None required. Plate shape gap is owner-locked out of scope.",
+      "note": "BattleCriticR15: ours 90%. HP clip closed (20/34 spans 214-248). FIRST 90."
     }
   ]
 }

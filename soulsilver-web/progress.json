@@ -905,6 +905,12 @@
       "win": false,
       "gap": "Single-row cavity vs Totodile gape. Fix applied: two M rows.",
       "note": "SpriteJudgeV14: Aquapup wins blind at 82%. First sprite near-win."
+    },
+    {
+      "piece": "sprite-judge-v15",
+      "win": false,
+      "gap": "Lopsided fangs. Fix applied: mirrored right fang.",
+      "note": "SpriteJudgeV15: Aquapup wins 78/90 (87%). Gape lands."
     }
   ],
   "bar": {

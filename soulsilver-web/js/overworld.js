@@ -116,6 +116,76 @@ function paintTile(g, t, dx, dy, frame, tx, ty, m, map) {
       }
       R(0, 14, 16, 2, "#35702f");
       P(RND(16), 15, "#6cba70"); P(RND(16), 14, "#6cba70");
+      // Feathered borders: neighbor-aware ground fringe + overhanging tips.
+      // Tall-to-tall sides stay full-bleed dark bed so patches merge.
+      const nbG = (x, y) => tileAt(m, x, y);
+      const isTallG = (c) => c === "G";
+      const isFringeG = (c) => c === null || c === "," || c === "F" || c === "." || c === "~" || c === "D" || c === "+";
+      const upG = nbG(tx, ty - 1), dnG = nbG(tx, ty + 1);
+      const lfG = nbG(tx - 1, ty), rtG = nbG(tx + 1, ty);
+      // [edgeRow, innerRow]: the outer row matches the neighbor's rendered
+      // edge (path tiles bleed a meadow lip toward tall grass), the inner
+      // row carries the neighbor ground tone.
+      const fringeCols = (c) => {
+        if (c === ".") return ["#5da862", "#d8b878"];
+        if (c === "~") return ["#c8a060", "#c8a060"];
+        if (c === "D" || c === "+") return ["#d8b878", "#d8b878"];
+        return ["#5da862", "#5da862"];
+      };
+      const fringeSpeck = (c) => c === "#d8b878" || c === "#c8a060"
+        ? ["#b89058", "#e8c890"] : ["#4f9a55", "#6cba70"];
+      const featherH = (up) => {
+        const n = up ? upG : dnG;
+        if (!isFringeG(n)) return;
+        const [edgeC, inC] = fringeCols(n);
+        const yE = up ? 0 : 15, yI = up ? 1 : 14, yJ = up ? 2 : 13;
+        const x0 = isTallG(lfG) ? 2 : 0, x1 = isTallG(rtG) ? 14 : 16;
+        R(x0, yE, x1 - x0, 1, edgeC);
+        R(x0, yI, x1 - x0, 1, inC);
+        const [spD, spL] = fringeSpeck(inC);
+        for (let x = x0; x < x1; x++) {
+          const j = hash2(tx * 16 + x, ty * 7 + (up ? 1 : 2)) % 3;
+          if (j === 0) P(x, yJ, inC);
+          else if (j === 2 && (x % 2 === 0 || inC === "#5da862")) P(x, yI, "#4c9448");
+          else if (x % 5 === 0) P(x, yE, x % 10 === 0 ? spL : spD);
+        }
+        // overhanging blade tips root in the bed, lean outward with sway
+        for (let k = 0; k < 3; k++) {
+          const hx = hash2(tx * 5 + k * 7 + 3, ty * 3 + k + (up ? 0 : 40));
+          const w = x1 - x0;
+          if (w <= 0) break;
+          let tx2 = x0 + (hx % w) + (frame % 2 ? (k % 2 ? 1 : 0) : (k % 2 ? 0 : -1));
+          if (tx2 < x0) tx2 = x0; if (tx2 >= x1) tx2 = x1 - 1;
+          if (up) { R(tx2, 0, 1, 3, "#35702f"); P(tx2, 0, "#6cba70"); }
+          else { R(tx2, 13, 1, 3, "#35702f"); P(tx2, 15, "#6cba70"); }
+        }
+      };
+      const featherV = (left) => {
+        const n = left ? lfG : rtG;
+        if (!isFringeG(n)) return;
+        const [edgeC, inC] = fringeCols(n);
+        const xE = left ? 0 : 15, xI = left ? 1 : 14, xJ = left ? 2 : 13;
+        const y0 = isTallG(upG) ? 2 : 0, y1 = isTallG(dnG) ? 14 : 16;
+        R(xE, y0, 1, y1 - y0, edgeC);
+        R(xI, y0, 1, y1 - y0, inC);
+        const [spD, spL] = fringeSpeck(inC);
+        for (let y = y0; y < y1; y++) {
+          const j = hash2(tx * 7 + (left ? 1 : 2), ty * 16 + y) % 3;
+          if (j === 0) P(xJ, y, inC);
+          else if (j === 2 && (y % 2 === 0 || inC === "#5da862")) P(xI, y, "#4c9448");
+          else if (y % 5 === 0) P(xE, y, y % 10 === 0 ? spL : spD);
+        }
+        for (let k = 0; k < 3; k++) {
+          const hy = hash2(tx * 3 + k + (left ? 0 : 40), ty * 5 + k * 7 + 3);
+          const h = y1 - y0;
+          if (h <= 0) break;
+          let ty2 = y0 + (hy % h) + (frame % 2 ? (k % 2 ? 1 : 0) : (k % 2 ? 0 : -1));
+          if (ty2 < y0) ty2 = y0; if (ty2 >= y1) ty2 = y1 - 1;
+          if (left) { R(0, ty2, 3, 1, "#35702f"); P(0, ty2, "#6cba70"); }
+          else { R(13, ty2, 3, 1, "#35702f"); P(15, ty2, "#6cba70"); }
+        }
+      };
+      featherH(true); featherH(false); featherV(true); featherV(false);
       break;
     }
     case "F": {

@@ -428,15 +428,66 @@ function paintTile(g, t, dx, dy, frame, tx, ty, m, map) {
       break;
     }
     case "R": {
-      // house roof: courses + staggered joints + ridge/eave trim
+      // Pitched 3/4 roof: ridge cap along the top, stepped courses with
+      // alternating sun/shade faces down the slope, dark gable triangles
+      // closing open run ends, tiled eave lip. Neighbor-aware: the ridge
+      // caps only an exposed top, the eave lips only an exposed bottom,
+      // gables close only open ends, so merged R runs stay seamless.
+      const upR = tileAt(m, tx, ty - 1) === "R";
+      const dnR = tileAt(m, tx, ty + 1) === "R";
+      const lfR = tileAt(m, tx - 1, ty) === "R";
+      const rtR = tileAt(m, tx + 1, ty) === "R";
       R(0, 0, 16, 16, "#c03828");
-      R(0, 0, 16, 2, "#e05848"); R(0, 0, 16, 1, "#f08070");
-      R(0, 5, 16, 1, "#982818"); R(0, 9, 16, 1, "#982818"); R(0, 13, 16, 1, "#982818");
-      R(0, 15, 16, 1, "#5e1408"); R(0, 14, 16, 1, "#e05848");
-      R(4, 2, 1, 3, "#a82818"); R(11, 2, 1, 3, "#a82818");
-      R(1, 6, 1, 3, "#a82818"); R(8, 6, 1, 3, "#a82818"); R(14, 6, 1, 3, "#a82818");
-      R(5, 10, 1, 3, "#a82818"); R(12, 10, 1, 3, "#a82818");
-      P(2, 5, "#701808"); P(9, 9, "#701808");
+      let y = 0;
+      if (!upR) {
+        R(0, 0, 16, 1, "#f08070");
+        R(0, 1, 16, 1, "#e05848");
+        R(0, 2, 16, 1, "#982818");
+        y = 3;
+      }
+      const eaveY = dnR ? 16 : 14;
+      let course = 0;
+      while (y + 4 <= eaveY) {
+        const shade = course % 2 === 1;
+        R(0, y, 16, 1, "#e05848");
+        R(0, y + 1, 16, 2, shade ? "#a82818" : "#c03828");
+        R(0, y + 3, 16, 1, "#982818");
+        const off = (course % 2) * 4 + (hash2(tx * 5 + course, ty * 3 + 1) % 2);
+        for (let jx = 2 + off; jx < 16; jx += 8)
+          R(jx, y + 1, 1, 2, shade ? "#701808" : "#a82818");
+        for (let x = 0; x < 16; x++)
+          if (hash2(tx * 16 + x, ty * 31 + y) % 11 === 0) P(x, y, "#f08070");
+        y += 4; course++;
+      }
+      if (y < eaveY) {
+        // partial course: sun lip + face, step shadow on its last row
+        const shade = course % 2 === 1;
+        R(0, y, 16, 1, "#e05848");
+        if (y + 1 < eaveY) R(0, y + 1, 16, eaveY - y - 2, shade ? "#a82818" : "#c03828");
+        R(0, eaveY - 1, 16, 1, "#982818");
+      }
+      // dark gable triangles closing open run ends: wide at the eave,
+      // tapering toward the ridge, with a darker rising edge
+      const gTop = upR ? 0 : 3, gBot = dnR ? 15 : 13;
+      const gable = (left) => {
+        for (let gy = gTop; gy <= gBot; gy++) {
+          const t = (gBot - gy) / Math.max(1, gBot - gTop);
+          const w = 1 + Math.round((1 - t) * 4);
+          for (let gx = 0; gx < w; gx++)
+            P(left ? 1 + gx : 14 - gx, gy, "#701808");
+          P(left ? 1 + w : 14 - w, gy, "#5e1408");
+        }
+      };
+      if (!lfR) gable(true);
+      if (!rtR) gable(false);
+      if (!dnR) {
+        // eave: sun lip + dark under-shadow with staggered tile joints
+        R(0, 14, 16, 1, "#e05848");
+        R(0, 15, 16, 1, "#5e1408");
+        const off = hash2(tx, ty) % 4;
+        for (let x = off; x < 16; x += 4) P(x, 14, "#a82818");
+        P((off + 2) % 16, 14, "#f08070");
+      }
       houseEdge(seatFootprint());
       break;
     }

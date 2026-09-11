@@ -387,6 +387,17 @@ function paintTile(g, t, dx, dy, frame, tx, ty, m, map) {
       P(3, 5, "#e9cf9e"); P(11, 9, "#e9cf9e"); P(7, 11, "#e9cf9e");
       R(0, 0, 16, 2, "#c8a878"); R(0, 0, 16, 1, "#a88050");
       R(0, 13, 16, 3, "#8a5a28"); R(0, 13, 16, 1, "#c8a068");
+      // Eave drop-shadow: wall row directly under a roof overhang sits in
+      // its shadow. Overhang lip color extends 1px onto the wall, then a
+      // 1px warm falloff row, so R-over-H reads as overhang, not flat seam.
+      if (tileAt(m, tx, ty - 1) === "R") {
+        R(0, 0, 16, 1, "#5e1408");
+        R(0, 1, 16, 1, "#7a3a20");
+        for (let x = 0; x < 16; x++) {
+          const hh = hash2(tx * 16 + x, ty * 3 + 1);
+          if (hh % 4 === 0) P(x, 1, "#5e1408");
+        }
+      }
       seatFootprint();
       break;
     }

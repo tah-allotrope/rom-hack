@@ -179,6 +179,48 @@
       "win": false,
       "gap": "Rear-pose sprites pending.",
       "note": "Screenshot: Nibble 3x on mound shadow, Aquapup faceless rear, 1x plates, mound tufts. HUD intact."
+    },
+    {
+      "piece": "rear-poses-r3",
+      "win": false,
+      "gap": "Awaiting SpriteCriticR3.",
+      "note": "RearPoses: 8 rear-pose silhouettes, outline diff 58-83%, zero face pixels claimed."
+    },
+    {
+      "piece": "battle-critic-r5",
+      "win": false,
+      "gap": "Foe feet on ally plate. Fix applied: foe+mound -12px, ally plate y104.",
+      "note": "BattleCriticR5 blind: BAR wins, ours 68%. Mound depth passes."
+    },
+    {
+      "piece": "battle-stage-verify",
+      "win": false,
+      "gap": "Awaiting re-critic.",
+      "note": "Screenshot: Skyro clear of Nibble plate, Nibble rear-pose asymmetric on mound. Staging closed visually."
+    },
+    {
+      "piece": "rear-pose-verify",
+      "win": false,
+      "gap": "Awaiting SpriteCriticR3.",
+      "note": "Screenshots: Voltpup/Nibble rears asymmetric, faceless. Rear-pose rebuild closed visually."
+    },
+    {
+      "piece": "sprites-critic-r3",
+      "win": false,
+      "gap": "Backs 10.5% silhouette diff, facial discs retained (Skyro/Gusthawk), Aquapup torso blank. Fix: nape caps, head turns 2-4px, dorsal marks.",
+      "note": "SpriteCriticR3 measured (not builder-claimed): backs 30%. Fronts intact, face glyphs gone."
+    },
+    {
+      "piece": "tiles-critic-r5",
+      "win": false,
+      "gap": "Trunk posts on every grass-facing tile incl. north walls. Fix: south-facing singles only, 4px stub behind skirt.",
+      "note": "TileCriticR5 blind: BAR wins, ours 70%. Interior/bleed/masses/shadow pass."
+    },
+    {
+      "piece": "trunk-gate-r6",
+      "win": false,
+      "gap": "Awaiting re-critic.",
+      "note": "TrunkGate: 4px stub y10-15 on south in-bounds ground only, flare gone, walls pure crown."
     }
   ]
 }

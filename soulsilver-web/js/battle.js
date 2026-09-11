@@ -344,12 +344,12 @@ export class Battle {
     window.__bt = { state: this.state, foe: this.foe.sp + " L" + this.foe.lv + " " + this.foe.hp + "/" + this.foe.maxhp, me: this.me().sp + " L" + this.me().lv + " " + this.me().hp + "/" + this.me().maxhp, menu: this.state === "menu" ? this.menu.i : -1, sub, php: this.party.map((m) => m.hp), ppp: this.me().moves.map((m) => m.pp) };
     drawBattleBg(g);
     // grass tufts: back tuft grounds the foe, wide front tuft grounds us
-    drawPlatform(g, 196, 80, 48, 12);
+    drawPlatform(g, 196, 68, 48, 12);
     drawPlatform(g, 60, 132, 72, 15);
     // foe sprite (32x32 at 3x); feet seated on the mound's back slope.
     // idle bob when alive (shadow lives in tuft)
     const bob = Math.floor(this.t * 2) % 2;
-    g.save(); g.translate(148, 0 + (this.foe.hp > 0 ? bob : 0)); g.scale(3, 3);
+    g.save(); g.translate(148, -12 + (this.foe.hp > 0 ? bob : 0)); g.scale(3, 3);
     blit(g, MON_FRONT[this.foe.sp], 0, 0); g.restore();
     // player back sprite seated on its mound's back slope (feet in the grass)
     const me = this.me();
@@ -360,7 +360,7 @@ export class Battle {
     }
     // anchored HP plates: enemy top-left, ally bottom-right
     plate(g, 4, 6, this.foe, true);
-    plate(g, W - 116, 96, me, false);
+    plate(g, W - 116, 104, me, false);
     if (this.state === "menu") this.menu.draw(g);
     if (this.state === "moves" && this.moveMenu) this.moveMenu.draw(g);
     if (this.state === "bag" && this.bagMenu) this.bagMenu.draw(g);

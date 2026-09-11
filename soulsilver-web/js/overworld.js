@@ -188,10 +188,24 @@ function paintTile(g, t, dx, dy, frame, tx, ty, m, map) {
       if (uT && rT) R(12, 0, 4, 4, "#2e7d32");
       if (dT && lT) R(0, 11, 4, 5, "#2e7d32");
       if (dT && rT) R(12, 11, 4, 5, "#2e7d32");
-      // HGSS-scale fringe tree: full-bleed crown + wide trunk + ellipse shadow
-      // (south fringe only; interior mass stays trunkless). Single-tile only:
-      // no map-format change, so this tile carries crown, trunk, and shadow.
+      // HGSS-scale fringe tree: full-bleed crown + ellipse shadow on every
+      // south fringe; 4px trunk stub only where the tile below is walkable
+      // in-bounds ground (grass/path). Wall, water, edge, and OOB fringe
+      // stays pure crown. Interior mass stays trunkless.
       if (!dT) {
+        const below = tileAt(m, tx, ty + 1);
+        const southGround = below !== null && (below === "," || below === "G" ||
+          below === "F" || below === "." || below === "~" || below === "D" || below === "+");
+        // ellipse ground shadow on the grass below the skirt
+        R(1, 13, 14, 1, "#3f8a46"); R(0, 14, 16, 1, "#3f8a46"); R(1, 15, 14, 1, "#35702f");
+        R(3, 14, 10, 1, "#2f6b33"); R(4, 13, 8, 1, "#35702f"); R(4, 15, 8, 1, "#2a5a2e");
+        // 4px stub rising from the tile base; the skirt drawn next hides its top
+        if (southGround) {
+          R(6, 10, 4, 6, "#8a5a28");
+          R(6, 10, 1, 6, "#c8a068");
+          R(9, 10, 1, 6, "#5e3a18");
+          P(8, 14, "#5e3a18");
+        }
         // wide crown: force full-bleed mid-band + skirt to the tile edges
         R(0, 6, 4, 5, "#2e7d32"); R(12, 6, 4, 5, "#2e7d32");
         R(0, 10, 16, 3, "#2e7d32");
@@ -200,21 +214,6 @@ function paintTile(g, t, dx, dy, frame, tx, ty, m, map) {
         R(0, 10, 16, 1, "#388e3c");
         R(0, 12, 16, 1, "#256b28");
         P(3, 10, "#4caf50"); P(12, 10, "#4caf50"); P(5, 12, "#1e5a20"); P(10, 12, "#1e5a20");
-        // ellipse ground shadow on the grass below the skirt
-        R(1, 13, 14, 1, "#3f8a46"); R(0, 14, 16, 1, "#3f8a46"); R(1, 15, 14, 1, "#35702f");
-        R(3, 14, 10, 1, "#2f6b33"); R(4, 13, 8, 1, "#35702f"); R(4, 15, 8, 1, "#2a5a2e");
-        // centered 6px trunk running from inside the crown to the tile base
-        R(5, 5, 6, 11, "#5e3a18");
-        R(6, 5, 4, 11, "#8a5a28");
-        R(6, 5, 1, 11, "#c8a068");
-        R(10, 5, 1, 11, "#3a2010");
-        P(8, 7, "#5e3a18"); P(8, 10, "#5e3a18"); P(7, 12, "#5e3a18");
-        P(6, 6, "#e8c088");
-        // root flare seated in the shadow
-        R(4, 14, 8, 2, "#5e3a18"); R(5, 14, 6, 2, "#8a5a28"); R(5, 14, 1, 2, "#c8a068");
-        // canopy lips overlap the trunk top so it emerges from the crown
-        R(3, 5, 3, 2, "#388e3c"); R(10, 5, 3, 2, "#388e3c");
-        P(4, 5, "#7ddb84"); P(11, 5, "#4caf50");
       }
       break;
     }

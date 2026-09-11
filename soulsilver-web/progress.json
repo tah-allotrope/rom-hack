@@ -605,6 +605,18 @@
       "win": false,
       "gap": "No auto word-wrap; long lines overflow. Fix: measure-wrap before paging.",
       "note": "UiCriticR9: BAR wins, ours 86%. Plate kill + 2-line pass."
+    },
+    {
+      "piece": "wrap-smoke",
+      "win": false,
+      "gap": "Awaiting UiCriticR10.",
+      "note": "TextWrap stub-tested (no overflow, paging drains). Sign talk did not trigger in live shot."
+    },
+    {
+      "piece": "sprites-critic-r19",
+      "win": false,
+      "gap": "Isolated checker island vs full cylinder gradient. Fix: highlight-center to dark-edge full height.",
+      "note": "SpriteCriticR19: BAR wins, ours 30%. Rows/eyes/backs pass."
     }
   ]
 }

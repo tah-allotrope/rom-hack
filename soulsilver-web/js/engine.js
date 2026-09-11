@@ -253,8 +253,8 @@ function boxMC() {
 // Returns the wrapped lines ([""] for blank input, so explicit \n survive).
 function wrapBoxLine(line, maxW) {
   const mc = boxMC();
-  const words = String(line).split(" ").filter((w) => w.length);
-  if (!words.length) return [""];
+  const toks = String(line).split(/(\s+)/).filter((t) => t.length);
+  if (!toks.length) return [""];
   const out = [];
   const breakWord = (w) => {
     let part = "";
@@ -266,7 +266,16 @@ function wrapBoxLine(line, maxW) {
     return part;
   };
   let cur = "";
-  for (const w of words) {
+  const pushGap = (n) => {
+    for (let k = 0; k < n; k++) {
+      const trial = cur + " ";
+      if (measure(mc, trial) <= maxW) cur = trial;
+      else { out.push(cur); cur = ""; }
+    }
+  };
+  for (const t of toks) {
+    if (/^\s+$/.test(t)) { pushGap(t.length); continue; }
+    const w = t;
     const trial = cur ? cur + " " + w : w;
     if (measure(mc, trial) <= maxW) { cur = trial; continue; }
     if (cur) { out.push(cur); cur = ""; }

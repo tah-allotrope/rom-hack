@@ -448,7 +448,7 @@ function paintTile(g, t, dx, dy, frame, tx, ty, m, map) {
       const eaveY = dnR ? 16 : 14;
       let course = 0;
       while (y + 4 <= eaveY) {
-        const shade = course % 2 === 1;
+        const shade = false; // uniform faces: HGSS slopes lack zebra banding
         R(0, y, 16, 1, "#e05848");
         R(0, y + 1, 16, 2, shade ? "#a82818" : "#c03828");
         R(0, y + 3, 16, 1, "#982818");

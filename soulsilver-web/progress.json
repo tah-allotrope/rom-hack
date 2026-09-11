@@ -773,6 +773,18 @@
       "win": false,
       "gap": "Single-pixel rim, no mid-tone step. Fix: mid-tone + dither column.",
       "note": "SpriteJudgeV5 pinned: BAR wins, ours 63%. Biggest sprite jump."
+    },
+    {
+      "piece": "rim-verify",
+      "win": false,
+      "gap": "Awaiting SpriteJudgeV6.",
+      "note": "Screenshot: Leafhog + Nibble rim-stepped. Committed."
+    },
+    {
+      "piece": "sprite-judge-v6",
+      "win": false,
+      "gap": "Flat fills vs directional multi-tone. Fix: UL highlight + LR shadow.",
+      "note": "SpriteJudgeV6 pinned: BAR wins, ours 64%. Best sprite score."
     }
   ],
   "bar": {

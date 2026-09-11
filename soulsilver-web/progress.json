@@ -917,6 +917,12 @@
       "win": false,
       "gap": "Fang washes out vs E. Fix applied: C neighbor.",
       "note": "SpriteJudgeV16: Aquapup wins 79/90 (88%)."
+    },
+    {
+      "piece": "sprite-judge-v17",
+      "win": false,
+      "gap": "Small inset bite vs head-wide jaw. Fix applied: 2px fangs.",
+      "note": "SpriteJudgeV17: Totodile wins, Aquapup 84%."
     }
   ],
   "bar": {

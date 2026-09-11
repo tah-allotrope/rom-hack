@@ -353,6 +353,24 @@
       "win": false,
       "gap": "Awaiting SpriteCriticR9.",
       "note": "Solid belly centers committed as c07b3d4."
+    },
+    {
+      "piece": "sprites-critic-r9",
+      "win": false,
+      "gap": "Interior EWE islands. Fix applied+committed: solid WWW fills.",
+      "note": "SpriteCriticR9: BAR wins 80/20, ours 20%. Eyes/muzzles/backs pass."
+    },
+    {
+      "piece": "belly-islands-fix",
+      "win": false,
+      "gap": "Awaiting re-critic.",
+      "note": "4 rows filled, node check passes, committed 4779af0."
+    },
+    {
+      "piece": "battle-critic-r11",
+      "win": false,
+      "gap": "OSCILLATION: R11 wants edge-flush square revert, contradicting R7 detached-slant direction. HELD current design; loop paused on battle.",
+      "note": "BattleCriticR11: BAR wins 60-40, ours 40%. R0 checklist passes. No revert applied."
     }
   ]
 }

@@ -845,6 +845,18 @@
       "win": false,
       "gap": "Redraw flattened shading depth. Fix: single-sided dither shade, protect eyes/mouths/feet.",
       "note": "SpriteJudgeV9 pinned: BAR wins, ours 35%. Feet/mouths pass."
+    },
+    {
+      "piece": "shadev3-verify",
+      "win": false,
+      "gap": "Awaiting SpriteJudgeV10.",
+      "note": "Screenshot: Voltpup + Leafhog shaded. Committed."
+    },
+    {
+      "piece": "sprite-judge-v10",
+      "win": false,
+      "gap": "OSCILLATION-HOLD: V10 calls applied dither noise (V6/V9 ordered it). All treatments held.",
+      "note": "SpriteJudgeV10: BAR wins 61/39, ours 39%. Shading tech complete."
     }
   ],
   "bar": {
@@ -873,7 +885,7 @@
     "battle": 90,
     "ui": 92,
     "tiles": 90,
-    "sprites": "22-64 judge variance, best-effort",
+    "sprites": "39-72 judge variance, best 72",
     "title": "win original-art bar"
   }
 }

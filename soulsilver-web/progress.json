@@ -654,5 +654,27 @@
       "gap": "Critics relitigate settled direction (plates, trunk, raster, weave) instead of converging.",
       "note": "Battle 90 holds. UI 84, tiles 70, sprites 20-35. All holds logged with evidence."
     }
-  ]
+  ],
+  "bar": {
+    "version": 1,
+    "locked": "2026-09-11",
+    "rules": [
+      "Battle plates: detached slanted R0 hairline #181820 (owner-locked; never relitigate flush/square).",
+      "Trunks: 4px narrow stub on south-ground fringe only; interior trunkless (owner-locked).",
+      "Text raster: 1-bit bitmap atlas, integer fillRect, no smoothing (DS hardware has no AA).",
+      "Meadow: parity checkerboard weave #5da862/#57a05c + speckle (owner direction R12).",
+      "Grass fringe: hash-scattered broken tufts, no continuous lip; clustered via low-freq hash.",
+      "Sprites: faceless backs, nape caps, solid mouth bands + single mouth lines, arched cylinders.",
+      "Textbox: no name plate, 2-line windows, inline speaker, measure-wrap."
+    ],
+    "screenshots": [
+      "title.png",
+      "house.png",
+      "town.png",
+      "route.png",
+      "battle.png",
+      "dialog.png"
+    ],
+    "instruction": "Critics: judge ONLY gaps outside these rules. Citing a locked rule as a gap is an automatic invalid verdict."
+  }
 }

@@ -857,6 +857,12 @@
       "win": false,
       "gap": "OSCILLATION-HOLD: V10 calls applied dither noise (V6/V9 ordered it). All treatments held.",
       "note": "SpriteJudgeV10: BAR wins 61/39, ours 39%. Shading tech complete."
+    },
+    {
+      "piece": "backs-gap",
+      "win": false,
+      "gap": "Backs still procedural-era; fronts art-directed. Fix: full back redraws.",
+      "note": "Half of battle-visible sprites never art-directed. Real gap, not oscillation."
     }
   ],
   "bar": {

@@ -229,15 +229,15 @@ function panelChrome(g, x, y, w, h) {
   g.save();
   // drop shadow (offset, translucent, same rounded shape)
   g.fillStyle = "rgba(0,0,0,0.35)";
-  rr(g, x + 1, y + 2, w, h, 6); g.fill();
+  rr(g, x + 1, y + 2, w, h, 3); g.fill();
   // off-white face
   g.fillStyle = "#fbfbf0";
-  rr(g, x, y, w, h, 6); g.fill();
+  rr(g, x, y, w, h, 3); g.fill();
   // double border: dark navy outer + pale blue inner
   g.lineWidth = 1; g.strokeStyle = "#334f80";
-  rr(g, x + 2.5, y + 2.5, w - 5, h - 5, 4); g.stroke();
+  rr(g, x + 2.5, y + 2.5, w - 5, h - 5, 2); g.stroke();
   g.strokeStyle = "#a9c1e6";
-  rr(g, x + 4, y + 4, w - 8, h - 8, 3); g.stroke();
+  rr(g, x + 4, y + 4, w - 8, h - 8, 2); g.stroke();
   g.restore();
 }
 

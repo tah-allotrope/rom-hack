@@ -653,6 +653,18 @@
       "win": false,
       "gap": "Critics relitigate settled direction (plates, trunk, raster, weave) instead of converging.",
       "note": "Battle 90 holds. UI 84, tiles 70, sprites 20-35. All holds logged with evidence."
+    },
+    {
+      "piece": "tile-judge-v1",
+      "win": false,
+      "gap": "Floating walls, no ground shadow/foundation. Fix: shadow + base strip.",
+      "note": "TileJudgeV1 pinned-bar: BAR wins, ours 58%. Lock respected, fresh gap."
+    },
+    {
+      "piece": "sprite-judge-v1",
+      "win": false,
+      "gap": "Flat single-tone fills vs volumed sprites. Fix: darker dithered tone right/bottom.",
+      "note": "SpriteJudgeV1 pinned-bar: BAR wins, ours 40%. Lock respected."
     }
   ],
   "bar": {

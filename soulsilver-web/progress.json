@@ -737,6 +737,12 @@
       "win": false,
       "gap": "Awaiting re-judge.",
       "note": "Screenshot: ridge + stepped courses read pitched. Committed."
+    },
+    {
+      "piece": "tile-judge-v5",
+      "win": false,
+      "gap": "Zebra course bands vs uniform slopes. Fix applied: shade=false.",
+      "note": "TileJudgeV5 pinned: BAR wins at 83%, ours misses 90%."
     }
   ],
   "bar": {

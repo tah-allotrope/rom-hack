@@ -329,6 +329,18 @@
       "win": false,
       "gap": "Leafhog 1px slit + checker-noise muzzles + Aquapup/Nibble same eyes. Fix: restore sclera, graded edges, differentiate.",
       "note": "SpriteCriticR7: BAR wins 90/10, ours 35. Volume geometry claims pass."
+    },
+    {
+      "piece": "sprite-fix-verify",
+      "win": false,
+      "gap": "Awaiting SpriteCriticR8.",
+      "note": "Screenshot: Leafhog two-row eyes + solid muzzle, Aquapup tall ovals + ridge. Defects closed visually."
+    },
+    {
+      "piece": "sprites-critic-r8",
+      "win": false,
+      "gap": "Voltpup/Gusthawk belly checkers + flat fills. Fix: solid W + E edge.",
+      "note": "SpriteCriticR8: all 3 defects pass, ours 30%. Eyes/muzzles/backs verified."
     }
   ]
 }

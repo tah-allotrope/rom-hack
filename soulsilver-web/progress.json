@@ -923,6 +923,12 @@
       "win": false,
       "gap": "Small inset bite vs head-wide jaw. Fix applied: 2px fangs.",
       "note": "SpriteJudgeV17: Totodile wins, Aquapup 84%."
+    },
+    {
+      "piece": "sprite-judge-v18",
+      "win": false,
+      "gap": "OSCILLATION-HOLD: V18 wants broad U-jaw rewrite (6 rounds built narrow muzzle). Held current.",
+      "note": "SpriteJudgeV18: Totodile wins, Aquapup 64%. Fang tweaks oscillate 64-88."
     }
   ],
   "bar": {
@@ -951,7 +957,7 @@
     "battle": 90,
     "ui": 92,
     "tiles": 90,
-    "sprites": "39-72 judge variance, best 72",
+    "sprites": "best 88 single / 75 roster; jaw direction held",
     "title": "win original-art bar"
   }
 }

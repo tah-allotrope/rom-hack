@@ -221,6 +221,54 @@
       "win": false,
       "gap": "Awaiting re-critic.",
       "note": "TrunkGate: 4px stub y10-15 on south in-bounds ground only, flare gone, walls pure crown."
+    },
+    {
+      "piece": "trunk-gate-verify",
+      "win": false,
+      "gap": "Awaiting TileCriticR6.",
+      "note": "Screenshots: post rows gone, pure crown walls, clear R29 grass/sign."
+    },
+    {
+      "piece": "sprite-nape-r4",
+      "win": false,
+      "gap": "Awaiting SpriteCriticR4.",
+      "note": "SpriteNape: discs to nape, 2-3px head shears, Aquapup ridge. Checks claimed."
+    },
+    {
+      "piece": "sprites-critic-r4",
+      "win": false,
+      "gap": "Flat tones, no volumetric shading. Fix: mid-tone step + dither + rim light.",
+      "note": "SpriteCriticR4: nape spec passes, ours 35%. Skyro blue-nape screenshot verified."
+    },
+    {
+      "piece": "nape-verify",
+      "win": false,
+      "gap": "Awaiting final critics.",
+      "note": "Screenshot: Skyro blue nape rear, Leafhog front, clean staging. Best battle shot yet."
+    },
+    {
+      "piece": "battle-critic-r6",
+      "win": false,
+      "gap": "Foe ears clip at y-12. Fix applied: anchor -6.",
+      "note": "BattleCriticR6: BAR wins, ours 40%. Mound/plate geometry passes."
+    },
+    {
+      "piece": "tiles-critic-r6",
+      "win": false,
+      "gap": "Critic oscillation noted: R5 wanted fewer trunks, R6 wants wider visible trunks. Middle applied: gated 6px stub. Fix applied.",
+      "note": "TileCriticR6: BAR wins, ours 35% by code read. No tile bug found."
+    },
+    {
+      "piece": "battle-foe-unclip",
+      "win": false,
+      "gap": "Awaiting re-critic.",
+      "note": "Foe anchor -12 to -6; ears on-canvas, 14px plate gap kept."
+    },
+    {
+      "piece": "trunk-stub-widen",
+      "win": false,
+      "gap": "Awaiting re-critic.",
+      "note": "Stub base 4px to 6px on south-ground fringe only."
     }
   ]
 }

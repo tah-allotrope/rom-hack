@@ -349,7 +349,7 @@ export class Battle {
     // foe sprite (32x32 at 3x); feet seated on the mound's back slope.
     // idle bob when alive (shadow lives in tuft)
     const bob = Math.floor(this.t * 2) % 2;
-    g.save(); g.translate(148, -12 + (this.foe.hp > 0 ? bob : 0)); g.scale(3, 3);
+    g.save(); g.translate(148, -6 + (this.foe.hp > 0 ? bob : 0)); g.scale(3, 3);
     blit(g, MON_FRONT[this.foe.sp], 0, 0); g.restore();
     // player back sprite seated on its mound's back slope (feet in the grass)
     const me = this.me();

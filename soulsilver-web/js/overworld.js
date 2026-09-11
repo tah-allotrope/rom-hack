@@ -61,6 +61,31 @@ function paintTile(g, t, dx, dy, frame, tx, ty, m, map) {
     R(0, 15, 16, 1, "#3a2010");
     return true;
   };
+  // House perimeter: dark brown dithered outline + corner posts around the
+  // H/R wall/roof mass. Neighbor-aware: an edge outlines only where the
+  // neighbor is not H/R, so merged wall/roof interiors stay seamless and
+  // the R-over-H eave shadow never gets an outline. Side edges stop above
+  // the seating rows when seated so the footprint shadow + foundation
+  // strip keep grounding the base; the bottom edge outlines only where
+  // seating did not already ground it. Art inside the 1px edge is untouched.
+  const houseEdge = (seated) => {
+    const isMass = (c) => c === "H" || c === "R";
+    const uO = !isMass(tileAt(m, tx, ty - 1));
+    const dO = !isMass(tileAt(m, tx, ty + 1));
+    const lO = !isMass(tileAt(m, tx - 1, ty));
+    const rO = !isMass(tileAt(m, tx + 1, ty));
+    const D = "#3a2010", L = "#5e3a18";
+    const dith = (x, y) => (hash2(tx * 16 + x, ty * 16 + y) % 3 === 0 ? L : D);
+    const y1 = seated ? 13 : 16;
+    if (lO) for (let y = 0; y < y1; y++) P(0, y, dith(0, y));
+    if (rO) for (let y = 0; y < y1; y++) P(15, y, dith(15, y));
+    if (uO) for (let x = 0; x < 16; x++) P(x, 0, dith(x, 0));
+    if (dO && !seated) for (let x = 0; x < 16; x++) P(x, 15, dith(x, 15));
+    if (lO && uO) { R(0, 0, 2, 2, D); P(1, 1, L); }
+    if (rO && uO) { R(14, 0, 2, 2, D); P(14, 1, L); }
+    if (lO && dO && !seated) { R(0, 14, 2, 2, D); P(1, 14, L); }
+    if (rO && dO && !seated) { R(14, 14, 2, 2, D); P(14, 14, L); }
+  };
   switch (t) {
     case ",": {
       grassSpeckle();
@@ -398,7 +423,7 @@ function paintTile(g, t, dx, dy, frame, tx, ty, m, map) {
           if (hh % 4 === 0) P(x, 1, "#5e1408");
         }
       }
-      seatFootprint();
+      houseEdge(seatFootprint());
       break;
     }
     case "R": {
@@ -411,7 +436,7 @@ function paintTile(g, t, dx, dy, frame, tx, ty, m, map) {
       R(1, 6, 1, 3, "#a82818"); R(8, 6, 1, 3, "#a82818"); R(14, 6, 1, 3, "#a82818");
       R(5, 10, 1, 3, "#a82818"); R(12, 10, 1, 3, "#a82818");
       P(2, 5, "#701808"); P(9, 9, "#701808");
-      seatFootprint();
+      houseEdge(seatFootprint());
       break;
     }
     case "D": {

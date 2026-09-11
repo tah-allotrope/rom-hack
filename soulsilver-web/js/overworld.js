@@ -42,6 +42,25 @@ function paintTile(g, t, dx, dy, frame, tx, ty, m, map) {
       R(sx, sy, 1, 2, "#3f8a46"); P(sx, sy, "#6cba70");
     }
   };
+  // House seating: a wall/door/roof tile directly above meadow ground is
+  // a footprint row. Its base gets a 2px darkened ground-shadow (meadow
+  // side) + 1px dark foundation strip (wall base) so houses sit instead
+  // of floating. Art above row 13 is untouched. D/+ stay excluded: they
+  // are interior walkables, so wall-over-door stacking never seats.
+  // Returns true when seated.
+  const seatFootprint = () => {
+    const below = tileAt(m, tx, ty + 1);
+    const meadow = below === "," || below === "G" || below === "F" ||
+      below === "." || below === "~";
+    if (!meadow) return false;
+    R(0, 13, 16, 2, "#3f8a46");
+    for (let x = 0; x < 16; x += 3) {
+      const hh = hash2(tx * 16 + x, ty * 7 + 1);
+      P((x + (hh % 2)) % 16, 13 + ((hh >>> 2) % 2), "#35702f");
+    }
+    R(0, 15, 16, 1, "#3a2010");
+    return true;
+  };
   switch (t) {
     case ",": {
       grassSpeckle();
@@ -368,6 +387,7 @@ function paintTile(g, t, dx, dy, frame, tx, ty, m, map) {
       P(3, 5, "#e9cf9e"); P(11, 9, "#e9cf9e"); P(7, 11, "#e9cf9e");
       R(0, 0, 16, 2, "#c8a878"); R(0, 0, 16, 1, "#a88050");
       R(0, 13, 16, 3, "#8a5a28"); R(0, 13, 16, 1, "#c8a068");
+      seatFootprint();
       break;
     }
     case "R": {
@@ -379,8 +399,8 @@ function paintTile(g, t, dx, dy, frame, tx, ty, m, map) {
       R(4, 2, 1, 3, "#a82818"); R(11, 2, 1, 3, "#a82818");
       R(1, 6, 1, 3, "#a82818"); R(8, 6, 1, 3, "#a82818"); R(14, 6, 1, 3, "#a82818");
       R(5, 10, 1, 3, "#a82818"); R(12, 10, 1, 3, "#a82818");
-      P(6, 3, "#f08070"); P(13, 7, "#f08070"); P(3, 11, "#f08070");
       P(2, 5, "#701808"); P(9, 9, "#701808");
+      seatFootprint();
       break;
     }
     case "D": {
@@ -392,8 +412,9 @@ function paintTile(g, t, dx, dy, frame, tx, ty, m, map) {
       R(4, 3, 3, 1, "#8a5a28"); R(9, 3, 3, 1, "#8a5a28");
       R(4, 8, 3, 1, "#8a5a28"); R(9, 8, 3, 1, "#8a5a28");
       R(11, 7, 2, 2, "#f8d838"); P(11, 7, "#fff8d0");
-      R(2, 12, 12, 1, "#3a2010");
       R(0, 14, 16, 2, "#d8b878"); R(0, 14, 16, 1, "#e8c890");
+      // seated door keeps a worn sandy step centered on its shadow
+      if (seatFootprint()) R(4, 14, 8, 1, "#d8b878");
       break;
     }
     case "C": {

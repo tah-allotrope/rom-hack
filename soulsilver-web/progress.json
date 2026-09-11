@@ -665,6 +665,12 @@
       "win": false,
       "gap": "Flat single-tone fills vs volumed sprites. Fix: darker dithered tone right/bottom.",
       "note": "SpriteJudgeV1 pinned-bar: BAR wins, ours 40%. Lock respected."
+    },
+    {
+      "piece": "ui-judge-v1-WIN",
+      "win": true,
+      "gap": "Corner radius tightened 6/4/3 to 3/2/2 per verdict.",
+      "note": "UiJudgeV1 pinned-bar: ours 92%. HITS 90% YES. SECOND WIN."
     }
   ],
   "bar": {

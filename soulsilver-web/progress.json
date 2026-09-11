@@ -545,6 +545,12 @@
       "win": false,
       "gap": "Hookless j stick from my narrowing. Fix applied: 2px foot hooking left.",
       "note": "UiCriticR7: BAR wins, ours 87%. Advances verify via shared bitW."
+    },
+    {
+      "piece": "owner-direction-locks",
+      "win": false,
+      "gap": "None. Locked by owner 2026-09-11.",
+      "note": "LOCKED: detached slanted plates (no revert), 4px narrow trunks (no widen), full loop continues. Critics must judge other gaps."
     }
   ]
 }

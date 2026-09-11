@@ -123,9 +123,6 @@ function panelChrome(g, x, y, w, h) {
   // off-white face
   g.fillStyle = "#fbfbf0";
   rr(g, x, y, w, h, 6); g.fill();
-  // outer highlight just inside the face
-  g.lineWidth = 2; g.strokeStyle = "#ffffff";
-  rr(g, x + 1, y + 1, w - 2, h - 2, 5); g.stroke();
   // double border: dark navy outer + pale blue inner
   g.lineWidth = 1; g.strokeStyle = "#334f80";
   rr(g, x + 2.5, y + 2.5, w - 5, h - 5, 4); g.stroke();

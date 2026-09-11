@@ -503,6 +503,12 @@
       "win": false,
       "gap": "Awaiting SpriteCriticR16.",
       "note": "Screenshot: Aquapup fanged maw readable, Embercub shaded rear. Mouths committed 9fdd34a."
+    },
+    {
+      "piece": "sprites-critic-r16",
+      "win": false,
+      "gap": "Gusethawk mottled beak. Fix applied: single K mouth line row 500.",
+      "note": "SpriteCriticR16: BAR wins 68/32, ours 32. 5/8 mouths pass, eyes/bellies/backs pass."
     }
   ]
 }

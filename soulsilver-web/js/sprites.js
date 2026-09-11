@@ -466,7 +466,7 @@ const F_PINEBUG = [
   "..KBNENNNNNNMEMEWEMEMNNNNNNENK..",
   "..KNNGGBBNNNNNNNNNNNNNNNNGGNNK..",
   ".GGGKBNENNNNNNNNNNNNNNNNNENKGGG.",
-  "....KBBNBNBNBNMKMMKMNBNBNBNK....",
+  "....KBBNBNBNBNMKKKKMNBNBNBNK....",
   ".....KNNK........KNNK...........",
   ".....KNWNK........KNWNK.........",
   "................................",

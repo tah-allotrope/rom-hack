@@ -443,6 +443,12 @@
       "win": false,
       "gap": "OSCILLATION: R12 wants R0 to 4 (was 6-2-0). HELD at 0; radius ping-pong needs owner call.",
       "note": "BattleCriticR12: BAR wins, ours 84%. Layout/content pass."
+    },
+    {
+      "piece": "grass-feather-verify",
+      "win": false,
+      "gap": "Awaiting re-critic.",
+      "note": "Screenshot: irregular feathery R29 patches, signpost, hero. Seams gone visually."
     }
   ]
 }

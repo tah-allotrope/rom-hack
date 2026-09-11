@@ -479,6 +479,12 @@
       "win": false,
       "gap": "Even static dots vs clustered tufts. Fix: low-frequency cluster hash gate.",
       "note": "TileCriticR11: BAR wins, ours 71%. Continuous lip gone."
+    },
+    {
+      "piece": "sprites-critic-r14",
+      "win": false,
+      "gap": "Eyes still biggest gap + Nibble back ear fringe (8 N px). Fix: full eye artistry + ear realign.",
+      "note": "SpriteCriticR14: BAR wins, ours 30%. Repair holds."
     }
   ]
 }

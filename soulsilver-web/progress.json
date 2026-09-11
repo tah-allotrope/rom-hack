@@ -815,6 +815,12 @@
       "win": true,
       "gap": "None.",
       "note": "BattleJudgeV1: holds-90 YES at 90%. Zero diffs since win."
+    },
+    {
+      "piece": "sprite-art-direction",
+      "win": false,
+      "gap": "Awaiting pass.",
+      "note": "Final attempt: full cohesive front redraws with art direction, not microfixes."
     }
   ],
   "bar": {

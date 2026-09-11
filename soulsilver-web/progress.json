@@ -527,6 +527,12 @@
       "win": false,
       "gap": "System AA font vs 1-bit bitmap (structural). Fix: embedded bitmap-font atlas.",
       "note": "UiCriticR5: BAR wins, ours 78%. Chrome/menus/padding pass."
+    },
+    {
+      "piece": "font-atlas-verify",
+      "win": false,
+      "gap": "Possible HP-number clipping on ally plate (21/2 cut). Awaiting UiCriticR6.",
+      "note": "Screenshot: 1-bit dialogue + plates render. FontAtlas committed 2657ec4."
     }
   ]
 }

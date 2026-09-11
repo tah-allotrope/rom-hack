@@ -863,6 +863,18 @@
       "win": false,
       "gap": "Backs still procedural-era; fronts art-directed. Fix: full back redraws.",
       "note": "Half of battle-visible sprites never art-directed. Real gap, not oscillation."
+    },
+    {
+      "piece": "backs-verify",
+      "win": false,
+      "gap": "Awaiting SpriteJudgeV11.",
+      "note": "Screenshot: Leafhog + Nibble rear poses. 206-row redraw committed."
+    },
+    {
+      "piece": "sprite-judge-v11",
+      "win": false,
+      "gap": "Nibble back flat torso + stub tail. Fix: E spine + tail curl.",
+      "note": "SpriteJudgeV11 pinned: BAR wins 84/100, ours 16%. Backs verified asymmetric."
     }
   ],
   "bar": {

@@ -455,13 +455,11 @@ function paintTile(g, t, dx, dy, frame, tx, ty, m, map) {
         const off = (course % 2) * 4 + (hash2(tx * 5 + course, ty * 3 + 1) % 2);
         for (let jx = 2 + off; jx < 16; jx += 8)
           R(jx, y + 1, 1, 2, shade ? "#701808" : "#a82818");
-        for (let x = 0; x < 16; x++)
-          if (hash2(tx * 16 + x, ty * 31 + y) % 11 === 0) P(x, y, "#f08070");
         y += 4; course++;
       }
       if (y < eaveY) {
         // partial course: sun lip + face, step shadow on its last row
-        const shade = course % 2 === 1;
+        const shade = false; // uniform faces (see full courses above)
         R(0, y, 16, 1, "#e05848");
         if (y + 1 < eaveY) R(0, y + 1, 16, eaveY - y - 2, shade ? "#a82818" : "#c03828");
         R(0, eaveY - 1, 16, 1, "#982818");

@@ -623,6 +623,18 @@
       "win": false,
       "gap": "Wrap collapses intentional spacing. Fix applied: gap-preserving tokens.",
       "note": "UiCriticR10: BAR wins, ours 86%. Zero overflow, paging terminates."
+    },
+    {
+      "piece": "sprite-cylinder-verify",
+      "win": false,
+      "gap": "Awaiting SpriteCriticR20.",
+      "note": "Screenshot: Embercub blaze cylinder + Voltpup rear. 49-row gradient committed."
+    },
+    {
+      "piece": "sprites-critic-r20",
+      "win": false,
+      "gap": "Flank masses + K outlines vs dithered colored outlines. Sprite micro-rounds PAUSED (non-converging lens); focus tiles/UI 90-push.",
+      "note": "SpriteCriticR20: BAR wins 80/20, ours 20%. Cylinders clean."
     }
   ]
 }

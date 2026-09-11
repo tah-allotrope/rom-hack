@@ -305,6 +305,30 @@
       "win": false,
       "gap": "Navy bordered web-chrome vs hairline-black boxes. Fix applied: stroke #181820.",
       "note": "BattleCriticR8: BAR wins, ours 72%. Insets/rounds/slants/1x pass."
+    },
+    {
+      "piece": "sprite-volume-verify",
+      "win": false,
+      "gap": "Awaiting SpriteCriticR7.",
+      "note": "Screenshot: Voltpup droop eyes + cheeks + grin, Gusthawk rear, hairline plates. Best roster shot yet."
+    },
+    {
+      "piece": "sprite-volume-commit",
+      "win": false,
+      "gap": "None pending.",
+      "note": "41-row eye/muzzle pass committed immediately as dfbe56d."
+    },
+    {
+      "piece": "battle-critic-r9",
+      "win": false,
+      "gap": "R6 rounds read floating vs sharp parallelograms. Fix applied: R 6 to 2.",
+      "note": "BattleCriticR9: BAR wins, ours 64%. Insets/slants/1x pass."
+    },
+    {
+      "piece": "sprites-critic-r7",
+      "win": false,
+      "gap": "Leafhog 1px slit + checker-noise muzzles + Aquapup/Nibble same eyes. Fix: restore sclera, graded edges, differentiate.",
+      "note": "SpriteCriticR7: BAR wins 90/10, ours 35. Volume geometry claims pass."
     }
   ]
 }

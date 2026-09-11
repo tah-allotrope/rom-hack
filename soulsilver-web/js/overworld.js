@@ -140,14 +140,23 @@ function paintTile(g, t, dx, dy, frame, tx, ty, m, map) {
         const [edgeC, inC] = fringeCols(n);
         const yE = up ? 0 : 15, yI = up ? 1 : 14, yJ = up ? 2 : 13;
         const x0 = isTallG(lfG) ? 2 : 0, x1 = isTallG(rtG) ? 14 : 16;
-        R(x0, yE, x1 - x0, 1, edgeC);
-        R(x0, yI, x1 - x0, 1, inC);
+        const BED = "#4c9448";
         const [spD, spL] = fringeSpeck(inC);
+        // Broken tuft fringe: no solid rects. Every edge/inner pixel is an
+        // independent bed-vs-fringe hash pick so no continuous lip survives.
         for (let x = x0; x < x1; x++) {
+          // outer row sparse (~1/3) so tufts read as dots, never a lip;
+          // inner row denser (~1/2) to root each tuft.
+          const he = hash2(tx * 16 + x, ty * 29 + (up ? 7 : 8));
+          const heF = (he % 3 === 0);
+          P(x, yE, heF ? edgeC : BED);
+          const hi = hash2(tx * 16 + x, ty * 29 + (up ? 9 : 10));
+          P(x, yI, (hi % 2 === 0) ? BED : inC);
           const j = hash2(tx * 16 + x, ty * 7 + (up ? 1 : 2)) % 3;
           if (j === 0) P(x, yJ, inC);
-          else if (j === 2 && (x % 2 === 0 || inC === "#5da862")) P(x, yI, "#4c9448");
-          else if (x % 5 === 0) P(x, yE, x % 10 === 0 ? spL : spD);
+          // sparse sun-catch on fringe pixels only; hashed so it never lines up
+          if (heF && (hash2(tx * 11 + x, ty * 13 + (up ? 21 : 22)) % 7 === 0))
+            P(x, yE, (x % 2 ? spD : spL));
         }
         // overhanging blade tips root in the bed, lean outward with sway
         for (let k = 0; k < 3; k++) {
@@ -166,14 +175,23 @@ function paintTile(g, t, dx, dy, frame, tx, ty, m, map) {
         const [edgeC, inC] = fringeCols(n);
         const xE = left ? 0 : 15, xI = left ? 1 : 14, xJ = left ? 2 : 13;
         const y0 = isTallG(upG) ? 2 : 0, y1 = isTallG(dnG) ? 14 : 16;
-        R(xE, y0, 1, y1 - y0, edgeC);
-        R(xI, y0, 1, y1 - y0, inC);
+        const BED = "#4c9448";
         const [spD, spL] = fringeSpeck(inC);
+        // Broken tuft fringe: no solid rects. Every edge/inner pixel is an
+        // independent bed-vs-fringe hash pick so no continuous lip survives.
         for (let y = y0; y < y1; y++) {
-          const j = hash2(tx * 7 + (left ? 1 : 2), ty * 16 + y) % 3;
+          // outer row sparse (~1/3) so tufts read as dots, never a lip;
+          // inner row denser (~1/2) to root each tuft.
+          const he = hash2(tx * 29 + (left ? 7 : 8), ty * 16 + y);
+          const heF = (he % 3 === 0);
+          P(xE, y, heF ? edgeC : BED);
+          const hi = hash2(tx * 7 + (left ? 1 : 2), ty * 16 + y);
+          P(xI, y, (hi % 2 === 0) ? BED : inC);
+          const j = hash2(tx * 13 + (left ? 21 : 22), ty * 11 + y) % 3;
           if (j === 0) P(xJ, y, inC);
-          else if (j === 2 && (y % 2 === 0 || inC === "#5da862")) P(xI, y, "#4c9448");
-          else if (y % 5 === 0) P(xE, y, y % 10 === 0 ? spL : spD);
+          // sparse sun-catch on fringe pixels only; hashed so it never lines up
+          if (heF && (hash2(tx * 13 + (left ? 21 : 22), ty * 11 + y + 5) % 7 === 0))
+            P(xE, y, (y % 2 ? spD : spL));
         }
         for (let k = 0; k < 3; k++) {
           const hy = hash2(tx * 3 + k + (left ? 0 : 40), ty * 5 + k * 7 + 3);

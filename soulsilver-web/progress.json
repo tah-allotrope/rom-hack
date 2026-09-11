@@ -449,6 +449,18 @@
       "win": false,
       "gap": "Awaiting re-critic.",
       "note": "Screenshot: irregular feathery R29 patches, signpost, hero. Seams gone visually."
+    },
+    {
+      "piece": "tiles-critic-r10",
+      "win": false,
+      "gap": "Solid 2px light lip vs broken tufts. Fix: hash-scatter only, no band rects.",
+      "note": "TileCriticR10: BAR wins, ours 62%. Feather introduced continuous lip."
+    },
+    {
+      "piece": "sprites-critic-r13",
+      "win": false,
+      "gap": "Dither contaminated outlines/highlights (Nibble N, Skyro WW). Fix: dither E-vs-light only.",
+      "note": "SpriteCriticR13: BAR wins 82/18, ours 18%. Parity overreach."
     }
   ]
 }

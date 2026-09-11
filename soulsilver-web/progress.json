@@ -413,6 +413,36 @@
       "win": false,
       "gap": "Flat horizontal shade bands vs wrapped gradients. Fix: arch bands 1px/row with torso.",
       "note": "SpriteCriticR11: BAR wins, ours 60%. Biggest sprite jump yet."
+    },
+    {
+      "piece": "sprite-arch-verify",
+      "win": false,
+      "gap": "Awaiting SpriteCriticR12.",
+      "note": "Screenshot: Aquapup shaded belly + tall eyes, Nibble rear stripe. 45-row arch committed d281de2."
+    },
+    {
+      "piece": "sprites-critic-r12",
+      "win": false,
+      "gap": "Coarse band edges; catchlight claim DISPUTED (row 321 WE/EW glints present). Fix: fine parity dither on band edges.",
+      "note": "SpriteCriticR12: BAR wins, ours 35%. Arch/taper verified."
+    },
+    {
+      "piece": "tiles-critic-r9",
+      "win": false,
+      "gap": "Hard tile-aligned grass rectangles vs feathery patches. Fix: neighbor-aware fringe + overhang blades.",
+      "note": "TileCriticR9: BAR wins, ours 82%. Fresh gap, no oscillation."
+    },
+    {
+      "piece": "ui-critic-r3",
+      "win": false,
+      "gap": "Wide Verdana glyph density vs narrow HGSS. Fix applied: Tahoma-first stack.",
+      "note": "UiCriticR3: BAR wins, ours 87%. One change from 90%."
+    },
+    {
+      "piece": "battle-critic-r12",
+      "win": false,
+      "gap": "OSCILLATION: R12 wants R0 to 4 (was 6-2-0). HELD at 0; radius ping-pong needs owner call.",
+      "note": "BattleCriticR12: BAR wins, ours 84%. Layout/content pass."
     }
   ]
 }

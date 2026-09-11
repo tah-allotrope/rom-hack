@@ -57,7 +57,7 @@ export function bindTouch() {
 // HGSS look: off-white rounded panels, dark-navy outer border + pale-blue
 // inner border (double border), soft drop shadow, 8px proportional text
 // with true alphabetic-baseline descenders and measure-based layout.
-const DS_FONT = 'Verdana, Tahoma, "DejaVu Sans", sans-serif';
+const DS_FONT = 'Tahoma, Verdana, "DejaVu Sans", sans-serif';
 const DS_SIZE = 8;          // HGSS body glyph size
 const DS_BASELINE = 7;      // ascent px for 8px Verdana: top-anchored y -> baseline
 const DS_LINE_H = 10;       // tight HGSS textbox line step (8px glyph + 2px gap)

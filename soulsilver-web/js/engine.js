@@ -148,6 +148,8 @@ const BIT_G = {
   ")": ["#..", ".#.", "..#", "..#", "..#", ".#.", "#.."],
   "\u00e9": ["...#.", "..#..", ".###.", "#...#", "#####", "#....", ".###."],
   ";": ["", "#", "", "", "", "#", "#"],
+  "♂": [".###.#", "#.#.#", "#.###", ".###.", "..#.."],
+  "♀": [".###.", "#.#.#", ".###.", "..#..", ".###.", "..#.."],
 };
 const BIT_D = { g: 2, j: 2, p: 2, q: 2, ",": 1, ";": 1, y: 1 };
 
@@ -175,7 +177,7 @@ function rr(g, x, y, w, h, r) {
   g.closePath();
 }
 // variable-width measure through the bitmap advances (never char-count * N)
-function measure(g, s, size = DS_SIZE, bold = false) {
+export function measure(g, s, size = DS_SIZE, bold = false) {
   s = String(s);
   if (!s.length) return 0;
   let w = 0;

@@ -30,7 +30,7 @@ function paintTile(g, t, dx, dy, frame, tx, ty, m, map) {
   let seed = hash2(tx, ty);
   const RND = (n) => { seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0; return seed % n; };
   const grassSpeckle = () => {
-    R(0, 0, 16, 16, "#5da862");
+    R(0, 0, 16, 16, ((tx + ty) & 1) ? "#57a05c" : "#5da862");
     for (let i = 0; i < 12; i++) {
       const sx = RND(16), sy = RND(16);
       P(sx, sy, i % 3 === 0 ? "#6cba70" : "#4f9a55");

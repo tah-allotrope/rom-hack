@@ -1,6 +1,6 @@
 // Turn-based battle: Gen III-V damage/XP/catch formulas, original content.
 import { MOVES, SPECIES, effectiveness } from "./data.js";
-import { W, H, textbox, Menu, drawPanel, text, pressedEdge } from "./engine.js";
+import { W, H, textbox, Menu, drawPanel, text, pressedEdge, measure } from "./engine.js";
 import { MON_FRONT, MON_BACK, blit } from "./sprites.js";
 import { sfx } from "./audio.js";
 
@@ -18,7 +18,7 @@ export function makeMon(spId, lv) {
   const st = calcStats(spId, lv);
   const learn = SPECIES[spId].learn.filter(([l]) => l <= lv).map(([, m]) => m).slice(-4);
   return {
-    sp: spId, lv, exp: lv * lv * lv,
+    sp: spId, lv, exp: lv * lv * lv, gd: Math.random() < 0.5 ? "M" : "F",
     moves: learn.map((id) => ({ id, pp: MOVES[id].pp })),
     hp: st.maxhp, ...st, status: null, stages: { atk: 0, def: 0 },
   };
@@ -428,6 +428,7 @@ function plate(g, x, y, m, foe) {
   const pad = 10;
   // padded name (left) + measured right-aligned level (proportional font)
   text(g, SPECIES[m.sp].name, x + pad, y + 6, "#182028", 8, true);
+  text(g, m.gd === "F" ? "♀" : "♂", x + pad + measure(g, SPECIES[m.sp].name, 8, true) + 3, y + 6, m.gd === "F" ? "#e05050" : "#2850c8", 8, true);
   const lv = "Lv" + m.lv;
   g.save();
   g.font = `bold 8px Verdana, Tahoma, "DejaVu Sans", sans-serif`;

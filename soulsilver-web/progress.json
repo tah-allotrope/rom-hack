@@ -371,6 +371,24 @@
       "win": false,
       "gap": "OSCILLATION: R11 wants edge-flush square revert, contradicting R7 detached-slant direction. HELD current design; loop paused on battle.",
       "note": "BattleCriticR11: BAR wins 60-40, ours 40%. R0 checklist passes. No revert applied."
+    },
+    {
+      "piece": "sprites-critic-r10",
+      "win": false,
+      "gap": "Flat unshaded belly slabs vs shaded volumes. Plus real 31px row defect I introduced.",
+      "note": "SpriteCriticR10: BAR wins, ours 40%. Islands filled, eyes/muzzles/backs pass."
+    },
+    {
+      "piece": "voltpup-column-fix",
+      "win": false,
+      "gap": "Next: belly volume shading (3-tone dither).",
+      "note": "Restored dropped column (31 to 32px), committed a2e82ee."
+    },
+    {
+      "piece": "loop-status",
+      "win": false,
+      "gap": "90% unreached. Battle loop HELD on critic oscillation (R7 vs R11 contradiction). Tiles 81, battle 78, UI 85, sprites 40.",
+      "note": "63 rounds. Tree clean, all node checks pass, playable verified."
     }
   ]
 }

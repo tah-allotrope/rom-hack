@@ -821,6 +821,18 @@
       "win": false,
       "gap": "Awaiting pass.",
       "note": "Final attempt: full cohesive front redraws with art direction, not microfixes."
+    },
+    {
+      "piece": "art-redraw-verify",
+      "win": false,
+      "gap": "Awaiting SpriteJudgeV8.",
+      "note": "Screenshot: Aquapup + Embercub directed art. 207-row redraw committed."
+    },
+    {
+      "piece": "sprite-judge-v8",
+      "win": false,
+      "gap": "Floating blob feet + Pinebug sutured mouth. Fix: dark soles + shadow + mouth.",
+      "note": "SpriteJudgeV8 pinned: BAR wins ~72/28, ours 70-72%. Best sprite score."
     }
   ],
   "bar": {

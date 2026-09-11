@@ -749,6 +749,12 @@
       "win": false,
       "gap": "White sparkle on lips vs clean terracotta. Fix applied: pass deleted.",
       "note": "TileJudgeV6 pinned: ours 89%, one point off 90%."
+    },
+    {
+      "piece": "tile-judge-v7-WIN",
+      "win": true,
+      "gap": "Last eave highlight pixel deleted per verdict.",
+      "note": "TileJudgeV7 pinned: OURS at 90%. HITS 90% YES. THIRD WIN."
     }
   ],
   "bar": {

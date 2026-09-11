@@ -485,6 +485,18 @@
       "win": false,
       "gap": "Eyes still biggest gap + Nibble back ear fringe (8 N px). Fix: full eye artistry + ear realign.",
       "note": "SpriteCriticR14: BAR wins, ours 30%. Repair holds."
+    },
+    {
+      "piece": "sprite-eyes2-verify",
+      "win": false,
+      "gap": "Awaiting SpriteCriticR15.",
+      "note": "Screenshot: Embercub brave ovals + Leafhog rear. Eyes2 committed 7f137c7."
+    },
+    {
+      "piece": "sprites-critic-r15",
+      "win": false,
+      "gap": "Mouth-band checker swallows mouths. Fix: solid mouth rows + single mouth line (keep belly arch).",
+      "note": "SpriteCriticR15: BAR wins, ours 32%. Eyes large/unique pass."
     }
   ]
 }

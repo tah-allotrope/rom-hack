@@ -785,6 +785,18 @@
       "win": false,
       "gap": "Flat fills vs directional multi-tone. Fix: UL highlight + LR shadow.",
       "note": "SpriteJudgeV6 pinned: BAR wins, ours 64%. Best sprite score."
+    },
+    {
+      "piece": "light-verify",
+      "win": false,
+      "gap": "Awaiting SpriteJudgeV7.",
+      "note": "Screenshot: Skyro + Pinebug directionally lit. Committed."
+    },
+    {
+      "piece": "sprite-judge-v7",
+      "win": false,
+      "gap": "Judge variance 64 to 22 on same direction; sprite judging PAUSED as non-convergent.",
+      "note": "SpriteJudgeV7: BAR wins 78/22. Light verified, rows intact."
     }
   ],
   "bar": {

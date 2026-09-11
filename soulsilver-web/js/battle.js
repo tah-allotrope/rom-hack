@@ -421,7 +421,7 @@ function plate(g, x, y, m, foe) {
   g.fill();
   g.fillStyle = "rgba(255,255,255,0.8)";
   g.fillRect(cx + R, y + 1, (foe ? cw - SL : cw) - 2 * R, 1);
-  g.strokeStyle = "#334f80";
+  g.strokeStyle = "#181820";
   g.lineWidth = 1;
   trace();
   g.stroke();

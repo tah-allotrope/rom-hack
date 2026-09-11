@@ -293,6 +293,18 @@
       "win": false,
       "gap": "Squat 6x3 stump under skirt vs narrow taller trunks. Fix applied: R(6,9,4,7).",
       "note": "TileCriticR7 blind: BAR wins, ours 81%. Canopy/stubs/shadows/paths pass."
+    },
+    {
+      "piece": "sprites-critic-r6",
+      "win": false,
+      "gap": "Mirrored dot eyes + flat fills vs shaped eyes + volume. Fix: unique eye geometry + muzzle dither.",
+      "note": "SpriteCriticR6: BAR wins, ours 35%. Glints, mouths, backs pass."
+    },
+    {
+      "piece": "battle-critic-r8",
+      "win": false,
+      "gap": "Navy bordered web-chrome vs hairline-black boxes. Fix applied: stroke #181820.",
+      "note": "BattleCriticR8: BAR wins, ours 72%. Insets/rounds/slants/1x pass."
     }
   ]
 }

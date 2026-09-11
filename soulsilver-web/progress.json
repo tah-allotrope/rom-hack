@@ -755,6 +755,12 @@
       "win": true,
       "gap": "Last eave highlight pixel deleted per verdict.",
       "note": "TileJudgeV7 pinned: OURS at 90%. HITS 90% YES. THIRD WIN."
+    },
+    {
+      "piece": "sprite-judge-v4",
+      "win": false,
+      "gap": "Flat interior masses vs staged dither gradients. Fix: second-tone interior dither.",
+      "note": "SpriteJudgeV4 pinned: BAR wins, ours 45%. Rules verified."
     }
   ],
   "bar": {

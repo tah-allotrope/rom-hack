@@ -671,6 +671,12 @@
       "win": true,
       "gap": "Corner radius tightened 6/4/3 to 3/2/2 per verdict.",
       "note": "UiJudgeV1 pinned-bar: ours 92%. HITS 90% YES. SECOND WIN."
+    },
+    {
+      "piece": "house-seat-verify",
+      "win": false,
+      "gap": "Awaiting re-judge.",
+      "note": "Screenshot: foundation strips under walls, seated houses. Committed."
     }
   ],
   "bar": {

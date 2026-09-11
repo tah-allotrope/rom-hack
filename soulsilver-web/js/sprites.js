@@ -290,17 +290,17 @@ const F_EMBERCUB = [
   "...KYOOOrrrrLMMWWWWMMLYOOOrrK...",
   "...KYOOOOrLLMMMWMMMLLEYOOOOrK...",
   "....KYOOOrLMMMWWWWMMMLOOOOrK....",
-  "....KYOOOrLLMMMWWMMMLLOOOOrKYY..",
+  "....KYOOOrLLMMMWWMMMLLOOOrrKYY..",
   "....KYOOOrLMMMWWWWMMMLOOOOrKYY..",
-  "....KYOOOrLLMMMWWMMMLLOOOOrKYY..",
-  ".....KYOOrLMMMWWWWMMMLOOOOrKYY..",
-  ".....KYOOOrLLMMWWMMLLOOOOrKY....",
+  "....KYOOOrLLMMMWWMMMLLOOOrrKYY..",
+  ".....KYOOrLMMMWWWWMMMLOOrOrKYY..",
+  ".....KYOOOrLLMMWWMMLLOOrOrKY....",
   "......KYOOOrK......KOOOOrK......",
   "......KYWKWOK......KOWKWrK......",
   "................................",
   "................................",
   "................................",
-  "................................"
+  "................................",
 ];
 // Aquapup: teardrop head, long floppy fin ears, close-set eyes, fanged mouth.
 const F_AQUAPUP = [
@@ -327,15 +327,15 @@ const F_AQUAPUP = [
   "..KEBKCCCCLLMMMWMMMLLCCCCBKBBK..",
   "..KEBKCCCCLMMMWWWMMMLCCCCBKBBK..",
   "....KEBKCCLLMMMWWMMMLLCCKBBK....",
-  "....KEBKCCLMMMWWWWMMMLCCKBBK....",
-  ".....KECCCCK......KCCCCBK.......",
+  "....KEBKCCLMMMWWWWMMMLCBKBBK....",
+  ".....KECCCCK......KCBCBBK.......",
   ".....KWCWCWK......KWCWCWK.......",
   "................................",
   "................................",
   "................................",
   "................................",
   "................................",
-  "................................"
+  "................................",
 ];
 // Leafhog: wide low hog, 3 leaf spikes, high wide eyes, protruding snout, curly tail.
 const F_LEAFHOG = [
@@ -356,11 +356,11 @@ const F_LEAFHOG = [
   "..KgGGGGGLMMMWWWWMMMLgGGGGGLLK..",
   "....KgGGGGLMMMKKKKMMMgGGGGLK....",
   "....KgGGGLMMMWWWWMMMLgGGGLLK....",
-  "....KgGGGGLLMMMWMMMLLgGGGGLK....",
-  ".....KgGGGLMMMWWWMMMLGGGGLK.....",
+  "....KgGGGGLLMMMWMMMLLgGGGDLK....",
+  ".....KgGGGLMMMWWWMMMLGGGDLK.....",
   ".....KgGGGGGGGGGGGGGGGGGGLK.....",
-  "...KgGGGGGGGGGGGGGGGGGGGLLK.GG..",
-  "...KgGGGGGGGGGGGGGGGGGGGGLK..G..",
+  "...KgGGGGGGGGGGGGGGGGGDGLLK.GG..",
+  "...KgGGGGGGGGGGGGGGGGGGDGLK..G..",
   ".....KgGGGGK......KGGGGLK.......",
   ".....KgGKGGK......KGGKGLK.......",
   "................................",
@@ -370,7 +370,7 @@ const F_LEAFHOG = [
   "................................",
   "................................",
   "................................",
-  "................................"
+  "................................",
 ];
 // Skyro: tiny round bird, stubby wings, crest tuft, small beak, stick legs.
 const F_SKYRO = [
@@ -393,7 +393,7 @@ const F_SKYRO = [
   "...KEBNK....KDEWWEDK....KBBNK...",
   "....KK.......KEWWEK.......KK....",
   "..........KDDEWWEDDK............",
-  "...........KWWKKWWK.............",
+  "...........KWWKKWEK.............",
   "...........KDEWWEDK.............",
   "............KWKKWK..............",
   "...........KKK..KKK.............",
@@ -405,7 +405,7 @@ const F_SKYRO = [
   "................................",
   "................................",
   "................................",
-  "................................"
+  "................................",
 ];
 // Nibble: tall rat, huge upright ears, whisker rows, buck teeth, ground-sweep tail.
 const F_NIBBLE = [
@@ -433,14 +433,14 @@ const F_NIBBLE = [
   "...KEPPPPPNLLMMWMMLLPPPPNK......",
   "...KEPPPPPPPPPPPPPPPNNK...KK....",
   "....KEPPPPPPPPPPPPPPNK...KPNK...",
-  ".....KEPPPK....KPPPPKKPPPPNK....",
-  ".....KEPWKP......KPPWKPPPNK.....",
+  ".....KEPPPK....KPPPPKKPPNPNK....",
+  ".....KEPWKP......KPPWKPNPNK.....",
   "................................",
   "................................",
   "................................",
   "................................",
   "................................",
-  "................................"
+  "................................",
 ];
 // Pinebug: low dome beetle, 3 leg pairs, antennae, stalk eyes + ocelli, shell spots.
 const F_PINEBUG = [
@@ -461,9 +461,9 @@ const F_PINEBUG = [
   "..GGGKBBNNNNNNNNNNNNNNNNNNKGGG..",
   "..KBNENNNNNNMEEWWWEEMNNNNNNEKK..",
   "..KBNGGBBNNNNNNNNNNNNNNNNGGNKK..",
-  "..KBNENNNNNNMEEWWWEEMNNNNNNEKK..",
-  ".GGGKBBNNNNNNNNNNNNNNNNNNNNKGGG.",
-  "..KBNENNNNNNMEEWWWEEMNNNNNNEKK..",
+  "..KBNENNNNNNMEEWWWEEMNNNNKNEKK..",
+  ".GGGKBBNNNNNNNNNNNNNNNNNKNNKGGG.",
+  "..KBNENNNNNNMEEWWWEEMNNNNKNEKK..",
   "..KBNGGBBNNNNNNNNNNNNNNNNGGNKK..",
   ".GGGKBNENNNNNNNNNNNNNNNNNENKGGG.",
   "....KBBNBNBNBNMKKKKMNBNBNBKK....",
@@ -475,7 +475,7 @@ const F_PINEBUG = [
   "................................",
   "................................",
   "................................",
-  "................................"
+  "................................",
 ];
 // Gusthawk: broad full-span wings, crest, browed eyes, hooked beak, talons.
 const F_GUSTHAWK = [
@@ -498,8 +498,8 @@ const F_GUSTHAWK = [
   "....KECK....KDEWWEDK....KCBK....",
   "..........KDDEEWWEEDDK..........",
   "..........KEEKKKKKKKEEK.........",
-  "...........KWWWKKWWWK...........",
-  "...........KDEEWWEEDK...........",
+  "...........KWWWKKWWEK...........",
+  "...........KDEEWEEEDK...........",
   "............KWYKYOK.............",
   "............KWK.KOK.............",
   "................................",
@@ -510,7 +510,7 @@ const F_GUSTHAWK = [
   "................................",
   "................................",
   "................................",
-  "................................"
+  "................................",
 ];
 // Voltpup: bolt ears, red cheeks, cream muzzle/belly, bolt tail.
 const F_VOLTPUP = [
@@ -535,17 +535,17 @@ const F_VOLTPUP = [
   "..KWYYYYLLMMMMWWWMMMMLLYYYYOOK..",
   "..KWYYYYYMMMMMKKKMMMMMYYYYOKYO..",
   "..KWYYYYLLMMMMWWMMMMLLYYYYOKYO..",
-  "...KWYYYYLMMMMWWWMMMMLYYYYOKYO..",
+  "...KWYYYYLMMMMWWWMMMMLYYYOOKYO..",
   "...KWYYYLLMMMMWWWMMMMLLYYYOOK...",
-  "....KWYYYLMMMMWWWMMMMLYYYYOK....",
-  ".....KWYYYYK......KYYYYOK.......",
+  "....KWYYYLMMMMWWWMMMMLYOYOOK....",
+  ".....KWYYYYK......KYOYOOK.......",
   ".....KWWKWYK......KYWKWOK.......",
   "................................",
   "................................",
   "................................",
   "................................",
   "................................",
-  "................................"
+  "................................",
 ];
 
 // backs: hand-drawn rear views preserving silhouette; accent colors kept per species
@@ -570,25 +570,25 @@ const B_EMBERCUB = [
   "...KYOOOOOOOOOMMMMOOOOOOOOOOrK..",
   "...KYOOOOOOOOOMMMMOOOOOOOOOOrK..",
   "...KYOOOOOOOrrKKKYOOOOOOOOrrK...",
-  "...KYMOOOOOOOOOMOOOOOOOOOOOrK...",
+  "...KYMOOOOOOOOOMOOOOOOOOOrOrK...",
   "...KYOOOOOOOOOMOOOOOOOOOOOrrK...",
-  "...KYMOOOOOOOOOMOOOOOOOOOOOrK...",
+  "...KYMOOOOOOOOOMOOOOOOOOOrOrK...",
   "...KYOOOOOOOOOMOOOOOOOOOOOrrK...",
-  "...KYMOOOOOOOOOMOOOOOOOOOOOrK...",
+  "...KYMOOOOOOOOOMOOOOOOOOOrOrK...",
   "...KYOOOOOOOOOMOOOOOOOOOOOrrK...",
-  "...KYMOOOOOOOOOMOOOOOOOOOOOrK...",
+  "...KYMOOOOOOOOOMOOOOOOOOOrOrK...",
   "...KYOOOOOOOOOMOOOOOOOOOOOrrK...",
   "....KYOOOOOOOOOMOOOOOOOOOMrKYY..",
   "....KYMOOOOOOOMOOOOOOOOOMrrKYY..",
   "....KYOOOOOOOOOMOOOOOOOOOMrKYY..",
-  ".....KYOOOOOOOOOMOOOOOOOMrrKYY..",
-  ".....KYMOOOOOOOMOOOOOOOOOrKY....",
+  ".....KYOOOOOOOOOMOOOOOrOMrrKYY..",
+  ".....KYMOOOOOOOMOOOOOrOrOrKY....",
   "......KYOOOOK......KOOOOrK......",
   "......KYWKWOK......KOWKWrK......",
   "................................",
   "................................",
   "................................",
-  "................................"
+  "................................",
 ];
 const B_AQUAPUP = [
   "................................",
@@ -603,26 +603,26 @@ const B_AQUAPUP = [
   ".KEBBBKCCCCCEEEECCCCCKBBBBK.....",
   "..KEBBBBKCCCCCCCCCCCCCCKBBBBEK..",
   ".KEBBBBKCCCCCCCKKCCCCCCCKBBBBK..",
-  ".KEBBBKECCCCCCEBBCCCCCCBBKBBBK..",
-  "..KEBBKECCCCCCCBBCCCCCCCBKBBBK..",
-  "..KEBBKECCCCCCEBBCCCCCCBBKBBBK..",
-  "..KEBKEECCCCCCCBBCCCCCCCCBKBBK..",
-  "..KEBKECCCCCCBBBBECCCCCCBBKBBK..",
-  "..KEBKEECCCCCCBBBECCCCCCCBKBBK..",
-  "..KEBKECCCCCCBBBBECCCCCCBBKBBK..",
-  "..KEBKEECCCCCCBBBECCCCCCCBKBBK..",
-  "..KEBKECCCCCCBBBBECCCCCCBBKBBK..",
-  "..KEBKEECCCCCCBBBECCCCCCCBKBBK..",
-  "....KEBKECCCCBBBBECCCCBBKBBK....",
-  "....KEBKEECCCCBBBECCCCCBKBBK....",
-  ".....KECCCCK......KCCCCBK.......",
+  ".KEBBBKECCCCCCEBBCCCCCBBBKBBBK..",
+  "..KEBBKECCCCCBCBBCCCCCCBBKBBBK..",
+  "..KEBBKECCCCCCEBBCCCCCBBBKBBBK..",
+  "..KEBKEECCCCCBCBBCCCCCCBCBKBBK..",
+  "..KEBKECCCCCBBBBBECCCCBCBBKBBK..",
+  "..KEBKEECCCCCBBBBECCCCCBCBKBBK..",
+  "..KEBKECCCCCBBBBBECCCCBCBBKBBK..",
+  "..KEBKEECCCCCBBBBECCCCCBCBKBBK..",
+  "..KEBKECCCCCBBBBBECCCCBCBBKBBK..",
+  "..KEBKEECCCCCBBBBECCCCCBCBKBBK..",
+  "....KEBKECCCBBBBBECCBCBBKBBK....",
+  "....KEBKEECCCBBBBECCCBCBKBBK....",
+  ".....KECCCBK......KCCCBBK.......",
   ".....KWCWCWK......KWCWCWK.......",
   "................................",
   "................................",
   "................................",
   "................................",
   "................................",
-  "................................"
+  "................................",
 ];
 const B_LEAFHOG = [
   "................................",
@@ -644,9 +644,9 @@ const B_LEAFHOG = [
   "....KgEGGGGGLLgggggGGGGGELLK....",
   "....KgGGGGGGGLgggggGGGGGGELK....",
   ".....KgGGGGGLLgggggGGGGGLLK.....",
-  ".....KgEGGGGGGGEGGGGGGGGGLK.....",
-  "...KgGGGGGGGGGGGGGGGGGGGLLK.GG..",
-  "...KgGGGGGGGGGGGGGGGGGGGGLK..G..",
+  ".....KgEGGGGGGGEGGGGGGGDGLK.....",
+  "...KgGGGGGGGGGGGGGGGGGDGLLK.GG..",
+  "...KgGGGGGGGGGGGGGGGGDGDGLK..G..",
   ".....KgGGGGK......KGGGGLK.......",
   ".....KgGKGGK......KGGKGLK.......",
   "................................",
@@ -656,7 +656,7 @@ const B_LEAFHOG = [
   "................................",
   "................................",
   "................................",
-  "................................"
+  "................................",
 ];
 const B_SKYRO = [
   "................................",
@@ -671,16 +671,16 @@ const B_SKYRO = [
   "............KNBBEEEEBBNK........",
   "..KEBBNK..KBBBBBBBBBBK..KBBBNK..",
   "..KEBBBNK.KBBBBBBBBBBK.KBBBBNK..",
-  "..KEBBBNK.KBBBEBBBBBBBKKBBBBNK..",
-  "..KEBBBNK.KBBBBEBBBBBBKKBBBBNK..",
-  "..KEBBBNK.KBBBEBBBBBBK.KBBBBNK..",
-  "..KEBBBNK..KBBBEBBBBK..KBBBBNK..",
-  "...KEBNK....KBEBBBBK....KBBNK...",
+  "..KEBBBNK.KBBBEBBBBBBBKKBBNBNK..",
+  "..KEBBBNK.KBBBBEBBBBBBKKBBBNNK..",
+  "..KEBBBNK.KBBBEBBBBBBK.KBBNBNK..",
+  "..KEBBBNK..KBBBEBBBBK..KBBBNNK..",
+  "...KEBNK....KBEBBBBK....KBNNK...",
   "....KK.......KEEBNK.......KK....",
-  "..........KEBBEBBBEK............",
-  "...........KEBBBBNK.............",
-  "...........KEBBBBNK.............",
-  "............KEBBNK..............",
+  "..........KEBBEBNBEK............",
+  "...........KEBBNBNK.............",
+  "...........KEBBBNNK.............",
+  "............KEBNNK..............",
   "...........KKK..KKK.............",
   "..........KWKWK..KWKWK..........",
   "................................",
@@ -690,7 +690,7 @@ const B_SKYRO = [
   "................................",
   "................................",
   "................................",
-  "................................"
+  "................................",
 ];
 const B_NIBBLE = [
   "................................",
@@ -708,23 +708,23 @@ const B_NIBBLE = [
   "..KEEPPPPPPPPPEPPPPPPPPNNNK.....",
   "..KEPPPPPPPPPEPPPPPPPPPENK......",
   "..KEEPPPPPPPEPPPPPPPPPENNK......",
-  "..KEPPPPPPPPPNNNNNEPPPPPPNK.....",
+  "..KEPPPPPPPPPNNNNNEPPPPNPNK.....",
   "..KEEPPPPPPPNNNNNNEPPPPPNNK.....",
-  "..KEPPPPPPPPPNNNNNEPPPPPPNK.....",
+  "..KEPPPPPPPPPNNNNNEPPPPNPNK.....",
   "..KEEPPPPPPPNNNNNNEPPPPPNNK.....",
-  "..KEPPPPPPPPPNNNNNEPPPPPPNK.....",
+  "..KEPPPPPPPPPNNNNNEPPPPNPNK.....",
   "..KEEPPPPPPPNNNNNNEPPPPPNNK.....",
   "...KEEPPPPPPPNNNEPPPPPPENK......",
   "...KEPPPPPPPPPPPPPPPNNK...KK....",
   "....KEPPPPPPPPPPPPPPNK...KPNK...",
-  ".....KEPPPK....KPPPPKKPPPPNK....",
+  ".....KEPPPK....KPPPPKKPPNPNK....",
   ".....KEPWKP......KPPWKPPPNK.....",
   "................................",
   "................................",
   "................................",
   "................................",
   "................................",
-  "................................"
+  "................................",
 ];
 const B_PINEBUG = [
   "................................",
@@ -740,16 +740,16 @@ const B_PINEBUG = [
   "............KBBNNEEEENNNBK......",
   ".......KBNNNNNNNNNNNNNNKK.......",
   "......KBNKGGBBNNNNNNGGKNNKK.....",
-  ".....KBENNNNNNNENNNNNNNNNNKK....",
-  "..GGGKBBENNNNNENNNNNNNNNNNKGGG..",
-  "..KBNNNNNNNNNNNENNNNNNNNNNNNKK..",
+  ".....KBENNNNNNNENNNNNNNKNNKK....",
+  "..GGGKBBENNNNNENNNNNNNKNKNKGGG..",
+  "..KBNNNNNNNNNNNENNNNNNNNNKNNKK..",
   "..KBNGGBBNNNNNENNNNNNNNNNGGNEK..",
-  "..KBNNNNNNNNNNNENNNNNNNNNNNNKK..",
-  ".GGGKBBNNNNNNNENNNNNNNNNNNEKGGG.",
-  "..KBNNNNNNNNNNNENNNNNNNNNNNNKK..",
+  "..KBNNNNNNNNNNNENNNNNNNNNKNNKK..",
+  ".GGGKBBNNNNNNNENNNNNNNNNKNEKGGG.",
+  "..KBNNNNNNNNNNNENNNNNNNNNKNNKK..",
   "..KBNGGBBNNNNNENNNNNNNNNNGGNEK..",
-  ".GGGKBNNNNNNNNNENNNNNNNNNNNKGGG.",
-  "....KBBNNNNNNNENNNNNNNNNNNEK....",
+  ".GGGKBNNNNNNNNNENNNNNNNKNKNKGGG.",
+  "....KBBNNNNNNNENNNNNNNNNKNEK....",
   ".....KBNK........KNKK...........",
   ".....KBWNK........KNWKK.........",
   "................................",
@@ -758,7 +758,7 @@ const B_PINEBUG = [
   "................................",
   "................................",
   "................................",
-  "................................"
+  "................................",
 ];
 const B_GUSTHAWK = [
   "................................",
@@ -778,10 +778,10 @@ const B_GUSTHAWK = [
   ".KMCCCBBK.KEEEEEEEEEK..KECCCBBK.",
   ".KEECCCCBK..KEEEEEEK..KECCCCBK..",
   "....KECK....KEEEEEEK....KCBK....",
-  "..........KMEEEEEEEEEK..........",
-  "..........KEEEEEEEEEMK..........",
-  "...........KEEEEEEEMK...........",
-  "...........KEEKEEKEEK...........",
+  "..........KMEEEEEEEDEK..........",
+  "..........KEEEEEEEDEMK..........",
+  "...........KEEEDEDEMK...........",
+  "...........KEEKEDKEEK...........",
   "............KWYKYOK.............",
   "............KWK.KOK.............",
   "................................",
@@ -792,7 +792,7 @@ const B_GUSTHAWK = [
   "................................",
   "................................",
   "................................",
-  "................................"
+  "................................",
 ];
 const B_VOLTPUP = [
   "................................",
@@ -808,7 +808,7 @@ const B_VOLTPUP = [
   "..KWYYYYYYYYYYEEEEYYYYYYYYYYOK..",
   "..KWYYYYYYYYYYEEEEYYYYYYYYYYOK..",
   "..KEEYYYYYYYYYYYYYYYYYYYYYYOOOK.",
-  "..KEYYYYYYYYYYYYYYYYYYYYYYYYOEK.",
+  "..KEYYYYYYYYYYYYYYYYYYYYYYYOOEK.",
   "..KEEYYYYYOORRRRRRRREYYYYYEOOK..",
   "..KEYYYYYYYYYYYYYYYYYYYYYYYEOK..",
   "..KEEYYYYYYYYYYYYYYYYYYYYYEOOK..",
@@ -817,8 +817,8 @@ const B_VOLTPUP = [
   "..KEYYYYYYYYYYYYYYYYYYYYYEOKYO..",
   "..KEEYYYYYYYYYYYYYYYYYYYEOOKYO..",
   "...KEEYYYYYYYYYYYYYYYYYYYEOKYO..",
-  "...KEYYYYYYYYYYYYYYYYYYYYYOOK...",
-  "....KEYYYYYYYYYYYYYYYYYYYEOK....",
+  "...KEYYYYYYYYYYYYYYYYYYYOYOOK...",
+  "....KEYYYYYYYYYYYYYYYYYOYEOK....",
   ".....KWYYYYK......KYYYYOK.......",
   ".....KWWKWYK......KYWKWOK.......",
   "................................",
@@ -826,7 +826,7 @@ const B_VOLTPUP = [
   "................................",
   "................................",
   "................................",
-  "................................"
+  "................................",
 ];
 
 export const MON_BACK = {

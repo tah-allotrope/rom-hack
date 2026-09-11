@@ -881,6 +881,12 @@
       "win": false,
       "gap": "Awaiting SpriteJudgeV12.",
       "note": "Screenshot: Nibble back shaded + tail. Committed."
+    },
+    {
+      "piece": "sprite-judge-v12",
+      "win": false,
+      "gap": "Thin detached tail vs grounded sweep. Fix applied: 2-row contiguous curl.",
+      "note": "SpriteJudgeV12 pinned: BAR wins, ours 68%. Dither spine lands."
     }
   ],
   "bar": {

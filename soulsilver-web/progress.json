@@ -875,6 +875,12 @@
       "win": false,
       "gap": "Nibble back flat torso + stub tail. Fix: E spine + tail curl.",
       "note": "SpriteJudgeV11 pinned: BAR wins 84/100, ours 16%. Backs verified asymmetric."
+    },
+    {
+      "piece": "nibble-verify",
+      "win": false,
+      "gap": "Awaiting SpriteJudgeV12.",
+      "note": "Screenshot: Nibble back shaded + tail. Committed."
     }
   ],
   "bar": {

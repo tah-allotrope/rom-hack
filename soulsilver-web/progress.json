@@ -887,6 +887,12 @@
       "win": false,
       "gap": "Thin detached tail vs grounded sweep. Fix applied: 2-row contiguous curl.",
       "note": "SpriteJudgeV12 pinned: BAR wins, ours 68%. Dither spine lands."
+    },
+    {
+      "piece": "sprite-judge-v13",
+      "win": false,
+      "gap": "Aquapup flat mouth vs open jaw. Tail tip capped.",
+      "note": "SpriteJudgeV13 pinned: BAR wins, ours 75% (73-78/species). Tail contiguous."
     }
   ],
   "bar": {

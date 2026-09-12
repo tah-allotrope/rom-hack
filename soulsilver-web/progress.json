@@ -995,6 +995,12 @@
       "win": false,
       "gap": "Forehead N speckles + 3 more fails. Speckles cleaned; rest queued.",
       "note": "NibbleCallR3: HGSS wins, Nibble 50%. Six findings had closed."
+    },
+    {
+      "piece": "leafhog-call-r4",
+      "win": false,
+      "gap": "DESIGN-HELD: critic wants Chikorita clone (single leaf); Leafhog triple-spike is species identity.",
+      "note": "LeafhogCallR4: Chikorita wins, Leafhog 30-35%. Stalks/eyes verified."
     }
   ],
   "bar": {

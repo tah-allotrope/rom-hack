@@ -1055,6 +1055,12 @@
       "win": false,
       "gap": "HELD: removing W blaze destroys belly identity + contradicts cylinder direction.",
       "note": "NibbleCallR10: HGSS wins, Nibble 25%. Eyes+whiskers now WIN subscores."
+    },
+    {
+      "piece": "roster-final",
+      "win": false,
+      "gap": "DISPUTED-HELD: claims fronts flat (contradicted by 100+ committed shading rows); language gap real but vague.",
+      "note": "RosterFinal: HGSS wins 70/30, ours 30%. Front/back language split noted."
     }
   ],
   "bar": {
@@ -1083,7 +1089,8 @@
     "battle": 90,
     "ui": 92,
     "tiles": 90,
-    "sprites": "best 88 single / 75 roster; jaw direction held",
-    "title": "win original-art bar"
+    "sprites": "30 roster / 88 best single; HELD",
+    "title": "win original-art bar",
+    "playthrough": "WIN"
   }
 }

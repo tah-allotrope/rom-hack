@@ -1025,6 +1025,18 @@
       "win": false,
       "gap": "Upper-face asymmetry rows 421-428. Fix: mirror 8-15 onto 23-16.",
       "note": "NibbleCallR7: HGSS wins, Nibble 40%. Muzzle symmetric."
+    },
+    {
+      "piece": "mirror-verify",
+      "win": false,
+      "gap": "Awaiting NibbleCallR8.",
+      "note": "Screenshot: symmetric Nibble face. Committed."
+    },
+    {
+      "piece": "nibble-call-r8",
+      "win": false,
+      "gap": "Row13 asymmetry + ear gaps + whiskers + flat inner ears. Feet HELD (would revert ordered toes).",
+      "note": "NibbleCallR8: HGSS sweeps, Nibble 28%. Mirror verified on 10/14."
     }
   ],
   "bar": {

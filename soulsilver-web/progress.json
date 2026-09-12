@@ -1061,6 +1061,18 @@
       "win": false,
       "gap": "DISPUTED-HELD: claims fronts flat (contradicted by 100+ committed shading rows); language gap real but vague.",
       "note": "RosterFinal: HGSS wins 70/30, ours 30%. Front/back language split noted."
+    },
+    {
+      "piece": "roster-final-2",
+      "win": false,
+      "gap": "Two backs float without shadows. Fix applied: DDD rows.",
+      "note": "RosterFinal2: HGSS wins 70-30, ours 30%."
+    },
+    {
+      "piece": "backs-grounded",
+      "win": false,
+      "gap": "Loop continues on sprites.",
+      "note": "DDD shadows under both bird backs. Committed."
     }
   ],
   "bar": {

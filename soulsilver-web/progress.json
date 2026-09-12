@@ -983,6 +983,12 @@
       "win": false,
       "gap": "Awaiting re-call.",
       "note": "Triple D stalks applied + committed."
+    },
+    {
+      "piece": "leafhog-call-r3",
+      "win": false,
+      "gap": "Floating side stems. Fix applied: widened head-top row.",
+      "note": "LeafhogCallR3: Chikorita wins 5/6, Leafhog 83%."
     }
   ],
   "bar": {

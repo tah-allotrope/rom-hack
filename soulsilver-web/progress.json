@@ -941,6 +941,18 @@
       "win": false,
       "gap": "Single-pixel dot eyes vs large highlighted eyes. Fix: 2x3 blocks.",
       "note": "LeafhogCall: Chikorita wins 72-18, Leafhog 20%."
+    },
+    {
+      "piece": "embercub-call",
+      "win": false,
+      "gap": "Mismatched ear fill r vs O. Fix applied: unified OOO.",
+      "note": "EmbercubCall: Cyndaquil wins, Embercub 63%."
+    },
+    {
+      "piece": "nibble-call",
+      "win": false,
+      "gap": "Six findings (whiskers, strays, teeth, belly, tail, feet). NibbleFix dispatched.",
+      "note": "NibbleCall: HGSS rodent wins, Nibble 39%."
     }
   ],
   "bar": {

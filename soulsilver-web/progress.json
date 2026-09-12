@@ -1001,6 +1001,12 @@
       "win": false,
       "gap": "DESIGN-HELD: critic wants Chikorita clone (single leaf); Leafhog triple-spike is species identity.",
       "note": "LeafhogCallR4: Chikorita wins, Leafhog 30-35%. Stalks/eyes verified."
+    },
+    {
+      "piece": "nibble-call-r4",
+      "win": false,
+      "gap": "No nose + off-center teeth. Fixes applied.",
+      "note": "NibbleCallR4: HGSS wins, Nibble 52% with subscores."
     }
   ],
   "bar": {

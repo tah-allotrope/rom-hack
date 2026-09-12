@@ -1037,6 +1037,12 @@
       "win": false,
       "gap": "Row13 asymmetry + ear gaps + whiskers + flat inner ears. Feet HELD (would revert ordered toes).",
       "note": "NibbleCallR8: HGSS sweeps, Nibble 28%. Mirror verified on 10/14."
+    },
+    {
+      "piece": "face-verify",
+      "win": false,
+      "gap": "Awaiting NibbleCallR9.",
+      "note": "Screenshot: symmetric detailed Nibble. Committed."
     }
   ],
   "bar": {

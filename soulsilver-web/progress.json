@@ -977,6 +977,12 @@
       "win": false,
       "gap": "Floating outer leaves, single center stalk. Fix: three D stalks row 351.",
       "note": "LeafhogCallR2: Chikorita wins 80-20, Leafhog 20%. Eyes held, new gap."
+    },
+    {
+      "piece": "leafhog-call-r2-fix",
+      "win": false,
+      "gap": "Awaiting re-call.",
+      "note": "Triple D stalks applied + committed."
     }
   ],
   "bar": {

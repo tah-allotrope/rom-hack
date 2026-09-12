@@ -935,6 +935,12 @@
       "win": true,
       "gap": "None found.",
       "note": "Full run: mom pages, warps, starter, rival WIN+level, Elm balls, wild catch, Violet, SAM faint-pick, wipe heal home. Zero softlocks."
+    },
+    {
+      "piece": "leafhog-call",
+      "win": false,
+      "gap": "Single-pixel dot eyes vs large highlighted eyes. Fix: 2x3 blocks.",
+      "note": "LeafhogCall: Chikorita wins 72-18, Leafhog 20%."
     }
   ],
   "bar": {

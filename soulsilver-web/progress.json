@@ -1049,6 +1049,12 @@
       "win": false,
       "gap": "K-slab eyes + bridge jog. Glints + mirror applied. Whiskers HELD (ordered work).",
       "note": "NibbleCallR9: HGSS wins, Nibble 37%."
+    },
+    {
+      "piece": "nibble-call-r10",
+      "win": false,
+      "gap": "HELD: removing W blaze destroys belly identity + contradicts cylinder direction.",
+      "note": "NibbleCallR10: HGSS wins, Nibble 25%. Eyes+whiskers now WIN subscores."
     }
   ],
   "bar": {

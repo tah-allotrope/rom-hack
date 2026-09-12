@@ -953,6 +953,12 @@
       "win": false,
       "gap": "Six findings (whiskers, strays, teeth, belly, tail, feet). NibbleFix dispatched.",
       "note": "NibbleCall: HGSS rodent wins, Nibble 39%."
+    },
+    {
+      "piece": "nibble-fix-verify",
+      "win": false,
+      "gap": "Awaiting re-calls.",
+      "note": "Screenshot: attached whiskers, teeth, clean belly, tapered tail. Committed."
     }
   ],
   "bar": {

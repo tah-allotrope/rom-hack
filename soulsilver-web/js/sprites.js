@@ -274,7 +274,7 @@ const F_EMBERCUB = [
   "........W..............W........",
   ".......YYY............YYY.......",
   ".......OOO......Y.....OOO.......",
-  "......rrrOr.OOYYYYYYrOOrOO......",
+  "......rrrOrOOOYYYYYYrOOrOO......",
   "......OrrrOrYYYYOYOYOOOrrr......",
   ".....OrrrOOOOYYYYOYOOOOOrrr.....",
   ".....rrrrOOOYYYYOYOYOOOOrrO.....",

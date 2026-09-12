@@ -1043,6 +1043,12 @@
       "win": false,
       "gap": "Awaiting NibbleCallR9.",
       "note": "Screenshot: symmetric detailed Nibble. Committed."
+    },
+    {
+      "piece": "nibble-call-r9",
+      "win": false,
+      "gap": "K-slab eyes + bridge jog. Glints + mirror applied. Whiskers HELD (ordered work).",
+      "note": "NibbleCallR9: HGSS wins, Nibble 37%."
     }
   ],
   "bar": {

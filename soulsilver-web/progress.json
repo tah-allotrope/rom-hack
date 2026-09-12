@@ -989,6 +989,12 @@
       "win": false,
       "gap": "Floating side stems. Fix applied: widened head-top row.",
       "note": "LeafhogCallR3: Chikorita wins 5/6, Leafhog 83%."
+    },
+    {
+      "piece": "nibble-call-r3",
+      "win": false,
+      "gap": "Forehead N speckles + 3 more fails. Speckles cleaned; rest queued.",
+      "note": "NibbleCallR3: HGSS wins, Nibble 50%. Six findings had closed."
     }
   ],
   "bar": {

@@ -426,7 +426,7 @@ const F_NIBBLE = [
   "........PNNKKKEEEEKKKPNN........",
   "....EEEEPPPKKKEEEEKKKPPPEEEEE...",
   "........PNNPPPEEKEEPPPNN........",
-  "..........NPPPKWWKPPPPN.........",
+  ".........NPPPPKWWKPPPPN.........",
   "...........NPMMWWWMMPN..........",
   "..........NPPMMWWWMMPPN.........",
   "..........NPPMMWWWMMPPN.........",

@@ -1013,6 +1013,12 @@
       "win": false,
       "gap": "Teeth jog left of nose. Fix applied: WW to cols 15-16.",
       "note": "NibbleCallR5: HGSS wins, Nibble 62% with subscores."
+    },
+    {
+      "piece": "nibble-call-r6",
+      "win": false,
+      "gap": "Asymmetric muzzle frame. Fix applied: mirror-exact frame.",
+      "note": "NibbleCallR6: HGSS wins, Nibble 43% with 7 subscores."
     }
   ],
   "bar": {

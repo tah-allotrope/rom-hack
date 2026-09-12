@@ -410,10 +410,10 @@ const F_SKYRO = [
 // Nibble: tall rat, huge upright ears, whisker rows, buck teeth, ground-sweep tail.
 const F_NIBBLE = [
   "................................",
-  "......NNNNN..........NNNNN......",
-  "......NRRRN..........NRRRN......",
-  "......NRRRN..........NRRRN......",
-  "......NRRRN..........NRRRN......",
+  "........N..............N........",
+  ".......NN..............NN.......",
+  ".......NRN............NRN.......",
+  "......NRRN............NRRN......",
   "......NRRRN..........NRRRN......",
   "......NRRRN..........NRRRN......",
   "......NRRRN.NPNPPPNPNNRRRN......",

@@ -959,6 +959,12 @@
       "win": false,
       "gap": "Awaiting re-calls.",
       "note": "Screenshot: attached whiskers, teeth, clean belly, tapered tail. Committed."
+    },
+    {
+      "piece": "embercub-call-r2",
+      "win": false,
+      "gap": "Single background hole in crown. Fix applied: O fill.",
+      "note": "EmbercubCallR2: Cyndaquil wins, Embercub 83%."
     }
   ],
   "bar": {

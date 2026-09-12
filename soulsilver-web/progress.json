@@ -1019,6 +1019,12 @@
       "win": false,
       "gap": "Asymmetric muzzle frame. Fix applied: mirror-exact frame.",
       "note": "NibbleCallR6: HGSS wins, Nibble 43% with 7 subscores."
+    },
+    {
+      "piece": "nibble-call-r7",
+      "win": false,
+      "gap": "Upper-face asymmetry rows 421-428. Fix: mirror 8-15 onto 23-16.",
+      "note": "NibbleCallR7: HGSS wins, Nibble 40%. Muzzle symmetric."
     }
   ],
   "bar": {

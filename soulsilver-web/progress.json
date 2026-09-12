@@ -929,6 +929,12 @@
       "win": false,
       "gap": "OSCILLATION-HOLD: V18 wants broad U-jaw rewrite (6 rounds built narrow muzzle). Held current.",
       "note": "SpriteJudgeV18: Totodile wins, Aquapup 64%. Fang tweaks oscillate 64-88."
+    },
+    {
+      "piece": "playthrough-e2e-WIN",
+      "win": true,
+      "gap": "None found.",
+      "note": "Full run: mom pages, warps, starter, rival WIN+level, Elm balls, wild catch, Violet, SAM faint-pick, wipe heal home. Zero softlocks."
     }
   ],
   "bar": {

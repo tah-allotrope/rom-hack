@@ -348,7 +348,7 @@ const F_LEAFHOG = [
   ".....DGGgGGD.DGGgGGD.DGGgGGD....",
   "....DGDGDGDGDGDGDGDGDGDGDGDGD...",
   "......GGGGG...GGGGG...GGGGG.....",
-  "................D...............",
+  "........D.......D.......D.......",
   "...........DGDGDgDGDGD..........",
   "........KKKKGgggggggKKKK........",
   ".......DGWWGggggggggGWWGGD......",
